@@ -110,7 +110,7 @@ export default function Sidebar(props: any) {
             })
     }
 
-    const navList = ['leads', 'contacts', 'opportunities', 'accounts', 'companies', 'users', 'cases']
+    const navList = ['leads', 'contacts', 'opportunities', 'accounts', 'companies', 'users', 'cases', 'chat']
     const navIcons = (text: any, screen: any): React.ReactNode => {
         switch (text) {
             case 'leads':
@@ -140,7 +140,14 @@ export default function Sidebar(props: any) {
         userProfile();
         setAnchorEl(event.currentTarget);
     };
-
+    const openInNewTab = (path: string) => {
+        window.open(
+          `${window.location.origin}/${path}`,
+          '_blank',
+          'noopener,noreferrer'
+        );
+      };
+    
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -244,8 +251,12 @@ export default function Sidebar(props: any) {
                                     <StyledListItemButton
                                         sx={{ pt: '6px', pb: '6px' }}
                                         onClick={() => {
-                                            navigate(`/app/${text}`)
-                                            setScreen(text)
+                                            if(text === 'chat'){
+                                                openInNewTab('chat');
+                                            } else {
+                                                navigate(`/app/${text}`)
+                                                setScreen(text)
+                                            }
                                         }}
                                         selected={screen === text}
                                     >
