@@ -52,7 +52,7 @@ export default function UserDetails() {
     const navigate = useNavigate()
     const { state } = useLocation()
     const [userDetails, setUserDetails] = useState<response | null>(null)
-
+    const [res, setRes] = useState<any>(null)
     useEffect(() => {
         getUserDetail(state.userId)
     }, [state.userId])
@@ -72,6 +72,7 @@ export default function UserDetails() {
                 console.log(res, 'res');
                 if (!res.error) {
                     setUserDetails(res?.data?.profile_obj)
+                    setRes(res)
                 }
             })
     }
@@ -115,6 +116,7 @@ export default function UserDetails() {
                     state: userDetails?.address?.state,
                     pincode: userDetails?.address?.postcode,
                     country: userDetails?.address?.country,
+                    countries: res?.data?.countries,
                     profile_pic: userDetails?.user_details?.profile_pic,
                     has_sales_access: userDetails?.has_sales_access,
                     has_marketing_access: userDetails?.has_marketing_access,
