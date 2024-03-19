@@ -508,7 +508,7 @@ export function EditUser() {
                                                         onChange={handleChange}
                                                         error={!!profileErrors?.country?.[0]}
                                                     >
-                                                        {state?.countries?.length && state?.countries.map((option: any) => (
+                                                        {state?.value?.countries?.length && state?.value?.countries.map((option: any) => (
                                                             <MenuItem key={option[0]} value={option[0]}>
                                                                 {option[1]}
                                                             </MenuItem>
