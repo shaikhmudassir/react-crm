@@ -323,7 +323,7 @@ export function EditLead() {
             teams: formData.teams,
             assigned_to: formData.assigned_to,
             contacts: formData.contacts,
-            status: formData.status,
+            status: formData.status.toLocaleLowerCase(),
             source: formData.source,
             address_line: formData.address_line,
             street: formData.street,
