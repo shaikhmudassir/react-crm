@@ -1,15 +1,10 @@
 import React, { SyntheticEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { Avatar, AvatarGroup, Box, Button, Card, List, Stack, Tab, TablePagination, Tabs, Toolbar, Typography, Link, MenuItem, Select } from '@mui/material'
-import styled from '@emotion/styled';
+import { Box, Button, Stack, Tabs, Typography, MenuItem, Select } from '@mui/material'
 import { LeadUrl } from '../../services/ApiUrls';
 import { DeleteModal } from '../../components/DeleteModal';
-import { Label } from '../../components/Label';
 import { fetchData } from '../../components/FetchData';
 import { Spinner } from '../../components/Spinner';
-import FormateTime from '../../components/FormateTime';
-import { getComparator, stableSort } from '../../components/Sorting';
-import { FaTrashAlt } from 'react-icons/fa';
 import { FiChevronUp } from '@react-icons/all-files/fi/FiChevronUp';
 import { FiChevronDown } from '@react-icons/all-files/fi/FiChevronDown';
 import { FiPlus } from "@react-icons/all-files/fi/FiPlus";
@@ -17,6 +12,7 @@ import { FiChevronLeft } from "@react-icons/all-files/fi/FiChevronLeft";
 import { FiChevronRight } from "@react-icons/all-files/fi/FiChevronRight";
 import { CustomTab, CustomToolbar, FabLeft, FabRight } from '../../styles/CssStyled';
 import '../../styles/style.css'
+import { LeadCard } from './LeadCard';
 
 // import css from './css';
 // import emotionStyled from '@emotion/styled';
@@ -29,66 +25,6 @@ import '../../styles/style.css'
 //   display: flex;
 //   justify-content: space-between;
 //   background-color: #1A3353;
-export const CustomTablePagination = styled(TablePagination)`
-.MuiToolbar-root {
-  min-width: 100px;
-}
-.MuiTablePagination-toolbar {
-  background-color: #f0f0f0;
-  color: #333;
-}
-.MuiTablePagination-caption {
-  color: #999;
-}
-'.MuiTablePagination-displayedRows': {
-  display: none;
-}
-'.MuiTablePagination-actions': {
-  display: none;
-}
-'.MuiTablePagination-selectLabel': {
-  margin-top: 4px;
-  margin-left: -15px;
-}
-'.MuiTablePagination-select': {
-  color: black;
-  margin-right: 0px;
-  margin-left: -12px;
-  margin-top: -6px;
-}
-'.MuiSelect-icon': {
-  color: black;
-  margin-top: -5px;
-}
-background-color: white;
-border-radius: 1;
-height: 10%;
-overflow: hidden;
-padding: 0;
-margin: 0;
-width: 39%;
-padding-bottom: 5;
-color: black;
-margin-right: 1;
-`;
-
-
-export const Tabss = styled(Tab)({
-  height: '34px',
-  textDecoration: 'none',
-  fontWeight: 'bold'
-});
-
-export const ToolbarNew = styled(Toolbar)({
-  minHeight: '48px', height: '48px', maxHeight: '48px',
-  width: '100%', display: 'flex', justifyContent: 'space-between', backgroundColor: '#1A3353',
-  '& .MuiToolbar-root': { minHeight: '48px !important', height: '48px !important', maxHeight: '48px !important' },
-  '@media (min-width:600px)': {
-    '& .MuiToolbar-root': {
-      minHeight: '48px !important', height: '48px !important', maxHeight: '48px !important'
-    }
-  }
-});
 // export const formatDate = (dateString: any) => {
 //   const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' }
 //   return new Date(dateString).toLocaleDateString(undefined, options)
@@ -382,156 +318,17 @@ export default function Leads(props: any) {
             // leads.open && leads.open
             //   ? stableSort(leads.open && leads.open, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
             // stableSort(openLeads, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item: any, index: any) => (
-            openLeads?.length ? openLeads.map((item: any, index: any) => (
-              <Box key={index}>
-                <Box className='lead-box'>
-                  <Box className='lead-box1'>
-                    <Stack className='lead-row1'>
-                      <div style={{ color: '#1A3353', fontSize: '1rem', fontWeight: '500', cursor: 'pointer' }} onClick={() => selectLeadList(item?.id)}>
-                        {item?.title}
-                      </div>
-                      <div onClick={() => deleteLead(item?.id)}>
-                        <FaTrashAlt style={{ cursor: 'pointer', color: 'gray' }} />
-                      </div>
-                    </Stack>
-                    <Stack className='lead-row2'>
-                      <div className='lead-row2-col1'>
-                        <div style={{ color: 'gray', fontSize: '16px', textTransform: 'capitalize' }}>
-                          {item?.country || ''} - source <span style={{ color: '#1a3353', fontWeight: 500 }}>{item?.source || '--'}</span> - status <span style={{ color: '#1a3353', fontWeight: 500 }}>{item?.status || '--'}</span>
-                        </div>
-                        <Box sx={{
-                          ml: 1
-                          //  flexWrap: 'wrap', width: '50%' 
-                        }}>
-                          {
-                            item.tags.map((tagData: any, index: any) => (
-                              // tag.slice(0, 3).map((tagData: any, index: any) => (
-                              <Label tags={tagData} key={index} />
-                            ))
-                          }{item.tags.length > 4 ? <Link sx={{ ml: 1 }}>+{item.tags.length - 4}</Link> : ''}
-                        </Box>
-                        <Box sx={{ ml: 1 }}>
-                          <div style={{ display: 'flex' }}>
-                            <AvatarGroup
-                              // total={2}
-                              max={3}
-                            >
-                              {/* <Tooltip title={con.user.username}> */}
-                              {/* {tag.map((tagData: any, index: any) => ( */}
-                              {item?.team && item?.team?.map((team: any, index: any) => (
-                                <Avatar
-                                  alt={team}
-                                  src={team}
-                                >
-                                  {team}
-                                </Avatar>
-                              ))}
-                              {/* </Tooltip> */}
-                              {/* )} */}
-                            </AvatarGroup>
-                          </div>
-
-                        </Box>
-                        {/* {
-                          item.assigned_to.map((assignItem: any, index: any) => (
-                            assignItem.user_details.profile_pic
-                              ? <Avatar alt='Remy Sharp'
-                                src={assignItem.user_details.profile_pic}
-                              />
-                              : <Avatar alt='Remy Sharp'
-                                size='small'
-                              // sx={{ backgroundColor: 'deepOrange', color: 'white', textTransform: 'capitalize', mt: '-20px', ml: '10px' }}
-                              >
-                                {assignItem.user_details.first_name.charAt(0)}
-                              </Avatar>
-                          ))
-                        } */}
-                      </div>
-                      <div className='lead-row2-col2'>
-                        {/* created on {formatDate(item.created_on)} by   &nbsp;<span> */}
-                        created&nbsp; {FormateTime(item?.created_at)}&nbsp; by
-                        <Avatar
-                          alt={item?.first_name}
-                          src={item?.created_by?.profile_pic}
-                          sx={{ ml: 1 }}
-                        // style={{
-                        //   height: '20px',
-                        //   width: '20px'
-                        // }}
-                        /> &nbsp;&nbsp;{item?.first_name}&nbsp;{item?.last_name}
-                      </div>
-                    </Stack>
-                  </Box>
-                </Box>
-              </Box>
-            )) : <Spinner />
+            openLeads?.length ? openLeads.map((item: any, index: any) => <LeadCard key={index} lead={item} selectLeadList={selectLeadList}
+            deleteLead={deleteLead}/>
+            ) : <Spinner />
           }
         </Box>
         : <Box sx={{ p: '10px', mt: '5px' }}>
           {
             // stableSort(closedLeads?.length || [], getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item: any, index: any) => (
-            closedLeads?.length ? closedLeads.map((item: any, index: any) => (
-              <Box key={index}>
-                <Box className='lead-box'>
-                  <Box className='lead-box1'>
-                    <Stack className='lead-row1'>
-                      <div style={{ color: '#1A3353', fontSize: '1rem', fontWeight: '500', cursor: 'pointer' }} onClick={() => selectLeadList(item?.id)}>
-                        {item?.title}
-                      </div>
-                      <div onClick={() => deleteLead(item?.id)}>
-                        <FaTrashAlt style={{ cursor: 'pointer', color: 'gray' }} />
-                      </div>
-                    </Stack>
-                    <Stack className='lead-row2'>
-                      <div className='lead-row2-col1'>
-                        <div style={{ color: 'gray', fontSize: '16px', textTransform: 'capitalize' }}>
-                          {item?.country || ''} - source <span style={{ color: '#1a3353', fontWeight: 500 }}>{item?.source || '--'}</span> - status <span style={{ color: '#1a3353', fontWeight: 500 }}>{item?.status || '--'}</span>
-                        </div>
-                        <Box sx={{ ml: 1 }}>
-                          {
-                            item.tags.map((tagData: any, index: any) => (
-                              // tag.slice(0, 3).map((tagData: any, index: any) => (
-                              <Label tags={tagData} key={index} />
-                            ))
-                          }{item.tags.length > 4 ? <Link sx={{ ml: 1 }}>+{item.tags.length - 4}</Link> : ''}
-                        </Box>
-                        <Box sx={{ ml: 1 }}>
-                          <div style={{ display: 'flex' }}>
-                            <AvatarGroup
-                              // total={2}
-                              max={3}
-                            >
-                              {/* {con.map((con) => */}
-                              {/* <Tooltip title={con.user.username}> */}
-                              {item?.team && item?.team?.map((team: any, index: any) => (
-                                <Avatar
-                                  alt={team}
-                                  src={team}
-                                >
-                                  {team}
-                                </Avatar>
-                              ))}
-                              {/* </Tooltip> */}
-                              {/* )} */}
-                            </AvatarGroup>
-                          </div>
-
-                        </Box>
-
-                      </div>
-                      <div className='lead-row2-col2'>
-                        created&nbsp; {FormateTime(item?.created_at)}&nbsp; by
-                        <Avatar
-                          alt={item?.first_name}
-                          src={item?.created_by?.profile_pic}
-                          sx={{ ml: 1 }}
-                        /> &nbsp;&nbsp;{item?.first_name}&nbsp;{item?.last_name}
-                      </div>
-                    </Stack>
-                  </Box>
-                </Box>
-              </Box>
-            )) :
+            closedLeads?.length ? closedLeads.map((item: any, index: any) => <LeadCard key={index} lead={item} selectLeadList={selectLeadList}
+            deleteLead={deleteLead}/>
+            ):
               <Spinner />
           }
         </Box>}
