@@ -330,6 +330,7 @@ export default function Users() {
                                 state: data?.address?.state,
                                 pincode: data?.address?.postcode,
                                 country: data?.address?.country,
+                                countries: res?.data?.countries,
                                 profile_pic: data?.user_details?.profile_pic,
                                 has_sales_access: data?.has_sales_access,
                                 has_marketing_access: data?.has_marketing_access,

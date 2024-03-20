@@ -650,7 +650,7 @@ export function AddOpportunity() {
                                                                         }
                                                                     }
                                                                 }}
-                                                            />
+                                                             />
                                                         )}
                                                     />
                                                     <FormHelperText>{errors?.teams?.[0] || ''}</FormHelperText>
@@ -696,7 +696,7 @@ export function AddOpportunity() {
                                             </Button>
                                             <Button
                                                 className='header-button'
-                                                onClick={() => setFormData({ ...formData, description: quillRef.current.firstChild.innerHTML })}
+                                                onClick={handleSubmit}
                                                 variant='contained'
                                                 size='small'
                                                 startIcon={<FaCheckCircle style={{ fill: 'white', width: '16px', marginLeft: '2px' }} />}

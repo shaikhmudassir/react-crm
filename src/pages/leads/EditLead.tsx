@@ -278,6 +278,7 @@ export function EditLead() {
             setFormData({ ...formData, [title]: val })
         }
     }
+
     const handleChange = (e: any) => {
         // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         // console.log('e.target',e)
@@ -322,7 +323,7 @@ export function EditLead() {
             teams: formData.teams,
             assigned_to: formData.assigned_to,
             contacts: formData.contacts,
-            status: formData.status,
+            status: formData.status.toLocaleLowerCase(),
             source: formData.source,
             address_line: formData.address_line,
             street: formData.street,
@@ -400,6 +401,7 @@ export function EditLead() {
         if (quill && initialContentRef.current !== null) {
             quill.clipboard.dangerouslyPasteHTML(initialContentRef.current);
         }
+        navigate('/app/leads/lead-details', { state: { leadId: state?.id, detail: true } })
     }
     const handleFileChange = (event: any) => {
         const file = event.target.files?.[0] || null;
@@ -1165,7 +1167,7 @@ export function EditLead() {
                                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', mt: 1.5 }}>
                                             <Button
                                                 className='header-button'
-                                                onClick={resetQuillToInitialState}
+                                                onClick={onCancel}
                                                 size='small'
                                                 variant='contained'
                                                 startIcon={<FaTimesCircle style={{ fill: 'white', width: '16px', marginLeft: '2px' }} />}
@@ -1175,7 +1177,7 @@ export function EditLead() {
                                             </Button>
                                             <Button
                                                 className='header-button'
-                                                onClick={() => setFormData({ ...formData, description: quillRef.current.firstChild.innerHTML })}
+                                                onClick={handleSubmit}
                                                 variant='contained'
                                                 size='small'
                                                 startIcon={<FaCheckCircle style={{ fill: 'white', width: '16px', marginLeft: '2px' }} />}
