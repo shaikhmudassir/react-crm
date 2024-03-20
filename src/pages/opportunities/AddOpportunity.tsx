@@ -248,7 +248,8 @@ export function AddOpportunity() {
         setSelectedTeams([])
     }
     const onCancel = () => {
-        resetForm()
+        resetForm();
+        backbtnHandle();
     }
     const backbtnHandle = () => {
         navigate('/app/opportunities')
@@ -686,7 +687,7 @@ export function AddOpportunity() {
                                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', mt: 1.5 }}>
                                             <Button
                                                 className='header-button'
-                                                onClick={resetQuillToInitialState}
+                                                onClick={onCancel}
                                                 size='small'
                                                 variant='contained'
                                                 startIcon={<FaTimesCircle style={{ fill: 'white', width: '16px', marginLeft: '2px' }} />}
