@@ -14,26 +14,7 @@ import { CustomTab, CustomToolbar, FabLeft, FabRight } from '../../styles/CssSty
 import '../../styles/style.css'
 import { LeadCard } from './LeadCard';
 
-// import css from './css';
-// import emotionStyled from '@emotion/styled';
-// import { styled } from '@mui/system';
-// import { css } from '@emotion/react';
-
-
-
-// margin-bottom: -15px;
-//   display: flex;
-//   justify-content: space-between;
-//   background-color: #1A3353;
-// export const formatDate = (dateString: any) => {
-//   const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' }
-//   return new Date(dateString).toLocaleDateString(undefined, options)
-// }
-// interface LeadList {
-//   drawer: number;
-// }
-export default function Leads(props: any) {
-  // const {drawer}=props
+export default function Leads() {
   const navigate = useNavigate()
   const [tab, setTab] = useState('open');
   const [loading, setLoading] = useState(true);
@@ -60,6 +41,7 @@ export default function Leads(props: any) {
   const [industries, setIndustries] = useState([])
 
   const [selectOpen, setSelectOpen] = useState(false);
+  const [loader, setLoader] = useState(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [recordsPerPage, setRecordsPerPage] = useState<number>(10);
   const [totalPages, setTotalPages] = useState<number>(0);
@@ -132,6 +114,7 @@ export default function Leads(props: any) {
     catch (error) {
       console.error('Error fetching data:', error);
     }
+    setLoader(false);
   }
 
   const handleChangeTab = (e: SyntheticEvent, val: any) => {
@@ -285,7 +268,7 @@ export default function Leads(props: any) {
         </Stack>
       </CustomToolbar>
       <Box sx={{ p: '10px', mt: '5px' }}>
-      {tab === 'open' ?  
+      {!loader ? tab === 'open' ?  
           openLeads?.length ? openLeads.map((item: any, index: any) => <LeadCard key={index} lead={item} openLead={openLeadDetails}
           deleteLead={deleteLead}/>
           ) : <h1>No Open Leads</h1>
@@ -294,7 +277,7 @@ export default function Leads(props: any) {
           deleteLead={deleteLead}/>
           ):
           <h1>No Closed Leads</h1>
-        }
+        : <Spinner/>}
         </Box>
       <DeleteModal
         onClose={deleteLeadModalClose}
