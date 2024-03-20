@@ -311,36 +311,18 @@ export default function Leads(props: any) {
           </Button>
         </Stack>
       </CustomToolbar>
-
-      {tab === 'open' ?
-        <Box sx={{ p: '10px', mt: '5px' }}>
-          {
-            // leads.open && leads.open
-            //   ? stableSort(leads.open && leads.open, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
-            // stableSort(openLeads, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item: any, index: any) => (
-            openLeads?.length ? openLeads.map((item: any, index: any) => <LeadCard key={index} lead={item} selectLeadList={selectLeadList}
-            deleteLead={deleteLead}/>
-            ) : <Spinner />
-          }
+      <Box sx={{ p: '10px', mt: '5px' }}>
+      {tab === 'open' ?  
+          openLeads?.length ? openLeads.map((item: any, index: any) => <LeadCard key={index} lead={item} selectLeadList={selectLeadList}
+          deleteLead={deleteLead}/>
+          ) : <h1>No Open Leads</h1>
+         :   
+          closedLeads?.length ? closedLeads.map((item: any, index: any) => <LeadCard key={index} lead={item} selectLeadList={selectLeadList}
+          deleteLead={deleteLead}/>
+          ):
+          <h1>No Closed Leads</h1>
+        }
         </Box>
-        : <Box sx={{ p: '10px', mt: '5px' }}>
-          {
-            // stableSort(closedLeads?.length || [], getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item: any, index: any) => (
-            closedLeads?.length ? closedLeads.map((item: any, index: any) => <LeadCard key={index} lead={item} selectLeadList={selectLeadList}
-            deleteLead={deleteLead}/>
-            ):
-              <Spinner />
-          }
-        </Box>}
-      {/* {loading &&
-        <Spinner />} */}
-      {/* <DeleteModal
-        onClose={deleteLeadModalClose}
-        open={deleteLeadModal}
-        id={selectedId}
-        modalDialog={modalDialog}
-        modalTitle={modalTitle}
-      /> */}
       <DeleteModal
         onClose={deleteLeadModalClose}
         open={deleteLeadModal}
