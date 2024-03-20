@@ -290,17 +290,13 @@ export function EditOpportunity() {
         setSelectedTeams([])
     }
     const onCancel = () => {
-        // resetForm()
+        resetForm()
         setReset(true)
+        backbtnHandle()
     }
-
-
     const module = 'Opportunities'
     const crntPage = 'Add Opportunities'
     const backBtn = state?.edit ? 'Back To Opportunities' : 'Back To OpportunityDetails'
-
-
-    console.log(state, 'opportunityedit')
     return (
         <Box sx={{ mt: '60px' }}>
             <CustomAppBar backbtnHandle={backbtnHandle} module={module} backBtn={backBtn} crntPage={crntPage} onCancel={onCancel} onSubmit={handleSubmit} />
@@ -771,7 +767,7 @@ export function EditOpportunity() {
                                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', mt: 1.5 }}>
                                             <Button
                                                 className='header-button'
-                                                onClick={emptyDescription}
+                                                onClick={onCancel}
                                                 size='small'
                                                 variant='contained'
                                                 startIcon={<FaTimesCircle style={{ fill: 'white', width: '16px', marginLeft: '2px' }} />}
@@ -781,7 +777,7 @@ export function EditOpportunity() {
                                             </Button>
                                             <Button
                                                 className='header-button'
-                                                onClick={() => setFormData({ ...formData, description: quillRef.current.firstChild.innerHTML })}
+                                                onClick={handleSubmit}
                                                 variant='contained'
                                                 size='small'
                                                 startIcon={<FaCheckCircle style={{ fill: 'white', width: '16px', marginLeft: '2px' }} />}
