@@ -180,7 +180,7 @@ export default function Leads(props: any) {
     }
   }
 
-  const selectLeadList = (leadId: any) => {
+  const openLeadDetails = (leadId: any) => {
     navigate(`/app/leads/lead-details`, { state: { leadId, detail: true, contacts: contacts || [], status: status || [], source: source || [], companies: companies || [], tags: tags || [], users: users || [], countries: countries || [], industries: industries || [] } })
     // navigate('/app/leads/lead-details', { state: { leadId: leadItem.id, edit: storeData, value } })
   }
@@ -215,34 +215,7 @@ export default function Leads(props: any) {
       })
   }
 
-  const formatDate = (inputDate: string): string => {
-    const currentDate = new Date();
-    const targetDate = new Date(inputDate);
-    const timeDifference = currentDate.getTime() - targetDate.getTime();
-
-    const secondsDifference = Math.floor(timeDifference / 1000);
-    const minutesDifference = Math.floor(secondsDifference / 60);
-    const hoursDifference = Math.floor(minutesDifference / 60);
-    const daysDifference = Math.floor(hoursDifference / 24);
-    const monthsDifference = Math.floor(daysDifference / 30);
-
-    if (monthsDifference >= 12) {
-      const yearsDifference = Math.floor(monthsDifference / 12);
-      return `${yearsDifference} ${yearsDifference === 1 ? 'year' : 'years'} ago`;
-    } else if (monthsDifference >= 1) {
-      return `${monthsDifference} ${monthsDifference === 1 ? 'month' : 'months'} ago`;
-    } else if (daysDifference >= 1) {
-      return `${daysDifference} ${daysDifference === 1 ? 'day' : 'days'} ago`;
-    } else if (hoursDifference >= 1) {
-      return `${hoursDifference} ${hoursDifference === 1 ? 'hour' : 'hours'} ago`;
-    } else if (minutesDifference >= 1) {
-      return `${minutesDifference} ${minutesDifference === 1 ? 'minute' : 'minutes'} ago`;
-    } else {
-      return `${secondsDifference} ${secondsDifference === 1 ? 'second' : 'seconds'} ago`;
-    }
-  };
   const recordsList = [[10, '10 Records per page'], [20, '20 Records per page'], [30, '30 Records per page'], [40, '40 Records per page'], [50, '50 Records per page']]
-  const tag = ['account', 'leading', 'account', 'leading', 'account', 'leading', 'account', 'account', 'leading', 'account', 'leading', 'account', 'leading', 'leading', 'account', 'account', 'leading', 'account', 'leading', 'account', 'leading', 'account', 'leading', 'account', 'leading', 'account', 'leading']
   return (
     <Box sx={{
       mt: '60px',
@@ -313,11 +286,11 @@ export default function Leads(props: any) {
       </CustomToolbar>
       <Box sx={{ p: '10px', mt: '5px' }}>
       {tab === 'open' ?  
-          openLeads?.length ? openLeads.map((item: any, index: any) => <LeadCard key={index} lead={item} selectLeadList={selectLeadList}
+          openLeads?.length ? openLeads.map((item: any, index: any) => <LeadCard key={index} lead={item} openLead={openLeadDetails}
           deleteLead={deleteLead}/>
           ) : <h1>No Open Leads</h1>
          :   
-          closedLeads?.length ? closedLeads.map((item: any, index: any) => <LeadCard key={index} lead={item} selectLeadList={selectLeadList}
+          closedLeads?.length ? closedLeads.map((item: any, index: any) => <LeadCard key={index} lead={item} openLead={openLeadDetails}
           deleteLead={deleteLead}/>
           ):
           <h1>No Closed Leads</h1>

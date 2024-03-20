@@ -6,11 +6,11 @@ import { FaTrashAlt } from 'react-icons/fa';
 
 interface ILEADCARD{
     lead:any,
-    selectLeadList:(leadId:string)=>void,
+    openLead:(leadId:string)=>void,
     deleteLead: (leadId:string)=>void
 }
 export const LeadCard = (props: ILEADCARD) => {
-  const { lead, selectLeadList, deleteLead } = props;
+  const { lead, openLead, deleteLead } = props;
   return (
     lead && <Box>
       <Box className="lead-box">
@@ -23,7 +23,7 @@ export const LeadCard = (props: ILEADCARD) => {
                 fontWeight: '500',
                 cursor: 'pointer',
               }}
-              onClick={() => selectLeadList(lead?.id)}
+              onClick={() => openLead(lead?.id)}
             >
               {lead?.title}
             </div>
