@@ -180,7 +180,6 @@ export function AddAccount() {
         }
         fetchData(`${AccountsUrl}/`, 'POST', JSON.stringify(data), Header)
             .then((res: any) => {
-                // console.log('Form data:', res);
                 if (!res.error) {
                     resetForm()
                     navigate('/app/accounts')
@@ -248,8 +247,6 @@ export function AddAccount() {
             reader.readAsDataURL(file);
         }
     };
-
-    // console.log(formData, 'leadsform')
     return (
         <Box sx={{ mt: '60px' }}>
             <CustomAppBar backbtnHandle={backbtnHandle} module={module} backBtn={backBtn} crntPage={crntPage} onCancel={onCancel} onSubmit={handleSubmit} />
