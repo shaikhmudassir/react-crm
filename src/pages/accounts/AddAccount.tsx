@@ -221,7 +221,8 @@ export function AddAccount() {
         setSelectedTeams([])
     }
     const onCancel = () => {
-        resetForm()
+        resetForm();
+        backbtnHandle();
     }
 
     const module = 'Accounts'

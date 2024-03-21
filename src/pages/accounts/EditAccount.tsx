@@ -273,16 +273,13 @@ export function EditAccount() {
         setSelectedTeams([])
     }
     const onCancel = () => {
-        // resetForm()
         setReset(true)
+        backbtnHandle()
     }
-
 
     const module = 'Accounts'
     const crntPage = 'Add Account'
     const backBtn = state?.edit ? 'Back to Accounts' : 'Back to AccountDetails'
-
-    // console.log(state, 'accountform')
     return (
         <Box sx={{ mt: '60px' }}>
             <CustomAppBar backbtnHandle={backbtnHandle} module={module} backBtn={backBtn} crntPage={crntPage} onCancel={onCancel} onSubmit={handleSubmit} />
