@@ -17,6 +17,7 @@ import { Spinner } from '../../components/Spinner';
 import styled from '@emotion/styled';
 import '../../styles/style.css';
 import { EnhancedTableHead } from '../../components/EnchancedTableHead';
+import { AccountCard } from './AccountCard';
 
 interface HeadCell {
     disablePadding: boolean;
@@ -177,8 +178,6 @@ export default function Accounts() {
     const [openRecordsPerPage, setOpenRecordsPerPage] = useState<number>(10);
     const [openTotalPages, setOpenTotalPages] = useState<number>(0);
     const [openLoading, setOpenLoading] = useState(true);
-
-
     const [closedCurrentPage, setClosedCurrentPage] = useState<number>(1);
     const [closedRecordsPerPage, setClosedRecordsPerPage] = useState<number>(10);
     const [closedTotalPages, setClosedTotalPages] = useState<number>(0);
@@ -189,7 +188,7 @@ export default function Accounts() {
     }, [openCurrentPage, openRecordsPerPage, closedCurrentPage, closedRecordsPerPage]);
 
     const handleChangeTab = (e: SyntheticEvent, val: any) => {
-        setTab(val)
+        setTab(val)       
     }
 
     const getAccounts = async () => {
@@ -229,7 +228,7 @@ export default function Accounts() {
         }
 
     }
-
+    
     const accountDetail = (accountId: any) => {
         navigate(`/app/accounts/account-details`, { state: { accountId, detail: true, contacts: contacts || [], status: status || [], tags: tags || [], users: users || [], countries: countries || [], teams: teams || [], leads: leads || [] } })
     }
@@ -549,143 +548,14 @@ export default function Accounts() {
                                             openAccounts?.length > 0
                                                 ? stableSort(openAccounts, getComparator(order, orderBy))
                                                     // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item: any, index: any) => {
-                                                    .map((item: any, index: any) => {
-                                                        const labelId = `enhanced-table-checkbox-${index}`
-                                                        const rowIndex = selectedId.indexOf(item.id);
-                                                        return (
-                                                            <TableRow
-                                                                tabIndex={-1}
-                                                                key={index}
-                                                                sx={{ border: 0, '&:nth-of-type(even)': { backgroundColor: 'whitesmoke' }, color: 'rgb(26, 51, 83)', textTransform: 'capitalize' }}
-                                                            >
-                                                                {/* <TableCell
-                                                                    padding='checkbox'
-                                                                    sx={{ border: 0, color: 'inherit' }}
-                                                                    align='left'
-                                                                >
-                                                                    <Checkbox
-                                                                        checked={isSelectedId[rowIndex] || false}
-                                                                        onChange={() => handleRowSelect(item.id)}
-                                                                        inputProps={{
-                                                                            'aria-labelledby': labelId,
-                                                                        }}
-                                                                        sx={{ border: 0, color: 'inherit' }}
-                                                                    />
-                                                                </TableCell> */}
-                                                                <TableCell
-                                                                    className='tableCell-link'
-                                                                    onClick={() => accountDetail(item.id)}
-                                                                >
-                                                                    {item?.name ? item?.name : '---'}
-                                                                </TableCell>
-                                                                <TableCell className='tableCell'>
-                                                                    {item?.website ? item?.website : '---'}
-                                                                </TableCell>
-                                                                <TableCell className='tableCell'>
-                                                                    <Stack style={{ display: 'flex', flexDirection: 'row', alignItems: "center" }}>
-                                                                        <Avatar src={item?.lead?.created_by?.profile_pic} alt={item?.lead?.created_by?.email} /><Stack sx={{ ml: 1 }}>{item?.lead?.account_name ? item?.lead?.account_name : '---'}</Stack>
-                                                                    </Stack>
-                                                                </TableCell>
-                                                                <TableCell className='tableCell'>
-                                                                    {item?.lead?.country ? item?.lead?.country : '---'}
-                                                                </TableCell>
-                                                                <TableCell className='tableCell'>
-                                                                    {item?.tags?.length ? item?.tags.map((tag: any, i: any) => <Stack sx={{ mr: 0.5 }}> Tags(tag)</Stack>) : '---'}
-                                                                </TableCell>
-                                                                <TableCell className='tableCell'>
-                                                                    {/* <IconButton>
-                                                                        <FaEdit
-                                                                            onClick={() => EditItem(item?.id)}
-                                                                            style={{ fill: '#1A3353', cursor: 'pointer', width: '18px' }}
-                                                                        />
-                                                                    </IconButton> */}
-                                                                    <IconButton>
-                                                                        <FaTrashAlt
-                                                                            onClick={() => deleteRow(item?.id)}
-                                                                            style={{ fill: '#1A3353', cursor: 'pointer', width: '15px' }} />
-                                                                    </IconButton>
-                                                                </TableCell>
-                                                            </TableRow>
-                                                        )
-                                                    })
+                                                    .map((item: any, index: any) => <AccountCard key={index} accountInfo={item} showDetails={accountDetail} deleteAccount={deleteRow}/>)
                                                 : <TableRow> <TableCell colSpan={6} sx={{ border: 0 }}><Spinner /></TableCell></TableRow>
-                                        }
-                                        {
-                                            // emptyRows > 0 && (
-                                            //     <TableRow
-                                            //         style={{
-                                            //             height: (dense ? 33 : 53) * emptyRows
-                                            //         }}
-                                            //     >
-                                            //         <TableCell colSpan={6} />
-                                            //     </TableRow>
-                                            // )
-
                                         }
                                     </TableBody> :
                                     <TableBody>
                                         {
                                             closedAccounts?.length > 0
-                                                ? stableSort(closedAccounts, getComparator(order, orderBy)).map((item: any, index: any) => {
-                                                    // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item: any, index: any) => {
-                                                    const labelId = `enhanced-table-checkbox-${index}`
-                                                    const rowIndex = selectedId.indexOf(item.id);
-                                                    return (
-                                                        <TableRow
-                                                            tabIndex={-1}
-                                                            key={index}
-                                                            sx={{ border: 0, '&:nth-of-type(even)': { backgroundColor: 'whitesmoke' }, color: 'rgb(26, 51, 83)', textTransform: 'capitalize' }}
-                                                        >
-                                                            {/* <TableCell
-                                                                    padding='checkbox'
-                                                                    sx={{ border: 0, color: 'inherit' }}
-                                                                    align='left'
-                                                                >
-                                                                    <Checkbox
-                                                                        checked={isSelectedId[rowIndex] || false}
-                                                                        onChange={() => handleRowSelect(item.id)}
-                                                                        inputProps={{
-                                                                            'aria-labelledby': labelId,
-                                                                        }}
-                                                                        sx={{ border: 0, color: 'inherit' }}
-                                                                    />
-                                                                </TableCell> */}
-                                                            <TableCell
-                                                                className='tableCell-link'
-                                                                onClick={() => accountDetail(item.id)}
-                                                            >
-                                                                {item?.name ? item?.name : '---'}
-                                                            </TableCell>
-                                                            <TableCell className='tableCell'>
-                                                                {item?.website ? item?.website : '---'}
-                                                            </TableCell>
-                                                            <TableCell className='tableCell'>
-                                                                <Stack style={{ display: 'flex', flexDirection: 'row', alignItems: "center" }}>
-                                                                    <Avatar src={item?.lead?.created_by?.profile_pic} alt={item?.lead?.created_by?.email} /><Stack sx={{ ml: 1 }}>{item?.lead?.account_name ? item?.lead?.account_name : '---'}</Stack>
-                                                                </Stack>
-                                                            </TableCell>
-                                                            <TableCell className='tableCell'>
-                                                                {item?.lead?.country ? item?.lead?.country : '---'}
-                                                            </TableCell>
-                                                            <TableCell className='tableCell'>
-                                                                {item?.tags?.length ? item?.tags.map((tag: any, i: any) => <Stack sx={{ mr: 0.5 }}> Tags(tag)</Stack>) : '---'}
-                                                            </TableCell>
-                                                            <TableCell className='tableCell'>
-                                                                {/* <IconButton>
-                                                                        <FaEdit
-                                                                            onClick={() => EditItem(item?.id)}
-                                                                            style={{ fill: '#1A3353', cursor: 'pointer', width: '18px' }}
-                                                                        />
-                                                                    </IconButton> */}
-                                                                <IconButton>
-                                                                    <FaTrashAlt
-                                                                        onClick={() => deleteRow(item?.id)}
-                                                                        style={{ fill: '#1A3353', cursor: 'pointer', width: '15px' }} />
-                                                                </IconButton>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                    )
-                                                })
+                                                ? stableSort(closedAccounts, getComparator(order, orderBy)).map((item: any, index: any) => <AccountCard key={index} accountInfo={item} showDetails={accountDetail} deleteAccount={deleteRow}/>)
                                                 : <TableRow> <TableCell colSpan={6} sx={{ border: 0 }}><Spinner /></TableCell></TableRow>
                                         }
                                     </TableBody>
