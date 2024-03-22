@@ -24,7 +24,7 @@ type response = {
         profile_pic: string;
     };
     role: string;
-    address: {
+    user_address: {
         address_line: string;
         street: string;
         city: string;
@@ -111,12 +111,12 @@ export default function UserDetails() {
                     role: userDetails?.role,
                     phone: userDetails?.phone,
                     alternate_phone: userDetails?.alternate_phone,
-                    address_line: userDetails?.address?.address_line,
-                    street: userDetails?.address?.street,
-                    city: userDetails?.address?.city,
-                    state: userDetails?.address?.state,
-                    pincode: userDetails?.address?.postcode,
-                    country: userDetails?.address?.country,
+                    address_line: userDetails?.user_address?.address_line,
+                    street: userDetails?.user_address?.street,
+                    city: userDetails?.user_address?.city,
+                    state: userDetails?.user_address?.state,
+                    pincode: userDetails?.user_address?.postcode,
+                    country: userDetails?.user_address?.country,
                     countries: res?.data?.countries,
                     profile_pic: userDetails?.user_details?.profile_pic,
                     has_sales_access: userDetails?.has_sales_access,
@@ -278,19 +278,19 @@ export default function UserDetails() {
                                     <div style={{ width: '32%' }}>
                                         <div className='title2'>Address Lane</div>
                                         <div className='title3'>
-                                            {userDetails?.address?.address_line || '---'}
+                                            {userDetails?.user_address?.address_line || '---'}
                                         </div>
                                     </div>
                                     <div style={{ width: '32%' }}>
                                         <div className='title2'>Street</div>
                                         <div className='title3'>
-                                            {userDetails?.address?.street || '---'}
+                                            {userDetails?.user_address?.street || '---'}
                                         </div>
                                     </div>
                                     <div style={{ width: '32%' }}>
                                         <div className='title2'>City</div>
                                         <div className='title3'>
-                                            {userDetails?.address?.city || '---'}
+                                            {userDetails?.user_address?.city || '---'}
                                         </div>
                                     </div>
                                 </div>
@@ -298,19 +298,19 @@ export default function UserDetails() {
                                     <div style={{ width: '32%' }}>
                                         <div className='title2'>Pincode</div>
                                         <div className='title3'>
-                                            {userDetails?.address?.postcode || '---'}
+                                            {userDetails?.user_address?.postcode || '---'}
                                         </div>
                                     </div>
                                     <div style={{ width: '32%' }}>
                                         <div className='title2'>State</div>
                                         <div className='title3'>
-                                            {userDetails?.address?.state || '---'}
+                                            {userDetails?.user_address?.state || '---'}
                                         </div>
                                     </div>
                                     <div style={{ width: '32%' }}>
                                         <div className='title2'>Country</div>
                                         <div className='title3'>
-                                            {userDetails?.address?.country || '---'}
+                                            {userDetails?.user_address?.country || '---'}
                                         </div>
                                     </div>
                                 </div>
