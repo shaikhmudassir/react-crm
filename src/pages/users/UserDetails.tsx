@@ -39,7 +39,7 @@ type response = {
     alternate_phone: string;
     date_of_joining: string;
     is_active: boolean;
-
+    id: string;
 };
 
 export const formatDate = (dateString: any) => {
@@ -53,6 +53,7 @@ export default function UserDetails() {
     const { state } = useLocation()
     const [userDetails, setUserDetails] = useState<response | null>(null)
     const [res, setRes] = useState<any>(null)
+    const [isActive, setIsActive] = useState<boolean>(false)
     useEffect(() => {
         getUserDetail(state.userId)
     }, [state.userId])
@@ -69,9 +70,9 @@ export default function UserDetails() {
           }
         fetchData(`${UserUrl}/${id}/`, 'GET', null as any, Header)
             .then((res) => {
-                console.log(res, 'res');
                 if (!res.error) {
                     setUserDetails(res?.data?.profile_obj)
+                    setIsActive(res?.data?.profile_obj?.user_details?.is_active);
                     setRes(res)
                 }
             })
@@ -130,7 +131,20 @@ export default function UserDetails() {
     const crntPage = 'User Detail'
     const backBtn = 'Back To Users'
     // console.log(userDetails, 'user');
-
+    const updateUserStatus = (e:any)=>{
+        const Header = {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('Token'),
+            org: localStorage.getItem('org')
+          }
+        const isChecked:boolean = e.target.checked;
+        const userStatus:string = isChecked ? 'Active' : 'Inactive'
+        fetchData(`${UserUrl}/${userDetails?.id}/status/`, 'POST', JSON.stringify({status : userStatus}), Header)
+            .then(() => {
+                setIsActive(!isActive);
+            })
+    }
     return (
         <Box sx={{ mt: '60px' }}>
             <div>
@@ -195,7 +209,7 @@ export default function UserDetails() {
                                 <div style={{ width: '32%' }}>
                                     <div className='title2'>Is Active</div>
                                     <div className='title3'>
-                                        <AntSwitch checked={userDetails?.user_details?.is_active} />
+                                        <AntSwitch checked={isActive} onChange={updateUserStatus} />
                                     </div>
                                 </div>
                                 <div style={{ width: '32%' }}>
