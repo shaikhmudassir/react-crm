@@ -93,6 +93,7 @@ function EditCompany() {
 
     const onCancel = () => {
         setReset(true)
+        backbtnHandle()
     }
     // console.log(formData, 'editform')
     return (
