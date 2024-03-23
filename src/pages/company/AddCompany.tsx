@@ -47,19 +47,15 @@ function AddCompany() {
             Authorization: localStorage.getItem('Token'),
             org: localStorage.getItem('org')
           }
-        // console.log('Form data:', data);
         const data = { name: formData.name }
         fetchData(`${CompaniesUrl}`, 'POST', JSON.stringify(data), Header)
             .then((res: any) => {
-                // console.log('Form data:', res);
                 if (!res.error) {
                     resetForm()
                     navigate('/app/companies')
                 }
                 if (res.error) {
-                    // console.log(res);
                     setError(true)
-                    //   setErrors(res?.errors?.contact_errors)
                 }
             })
             .catch(() => {
@@ -78,9 +74,9 @@ function AddCompany() {
     const backBtn = 'Back To Companies'
 
     const onCancel = () => {
-        resetForm()
+        resetForm();
+        backbtnHandle();
     }
-    // console.log(errors, 'err')
     return (
         <Box sx={{ mt: '60px' }}>
             <CustomAppBar backbtnHandle={backbtnHandle} module={module} backBtn={backBtn} crntPage={crntPage} onCancel={onCancel} onSubmit={handleSubmit} />
