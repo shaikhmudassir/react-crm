@@ -222,6 +222,8 @@ export function AddCase() {
     }
     const onCancel = () => {
         resetForm()
+        resetQuillToInitialState()
+        backbtnHandle()
     }
 
     const backbtnHandle = () => {
@@ -585,7 +587,7 @@ export function AddCase() {
                                     <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', mt: 1.5 }}>
                                         <Button
                                             className='header-button'
-                                            onClick={resetQuillToInitialState}
+                                            onClick={onCancel}
                                             size='small'
                                             variant='contained'
                                             startIcon={<FaTimesCircle style={{ fill: 'white', width: '16px', marginLeft: '2px' }} />}
@@ -595,7 +597,7 @@ export function AddCase() {
                                         </Button>
                                         <Button
                                             className='header-button'
-                                            onClick={() => setFormData({ ...formData, description: quillRef.current.firstChild.innerHTML })}
+                                            onClick={handleSubmit}
                                             variant='contained'
                                             size='small'
                                             startIcon={<FaCheckCircle style={{ fill: 'white', width: '16px', marginLeft: '2px' }} />}
