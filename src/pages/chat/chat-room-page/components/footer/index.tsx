@@ -9,7 +9,7 @@ import {
   SendMessageButton,
   Wrapper,
 } from "./styles";
-import { IconBase } from "react-icons";
+import Icon from "./../../components/icons";
 
 const attachButtons = [
   { icon: "attachRooms", label: "Choose room" },
@@ -26,19 +26,19 @@ export default function Footer() {
     <Wrapper>
       <IconsWrapper>
         <AttachButton onClick={() => setShowIcons(!showIcons)}>
-          <IconBase id="attach" className="icon" />
+          <Icon id="attach" className="icon" />
         </AttachButton>
         <ButtonsContainer>
           {attachButtons.map((btn) => (
             <Button showIcon={showIcons} key={btn.label}>
-              <IconBase id={btn.icon} />
+              <Icon id={btn.icon} />
             </Button>
           ))}
         </ButtonsContainer>
       </IconsWrapper>
       <Input placeholder="Type a message here .." />
       <SendMessageButton>
-        <IconBase id="send" className="icon" />
+        <Icon id="send" className="icon" />
       </SendMessageButton>
     </Wrapper>
   );
