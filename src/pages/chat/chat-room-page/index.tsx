@@ -33,7 +33,7 @@ export default function ChatRoomPage() {
           <Background />
           <Header
             title={activeInbox?.name ?? ""}
-            image={activeInbox?.image ?? ""}
+            image={activeInbox?.profile_image ?? ""}
             subTitle={activeInbox?.isOnline ? "Online" : ""}
             onSearchClick={() => handleMenuOpen("search")}
             onProfileClick={() => handleMenuOpen("profile")}
@@ -59,7 +59,7 @@ export default function ChatRoomPage() {
           isOpen={isProfileOpen}
           onClose={() => setIsProfileOpen(false)}
         >
-          <ProfileSection name={activeInbox?.name ?? ""} image={activeInbox?.image ?? ""} />
+          <ProfileSection name={activeInbox?.name ?? ""} image={activeInbox?.profile_image ?? ""} />
         </Sidebar>
       </Container>
     </ChatLayout>
