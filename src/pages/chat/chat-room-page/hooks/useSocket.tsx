@@ -10,8 +10,8 @@ const useSocket = (props: ISOCKET) => {
   const [chatLog, setChatLog] = useState('');
   const host = 'api.yorcrm.com';
   useEffect(() => {
-    const socketURL = `wss://${window.location.host}/ws/chat/${props.roomId}/?token=${token}&org=${org}`; 
-    // const socketURL = `wss://api.yorcrm.com/ws/chat/${props.roomId}/?token=${token}&org=${org}`; 
+    // const socketURL = `wss://${window.location.host}/ws/chat/${props.roomId}/?token=${token}&org=${org}`; 
+    const socketURL = `wss://api.yorcrm.com/ws/chat/${props.roomId}/?token=${token}&org=${org}`; 
     const newSocket = new WebSocket(
       socketURL
     );
