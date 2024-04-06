@@ -1,26 +1,38 @@
-import { useEffect, useState } from 'react';
-
-const useSocket = (socketUrl: string) => {
+import { useState, useEffect } from 'react';
+interface ISOCKET {
+  roomId: string
+}
+const useSocket = (props: ISOCKET) => {
+  const org = localStorage.getItem('org');
+  const token = localStorage.getItem('Token')?.split(" ")[1];
   const [socket, setSocket] = useState<WebSocket | null>(null);
-
+  const [isConnected, setIsConnected] = useState(false);
+  const [chatLog, setChatLog] = useState('');
+  const host = 'api.yorcrm.com';
   useEffect(() => {
-    const newSocket = new WebSocket(socketUrl);
+    // const socketURL = `wss://${window.location.host}/ws/chat/${roomName}/?token=${token}&org=${org}`; 
+    const socketURL = `wss://api.yorcrm.com/ws/chat/${props.roomId}/?token=${token}&org=${org}`; 
+    const newSocket = new WebSocket(
+      socketURL
+    );
 
-    newSocket.onopen = () => {
+    newSocket.onmessage = function (e) {
+      const data = JSON.parse(e.data);
+      setChatLog((prevLog) => prevLog + data.message + '\n');
+    };
+
+    newSocket.onopen = function (e) {
       console.log('WebSocket connection opened');
+      setIsConnected(true);
     };
 
-    newSocket.onmessage = (event) => {
-      console.log('Message received:', event.data);
-      // You can handle incoming messages here
-    };
-
-    newSocket.onerror = (error) => {
+    newSocket.onerror = function (error) {
       console.error('WebSocket error:', error);
     };
 
-    newSocket.onclose = () => {
-      console.log('WebSocket connection closed');
+    newSocket.onclose = function (e) {
+      console.error('Chat socket closed unexpectedly', e);
+      setIsConnected(false);
     };
 
     setSocket(newSocket);
@@ -28,9 +40,19 @@ const useSocket = (socketUrl: string) => {
     return () => {
       newSocket.close();
     };
-  }, [socketUrl]);
+  }, [props.roomId, token, org]);
 
-  return socket;
+  const sendMessage = (message:string) => {
+    if (isConnected && socket && socket.readyState === WebSocket.OPEN) {
+      socket.send(JSON.stringify({
+        message: message,
+      }));
+    } else {
+      console.error('WebSocket is not connected.');
+    }
+  };
+
+  return { chatLog, isConnected, sendMessage };
 };
 
 export default useSocket;

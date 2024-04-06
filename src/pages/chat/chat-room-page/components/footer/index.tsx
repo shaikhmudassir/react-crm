@@ -10,6 +10,7 @@ import {
   Wrapper,
 } from "./styles";
 import Icon from "./../../components/icons";
+import useSocket from "../../hooks/useSocket";
 
 const attachButtons = [
   { icon: "attachRooms", label: "Choose room" },
@@ -21,7 +22,8 @@ const attachButtons = [
 
 export default function Footer() {
   const [showIcons, setShowIcons] = useState(false);
-
+  const { chatLog, isConnected, sendMessage } = useSocket({roomId:'uojHMse9aiV8phCQ33Wu2tEbe4RWZXAL'});
+  const [message, setMessage] = useState<string>('');
   return (
     <Wrapper>
       <IconsWrapper>
@@ -36,9 +38,12 @@ export default function Footer() {
           ))}
         </ButtonsContainer>
       </IconsWrapper>
-      <Input placeholder="Type a message here .." />
-      <SendMessageButton>
-        <Icon id="send" className="icon" />
+      <Input placeholder="Type a message here .." onChange={(e)=>setMessage(e.target.value)}/>
+      <SendMessageButton onClick={()=>{
+        sendMessage(message)
+        setMessage('')
+      }}>
+      <Icon id="send" className="icon" />
       </SendMessageButton>
     </Wrapper>
   );
