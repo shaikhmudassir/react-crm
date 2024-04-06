@@ -19,10 +19,12 @@ const attachButtons = [
   { icon: "attachCamera", label: "Use camera" },
   { icon: "attachImage", label: "Choose image" },
 ];
-
-export default function Footer() {
+interface IFOOTER {
+  wa_id:string
+}
+export default function Footer(props: IFOOTER) {
   const [showIcons, setShowIcons] = useState(false);
-  const { chatLog, isConnected, sendMessage } = useSocket({roomId:'uojHMse9aiV8phCQ33Wu2tEbe4RWZXAL'});
+  const { chatLog, isConnected, sendMessage } = useSocket({roomId:props.wa_id});
   const [message, setMessage] = useState<string>('');
   return (
     <Wrapper>
