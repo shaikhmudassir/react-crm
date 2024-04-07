@@ -23,6 +23,8 @@ export default function ChatRoomPage() {
     setIsSearchOpen,
     setShouldScrollToBottom,
     shouldScrollToBottom,
+    messages,
+    setMessages
   } = useChatRoom();
   useNavigateToChat(activeInbox);
   
@@ -41,6 +43,7 @@ export default function ChatRoomPage() {
           <MessagesList
             onShowBottomIcon={handleShowIcon}
             shouldScrollToBottom={shouldScrollToBottom}
+            messages={messages}
           />
           <FooterContainer>
             {isShowIcon && (

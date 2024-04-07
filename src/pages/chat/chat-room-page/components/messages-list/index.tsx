@@ -15,29 +15,17 @@ import {
   MessageGroup,
 } from "./styles";
 import { IconBase } from "react-icons";
-import { getMessageHistory } from "../../../data/inbox";
-import { useChatContext } from "../../../context/chat";
 
 type MessagesListProps = {
   onShowBottomIcon: Function;
   shouldScrollToBottom?: boolean;
+  messages: Message[]
 };
 
 export default function MessagesList(props: MessagesListProps) {
-  const [messages, setMessages] = useState<any>([]);
-  const chatCtx = useChatContext();
-  const wa_id = chatCtx.activeChat?.wa_id;
-  const { onShowBottomIcon, shouldScrollToBottom } = props;
-
+  
   const params = useParams();
-  useEffect(()=>{
-    if(wa_id){
-      getMessageHistory(wa_id || '').then((res)=>{
-        setMessages(res);
-      });
-    }
-  },[params.id])
-
+  const { onShowBottomIcon, shouldScrollToBottom, messages } = props;
   const { containerRef, lastMessageRef } = useScrollToBottom(
     onShowBottomIcon,
     shouldScrollToBottom,
