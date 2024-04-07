@@ -1,9 +1,9 @@
-import { forwardRef, useMemo } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 // import Icon from "common/components/icons";
 import useScrollToBottom from "./hooks/useScrollToBottom";
-import { getMessages, Message } from "./data/get-messages";
+import { Message } from "./data/get-messages";
 import {
   ChatMessage,
   ChatMessageFiller,
@@ -15,6 +15,8 @@ import {
   MessageGroup,
 } from "./styles";
 import { IconBase } from "react-icons";
+import { getMessageHistory } from "../../../data/inbox";
+import { useChatContext } from "../../../context/chat";
 
 type MessagesListProps = {
   onShowBottomIcon: Function;
@@ -22,13 +24,20 @@ type MessagesListProps = {
 };
 
 export default function MessagesList(props: MessagesListProps) {
+  const [messages, setMessages] = useState<any>([]);
+  const chatCtx = useChatContext();
+  const wa_id = chatCtx.activeChat?.wa_id;
   const { onShowBottomIcon, shouldScrollToBottom } = props;
 
   const params = useParams();
-  const messages = useMemo(() => {
-    return getMessages();
-    // eslint-disable-next-line
-  }, [params.id]);
+  useEffect(()=>{
+    if(wa_id){
+      getMessageHistory(wa_id || '').then((res)=>{
+        setMessages(res);
+      });
+    }
+  },[params.id])
+
   const { containerRef, lastMessageRef } = useScrollToBottom(
     onShowBottomIcon,
     shouldScrollToBottom,
@@ -46,7 +55,7 @@ export default function MessagesList(props: MessagesListProps) {
         <Date> TODAY </Date>
       </DateWrapper>
       <MessageGroup>
-        {messages.map((message, i) => {
+        {messages?.map((message:Message, i:any) => {
           if (i === messages.length - 1) {
             return <SingleMessage key={message.id} message={message} ref={lastMessageRef} />;
           } else {
@@ -67,7 +76,7 @@ const SingleMessage = forwardRef((props: { message: Message }, ref: any) => {
       className={message.isOpponent ? "chat__msg--received" : "chat__msg--sent"}
       ref={ref}
     >
-      <span>{message.body}</span>
+      <span>{message.message}</span>
       <ChatMessageFiller />
       <ChatMessageFooter>
         <span>{message.timestamp}</span>

@@ -30,3 +30,4 @@ export const ProfileUrl = 'profile'
 
 // CHAT
 export const ChatContacts = 'chat/contacts' 
+export const ChatMessageHistory = 'chat/messages' 
