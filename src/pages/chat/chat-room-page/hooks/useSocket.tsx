@@ -16,11 +16,11 @@ const useSocket = (props: ISOCKET) => {
       socketURL
     );
 
-    newSocket.onmessage = function (e) {
-      const data = JSON.parse(e.data);
-      console.log("message-received->",data)
-      setChatLog((prevLog) => prevLog + data.message + '\n');
-    };
+    // newSocket.onmessage = function (e) {
+    //   const data = JSON.parse(e.data);
+    //   console.log("message-received->",data)
+      
+    // };
 
     newSocket.onopen = function (e) {
       console.log('WebSocket connection opened');
