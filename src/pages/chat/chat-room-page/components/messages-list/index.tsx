@@ -9,7 +9,7 @@ import {
   ChatMessageFiller,
   ChatMessageFooter,
   Container,
-  Date,
+  Date as DateElem,
   DateWrapper,
   EncryptionMessage,
   MessageGroup,
@@ -40,7 +40,7 @@ export default function MessagesList(props: MessagesListProps) {
         or listen to them. Click to learn more.
       </EncryptionMessage>
       <DateWrapper>
-        <Date> TODAY </Date>
+        <DateElem> TODAY </DateElem>
       </DateWrapper>
       <MessageGroup>
         {messages?.map((message:Message, i:any) => {
@@ -57,6 +57,11 @@ export default function MessagesList(props: MessagesListProps) {
 
 const SingleMessage = forwardRef((props: { message: Message }, ref: any) => {
   const { message } = props;
+  const messageDate = new Date(`${message.date}T${message.timestamp}`);
+  const hours = messageDate.getHours();
+  const minutes = messageDate.getMinutes();
+  // Format the hours and minutes to HH:MM format
+  const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 
   return (
     <ChatMessage
@@ -67,7 +72,7 @@ const SingleMessage = forwardRef((props: { message: Message }, ref: any) => {
       <span>{message.message}</span>
       <ChatMessageFiller />
       <ChatMessageFooter>
-        <span>{message.timestamp}</span>
+        <span>{formattedTime}</span>
         {!message.isOpponent && (
           <IconBase
             id={`${message.messageStatus === "SENT" ? "singleTick" : "doubleTick"}`}
