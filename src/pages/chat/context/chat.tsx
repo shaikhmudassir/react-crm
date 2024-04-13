@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { inbox } from "../data/inbox";
+import React, { useEffect, useState } from "react";
+import { getChatContacts, inbox } from "../data/inbox";
 import { Inbox } from "../../../common/types/common.type";
 // import { Inbox } from "common/types/common.type";
 
@@ -29,13 +29,18 @@ export default function ChatProvider(props: { children: any }) {
   const { children } = props;
 
   const [user] = useState<User>(initialValue.user);
-  const [inbox] = useState<Inbox[]>(initialValue.inbox);
+  const [inbox, setInbox] = useState<Inbox[]>(initialValue.inbox);
   const [activeChat, setActiveChat] = useState<Inbox>();
 
   const handleChangeChat = (chat: Inbox) => {
     setActiveChat(chat);
   };
-
+  useEffect(()=>{
+    getChatContacts().then((res)=>{
+      // setInbox(res); uncomment later
+      setInbox(res.filter((i:any)=>i.name.includes('Sha')));
+    });
+  },[])
   return (
     <ChatContext.Provider value={{ user, inbox, activeChat, onChangeChat: handleChangeChat }}>
       {children}

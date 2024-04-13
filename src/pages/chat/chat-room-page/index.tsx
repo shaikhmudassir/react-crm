@@ -23,9 +23,11 @@ export default function ChatRoomPage() {
     setIsSearchOpen,
     setShouldScrollToBottom,
     shouldScrollToBottom,
+    messages,
+    updateMessageList
   } = useChatRoom();
   useNavigateToChat(activeInbox);
-
+  
   return (
     <ChatLayout>
       <Container>
@@ -33,7 +35,7 @@ export default function ChatRoomPage() {
           <Background />
           <Header
             title={activeInbox?.name ?? ""}
-            image={activeInbox?.image ?? ""}
+            image={activeInbox?.profile_image ?? ""}
             subTitle={activeInbox?.isOnline ? "Online" : ""}
             onSearchClick={() => handleMenuOpen("search")}
             onProfileClick={() => handleMenuOpen("profile")}
@@ -41,6 +43,7 @@ export default function ChatRoomPage() {
           <MessagesList
             onShowBottomIcon={handleShowIcon}
             shouldScrollToBottom={shouldScrollToBottom}
+            messages={messages}
           />
           <FooterContainer>
             {isShowIcon && (
@@ -48,7 +51,7 @@ export default function ChatRoomPage() {
                 <IconBase id="downArrow" />
               </ScrollButton>
             )}
-            <Footer />
+            <Footer wa_id={activeInbox?.wa_id || ''} updateMessageList={updateMessageList}/>
           </FooterContainer>
         </Body>
         <Sidebar title="Search" isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)}>
@@ -59,7 +62,7 @@ export default function ChatRoomPage() {
           isOpen={isProfileOpen}
           onClose={() => setIsProfileOpen(false)}
         >
-          <ProfileSection name={activeInbox?.name ?? ""} image={activeInbox?.image ?? ""} />
+          <ProfileSection name={activeInbox?.name ?? ""} image={activeInbox?.profile_image ?? ""} />
         </Sidebar>
       </Container>
     </ChatLayout>

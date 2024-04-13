@@ -25,7 +25,7 @@ type InboxContactProps = {
 
 export default function InboxContact(props: InboxContactProps) {
   const { onChangeChat, isActive } = props;
-  const { name, lastMessage, image, timestamp } = props.inbox;
+  const { name, last_message, profile_image, timestamp } = props.inbox;
 
   const handleChangeChat = () => {
     if (onChangeChat) {
@@ -36,12 +36,12 @@ export default function InboxContact(props: InboxContactProps) {
   return (
     <Contact isActive={isActive} onClick={handleChangeChat}>
       <AvatarWrapper>
-        <Avatar src={image} />
+        <Avatar src={profile_image} />
       </AvatarWrapper>
       <Content>
         <TopContent>
           <Name>{name}</Name>
-          {timestamp && lastMessage ? <Time>{timestamp}</Time> : <Trailing {...props.inbox} />}
+          {timestamp && last_message ? <Time>{timestamp}</Time> : <Trailing {...props.inbox} />}
         </TopContent>
 
         <BottomContent>
@@ -49,17 +49,17 @@ export default function InboxContact(props: InboxContactProps) {
             <Message {...props.inbox} />
           </MessageWrapper>
 
-          {timestamp && lastMessage && <Trailing {...props.inbox} />}
+          {timestamp && last_message && <Trailing {...props.inbox} />}
         </BottomContent>
       </Content>
     </Contact>
   );
 }
 
-function Message(props: Pick<Inbox, "messageStatus" | "lastMessage">) {
-  const { lastMessage, messageStatus } = props;
+function Message(props: Pick<Inbox, "messageStatus" | "last_message">) {
+  const { last_message, messageStatus } = props;
 
-  if (!lastMessage) return <></>;
+  if (!last_message) return <></>;
 
   return (
     <>
@@ -67,7 +67,7 @@ function Message(props: Pick<Inbox, "messageStatus" | "lastMessage">) {
         isRead={messageStatus === "READ"}
         id={messageStatus === "SENT" ? "singleTick" : "doubleTick"}
       />
-      <Subtitle>{lastMessage}</Subtitle>
+      <Subtitle>{last_message}</Subtitle>
     </>
   );
 }

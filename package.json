@@ -26,7 +26,8 @@
     "react-spinners": "^0.13.8",
     "styled-components": "^5.3.11",
     "typescript": "^5.1.6",
-    "web-vitals": "^3.3.2"
+    "web-vitals": "^3.3.2",
+    "websocket": "^1.0.34"
   },
   "scripts": {
     "start": "react-scripts start",
