@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useChatContext } from "../../context/chat";
-import { getMessageHistory } from "../../data/inbox";
-import { Message } from "../components/messages-list/data/get-messages";
+import { useEffect, useState } from 'react';
+import { useChatContext } from '../../context/chat';
+import { getMessageHistory } from '../../data/inbox';
+import { Message } from '../components/messages-list/data/get-messages';
 // import { useChatContext } from "pages/chat/context/chat";
 
 export default function useChatRoom() {
@@ -12,22 +12,41 @@ export default function useChatRoom() {
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [messages, setMessages] = useState<any>([]);
   const wa_id = chatCtx.activeChat?.wa_id;
-  useEffect(()=>{
-    if(wa_id){
-      getMessageHistory(wa_id || '').then((res)=>{
-        const sortedMessages = res.sort((a:Message, b:Message) => {
+  useEffect(() => {
+    if (wa_id) {
+      getMessageHistory(wa_id || '').then((res) => {
+        const sortedMessages = res.sort((a: Message, b: Message) => {
           const dateA = new Date(`${a.date}T${a.timestamp}`).getTime();
           const dateB = new Date(`${b.date}T${b.timestamp}`).getTime();
           return dateA - dateB;
-        })
+        });
         setMessages(sortedMessages);
       });
     }
-  },[chatCtx.activeChat?.id])
+  }, [chatCtx.activeChat?.id]);
 
-  const handleMenuOpen = (menu: "search" | "profile") => {
-    setIsSearchOpen(menu === "search" ? true : false);
-    setIsProfileOpen(menu === "profile" ? true : false);
+  const handleMenuOpen = (menu: 'search' | 'profile') => {
+    setIsSearchOpen(menu === 'search' ? true : false);
+    setIsProfileOpen(menu === 'profile' ? true : false);
+  };
+
+  const updateMessageList = (message: string, isReceived: boolean) => {
+    const latestMessageObj: Message = messages[messages.length - 1];
+    const latestId: number = parseInt(latestMessageObj.id);
+    const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+    const currentTime = new Date().toLocaleTimeString('en-US', {
+      hour12: false,
+    }); // HH:MM:SS format
+
+    const newMessage: Message = {
+      id: (latestId + 1).toString(),
+      message: message,
+      date: currentDate,
+      timestamp: currentTime,
+      messageStatus: 'SENT',
+      isOpponent: isReceived,
+    };
+    setMessages([...messages, newMessage])
   };
 
   const handleShowIcon = (state: boolean) => {
@@ -47,7 +66,7 @@ export default function useChatRoom() {
     setIsSearchOpen,
     setShouldScrollToBottom,
     shouldScrollToBottom,
-    messages, 
-    setMessages
+    messages,
+    updateMessageList,
   };
 }

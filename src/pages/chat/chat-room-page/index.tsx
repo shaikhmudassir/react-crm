@@ -24,7 +24,7 @@ export default function ChatRoomPage() {
     setShouldScrollToBottom,
     shouldScrollToBottom,
     messages,
-    setMessages
+    updateMessageList
   } = useChatRoom();
   useNavigateToChat(activeInbox);
   
@@ -51,7 +51,7 @@ export default function ChatRoomPage() {
                 <IconBase id="downArrow" />
               </ScrollButton>
             )}
-            <Footer wa_id={activeInbox?.wa_id || ''}/>
+            <Footer wa_id={activeInbox?.wa_id || ''} updateMessageList={updateMessageList}/>
           </FooterContainer>
         </Body>
         <Sidebar title="Search" isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)}>

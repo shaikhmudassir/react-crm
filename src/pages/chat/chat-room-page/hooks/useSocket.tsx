@@ -43,13 +43,15 @@ const useSocket = (props: ISOCKET) => {
     };
   }, [props.roomId, token, org]);
 
-  const sendMessage = (message:string) => {
+  const sendMessage = (message:string):boolean => {
     if (isConnected && socket && socket.readyState === WebSocket.OPEN) {
       socket.send(JSON.stringify({
         message: message,
       }));
+      return true;
     } else {
       console.error('WebSocket is not connected.');
+      return false;
     }
   };
 
