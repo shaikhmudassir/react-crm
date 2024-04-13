@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useChatContext } from "../../context/chat";
 import { getMessageHistory } from "../../data/inbox";
+import { Message } from "../components/messages-list/data/get-messages";
 // import { useChatContext } from "pages/chat/context/chat";
 
 export default function useChatRoom() {
@@ -14,7 +15,12 @@ export default function useChatRoom() {
   useEffect(()=>{
     if(wa_id){
       getMessageHistory(wa_id || '').then((res)=>{
-        setMessages(res);
+        const sortedMessages = res.sort((a:Message, b:Message) => {
+          const dateA = new Date(`${a.date}T${a.timestamp}`).getTime();
+          const dateB = new Date(`${b.date}T${b.timestamp}`).getTime();
+          return dateA - dateB;
+        })
+        setMessages(sortedMessages);
       });
     }
   },[chatCtx.activeChat?.id])
