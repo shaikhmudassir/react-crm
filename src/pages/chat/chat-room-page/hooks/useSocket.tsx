@@ -7,7 +7,7 @@ const useSocket = (props: ISOCKET) => {
   const token = localStorage.getItem('Token')?.split(" ")[1];
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  const [chatLog, setChatLog] = useState('');
+  const [recvMessages, setRecvMessages] = useState<string[]>([]);
   const host = 'api.yorcrm.com';
   useEffect(() => {
     // const socketURL = `wss://${window.location.host}/ws/chat/${props.roomId}/?token=${token}&org=${org}`; 
@@ -16,12 +16,13 @@ const useSocket = (props: ISOCKET) => {
       socketURL
     );
 
-    // newSocket.onmessage = function (e) {
-    //   const data = JSON.parse(e.data);
-    //   console.log("message-received->",data)
-      
-    // };
+    newSocket.onmessage = function (e) {
+      const data = JSON.parse(e.data);
+      //console.log("message-received->",data)
+      setRecvMessages((recvMessages) => [...recvMessages, data.message]);      
+    };
 
+    
     newSocket.onopen = function (e) {
       console.log('WebSocket connection opened');
       setIsConnected(true);
@@ -55,7 +56,7 @@ const useSocket = (props: ISOCKET) => {
     }
   };
 
-  return { chatLog, isConnected, sendMessage };
+  return { recvMessages, isConnected, sendMessage };
 };
 
 export default useSocket;
