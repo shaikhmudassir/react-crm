@@ -9,7 +9,6 @@ import {
   Wrapper,
 } from './styles';
 import Icon from './../../components/icons';
-import useSocket from '../../hooks/useSocket';
 
 const attachButtons = [
   { icon: 'attachRooms', label: 'Choose room' },
@@ -22,12 +21,13 @@ const attachButtons = [
 interface IFOOTER {
   wa_id: string;
   updateMessageList: (newMessage: string, isReceived: boolean) => void;
+  sendMessage:(m:string)=>boolean;
+  isConnected: boolean
 }
 
 export default function Footer(props: IFOOTER) {
-  const { wa_id, updateMessageList } = props;
+  const { updateMessageList, sendMessage, isConnected } = props;
   const [showIcons, setShowIcons] = useState(false);
-  const { isConnected, sendMessage } = useSocket({ roomId: wa_id });
   const [message, setMessage] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
 

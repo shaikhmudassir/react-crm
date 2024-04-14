@@ -10,6 +10,7 @@ import SearchSection from "./components/search-section";
 import useNavigateToChat from "./hooks/useNavigateToChat";
 import { Container, Body, Background, FooterContainer, ScrollButton } from "./styles";
 import { IconBase } from "react-icons";
+import useSocket from "./hooks/useSocket";
 
 export default function ChatRoomPage() {
   const {
@@ -27,7 +28,7 @@ export default function ChatRoomPage() {
     updateMessageList
   } = useChatRoom();
   useNavigateToChat(activeInbox);
-  
+  const { isConnected, sendMessage } = useSocket({ roomId: activeInbox?.wa_id || '' });
   return (
     <ChatLayout>
       <Container>
@@ -51,7 +52,12 @@ export default function ChatRoomPage() {
                 <IconBase id="downArrow" />
               </ScrollButton>
             )}
-            <Footer wa_id={activeInbox?.wa_id || ''} updateMessageList={updateMessageList}/>
+            <Footer 
+              wa_id={activeInbox?.wa_id || ''} 
+              updateMessageList={updateMessageList}
+              isConnected={isConnected}
+              sendMessage={sendMessage}
+            />
           </FooterContainer>
         </Body>
         <Sidebar title="Search" isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)}>
