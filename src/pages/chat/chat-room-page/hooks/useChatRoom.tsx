@@ -13,7 +13,9 @@ export default function useChatRoom() {
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [messages, setMessages] = useState<any>([]);
   const wa_id = chatCtx.activeChat?.wa_id;
-  const { isConnected, sendMessage } = useSocket({ roomId: wa_id || '' });
+  const { isConnected, sendMessage, recvMessages } = useSocket({
+    roomId: wa_id || '',
+  });
 
   useEffect(() => {
     if (wa_id) {
@@ -33,6 +35,10 @@ export default function useChatRoom() {
     setIsProfileOpen(menu === 'profile' ? true : false);
   };
 
+  useEffect(() => {
+    updateMessageList(recvMessages[recvMessages.length - 1], true);
+  }, [recvMessages]);
+  
   const updateMessageList = (message: string, isReceived: boolean) => {
     const latestMessageObj: Message = messages[messages.length - 1];
     const latestId: number = parseInt(latestMessageObj.id);
@@ -49,7 +55,7 @@ export default function useChatRoom() {
       messageStatus: 'SENT',
       isOpponent: isReceived,
     };
-    setMessages([...messages, newMessage])
+    setMessages([...messages, newMessage]);
   };
 
   const handleShowIcon = (state: boolean) => {
@@ -71,7 +77,7 @@ export default function useChatRoom() {
     shouldScrollToBottom,
     messages,
     updateMessageList,
-    isConnected, 
-    sendMessage
+    isConnected,
+    sendMessage,
   };
 }
