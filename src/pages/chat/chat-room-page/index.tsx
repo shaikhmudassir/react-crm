@@ -25,10 +25,11 @@ export default function ChatRoomPage() {
     setShouldScrollToBottom,
     shouldScrollToBottom,
     messages,
-    updateMessageList
+    updateMessageList,
+    isConnected, 
+    sendMessage
   } = useChatRoom();
   useNavigateToChat(activeInbox);
-  const { isConnected, sendMessage } = useSocket({ roomId: activeInbox?.wa_id || '' });
   return (
     <ChatLayout>
       <Container>
