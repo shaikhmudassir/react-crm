@@ -10,7 +10,8 @@ const useSocket = (props: ISOCKET) => {
   const [recvMessages, setRecvMessages] = useState<string[]>([]);
   const host = 'api.yorcrm.com';
   useEffect(() => {
-    // const socketURL = `wss://${window.location.host}/ws/chat/${props.roomId}/?token=${token}&org=${org}`; 
+    if(props.roomId, token, org){
+          // const socketURL = `wss://${window.location.host}/ws/chat/${props.roomId}/?token=${token}&org=${org}`; 
     const socketURL = `wss://api.yorcrm.com/ws/chat/${props.roomId}/?token=${token}&org=${org}`; 
     const newSocket = new WebSocket(
       socketURL
@@ -42,6 +43,7 @@ const useSocket = (props: ISOCKET) => {
     return () => {
       newSocket.close();
     };
+    }
   }, [props.roomId, token, org]);
 
   const sendMessage = (message:string):boolean => {
