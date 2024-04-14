@@ -36,8 +36,8 @@ export default function useChatRoom() {
   };
 
   useEffect(() => {
-    if (recvMessages.length > 0){
-      console.log('new message recvd--->'[recvMessages.length - 1])
+    if (recvMessages.length > 0) {
+      console.log('new message recvd--->'[recvMessages.length - 1]);
       updateMessageList(recvMessages[recvMessages.length - 1], true);
     }
   }, [recvMessages]);
