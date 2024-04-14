@@ -36,9 +36,12 @@ export default function useChatRoom() {
   };
 
   useEffect(() => {
-    updateMessageList(recvMessages[recvMessages.length - 1], true);
+    if (recvMessages.length > 0){
+      console.log('new message recvd--->'[recvMessages.length - 1])
+      updateMessageList(recvMessages[recvMessages.length - 1], true);
+    }
   }, [recvMessages]);
-  
+
   const updateMessageList = (message: string, isReceived: boolean) => {
     const latestMessageObj: Message = messages[messages.length - 1];
     const latestId: number = parseInt(latestMessageObj.id);
