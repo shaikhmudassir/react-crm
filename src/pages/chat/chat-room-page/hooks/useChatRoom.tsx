@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useChatContext } from '../../context/chat';
 import { getMessageHistory } from '../../data/inbox';
 import { Message } from '../components/messages-list/data/get-messages';
+import useSocket from './useSocket';
 // import { useChatContext } from "pages/chat/context/chat";
 
 export default function useChatRoom() {
@@ -12,6 +13,8 @@ export default function useChatRoom() {
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [messages, setMessages] = useState<any>([]);
   const wa_id = chatCtx.activeChat?.wa_id;
+  const { isConnected, sendMessage } = useSocket({ roomId: wa_id || '' });
+
   useEffect(() => {
     if (wa_id) {
       getMessageHistory(wa_id || '').then((res) => {
@@ -68,5 +71,7 @@ export default function useChatRoom() {
     shouldScrollToBottom,
     messages,
     updateMessageList,
+    isConnected, 
+    sendMessage
   };
 }

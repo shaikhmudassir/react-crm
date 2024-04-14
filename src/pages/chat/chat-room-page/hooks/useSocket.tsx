@@ -11,7 +11,8 @@ const useSocket = (props: ISOCKET) => {
   const host = 'api.yorcrm.com';
   useEffect(() => {
     if(props.roomId, token, org){
-          // const socketURL = `wss://${window.location.host}/ws/chat/${props.roomId}/?token=${token}&org=${org}`; 
+      // dev-space
+      // const socketURL = `wss://${window.location.host}/ws/chat/${props.roomId}/?token=${token}&org=${org}`; 
     const socketURL = `wss://api.yorcrm.com/ws/chat/${props.roomId}/?token=${token}&org=${org}`; 
     const newSocket = new WebSocket(
       socketURL
