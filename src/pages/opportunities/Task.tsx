@@ -1,20 +1,24 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div<{ isDragging: boolean }>`
-border: 1px solid lightgrey;
-border-radius: 4px;
-padding: 12px;
-margin-bottom: 12px;
-background-color: ${props => (props.isDragging ? '#e6f7ff' : 'white')};
-box-shadow: ${props =>
-  props.isDragging ? '0px 2px 4px rgba(0, 0, 0, 0.1)' : 'none'};
-transition: background-color 0.2s ease, box-shadow 0.2s ease;
+background-color: white;
+border-radius: 8px;
+box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+padding: 16px;
+transition: transform 0.2s ease, box-shadow 0.2s ease;
 
 &:hover {
-  background-color: #f0f0f0;
+  transform: translateY(-4px);
 }
+
+${props =>
+  props.isDragging &&
+  css`
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+  `}
 `;
 
 export const Task = (props: any) => {
