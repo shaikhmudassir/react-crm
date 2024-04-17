@@ -15,6 +15,7 @@ import { DeleteModal } from '../../components/DeleteModal';
 import { FiChevronUp } from '@react-icons/all-files/fi/FiChevronUp';
 import { FiChevronDown } from '@react-icons/all-files/fi/FiChevronDown';
 import { EnhancedTableHead } from '../../components/EnchancedTableHead';
+import KanbanBoard from './KanbanView';
 
 
 interface HeadCell {
@@ -269,7 +270,9 @@ export default function Opportunities(props: any) {
   //   }
 
   // };
-
+  const getUniqueColumns = () => {
+    
+  }
   const handleRowSelect = (accountId: string) => {
     const selectedIndex = selected.indexOf(accountId);
     let newSelected: string[] = [...selected];
@@ -384,105 +387,8 @@ export default function Opportunities(props: any) {
                             )}
                         </Toolbar> */}
             <TableContainer>
-              <Table>
-                <EnhancedTableHead
-                  numSelected={selected.length}
-                  order={order}
-                  orderBy={orderBy}
-                  // onSelectAllClick={handleSelectAllClick}
-                  onRequestSort={handleRequestSort}
-                  // rowCount={tab === 'open' ? openOpportunities?.length : closedOpportunities?.length}
-                  rowCount={opportunities?.length}
-                  numSelectedId={selectedId}
-                  isSelectedId={isSelectedId}
-                  headCells={headCells}
-                />
-                <TableBody>
-                  {
-                    opportunities?.length > 0
-                      ? stableSort(opportunities, getComparator(order, orderBy)).map((item: any, index: any) => {
-                        // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item: any, index: any) => {
-                        const labelId = `enhanced-table-checkbox-${index}`
-                        const rowIndex = selectedId.indexOf(item.id);
-                        return (
-                          <TableRow
-                            tabIndex={-1}
-                            key={index}
-                            sx={{ border: 0, '&:nth-of-type(even)': { backgroundColor: 'whitesmoke' }, color: 'rgb(26, 51, 83)', textTransform: 'capitalize' }}
-                          >
-                            {/* <TableCell
-                                                                    padding='checkbox'
-                                                                    sx={{ border: 0, color: 'inherit' }}
-                                                                    align='left'
-                                                                >
-                                                                    <Checkbox
-                                                                        checked={isSelectedId[rowIndex] || false}
-                                                                        onChange={() => handleRowSelect(item.id)}
-                                                                        inputProps={{
-                                                                            'aria-labelledby': labelId,
-                                                                        }}
-                                                                        sx={{ border: 0, color: 'inherit' }}
-                                                                    />
-                                                                </TableCell> */}
-                            <TableCell
-                              className='tableCell-link'
-                              onClick={() => opportunityDetail(item.id)}
-                            >
-                              {item?.name ? item?.name : '---'}
-                            </TableCell>
-                            <TableCell className='tableCell'>
-                              {item?.account ? item?.account?.name : '---'}
-                            </TableCell>
-                            <TableCell className='tableCell'>
-                              {item?.assigned_to ? <Avatar src={item?.assigned_to} alt={item?.assigned_to} /> : '----'}
-                              {/* <Stack style={{ display: 'flex', flexDirection: 'row', alignItems: "center" }}>
-                                  <Avatar src={item?.lead?.created_by?.profile_pic} alt={item?.lead?.created_by?.email} /><Stack sx={{ ml: 1 }}>{item?.lead?.account_name ? item?.lead?.account_name : '---'}</Stack>
-                                </Stack> */}
-                            </TableCell>
-                            <TableCell className='tableCell'>
-                              {item?.stage ? item?.stage : '---'}
-                            </TableCell>
-                            <TableCell className='tableCell'>
-                              {item?.created_on_arrow ? item?.created_on_arrow : '---'}
-                            </TableCell>
-                            <TableCell className='tableCell'>
-                              {item?.tags?.length ? item?.tags.map((tag: any, i: any) => <Stack sx={{ mr: 0.5 }}> <Label tags={tag} /></Stack>) : '---'}
-                            </TableCell>
-                            <TableCell className='tableCell'>
-                              {item?.lead_source ? item?.lead_source : '---'}
-                            </TableCell>
-                            <TableCell className='tableCell'>
-                              {/* <IconButton>
-                                                                        <FaEdit
-                                                                            onClick={() => EditItem(item?.id)}
-                                                                            style={{ fill: '#1A3353', cursor: 'pointer', width: '18px' }}
-                                                                        />
-                                                                    </IconButton> */}
-                              <IconButton>
-                                <FaTrashAlt
-                                  onClick={() => deleteRow(item?.id)}
-                                  style={{ fill: '#1A3353', cursor: 'pointer', width: '15px' }} />
-                              </IconButton>
-                            </TableCell>
-                          </TableRow>
-                        )
-                      })
-                      : <TableRow> <TableCell colSpan={8} sx={{ border: 0 }}><Spinner /></TableCell></TableRow>
-                  }
-                  {/* {
-                    emptyRows > 0 && (
-                        <TableRow
-                            style={{
-                                height: (dense ? 33 : 53) * emptyRows
-                            }}
-                        >
-                            <TableCell colSpan={6} />
-                        </TableRow>
-                    )
-                  }
- */}
-                </TableBody>
-              </Table>
+              <><KanbanBoard data={opportunities}/>
+              </>
             </TableContainer>
           </Paper>
         </Box>
