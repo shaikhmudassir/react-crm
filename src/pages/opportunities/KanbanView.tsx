@@ -4,9 +4,11 @@ import { KanbanColumn } from './KanbanColumn';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  display: flex;
+display: flex;
+gap: 20px;
+padding: 20px;
+background-color: #f5f5f5;
 `;
-
 interface KANBANVIEW {
   data: any;
 }

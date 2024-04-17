@@ -15,11 +15,15 @@ const Title = styled.h3`
   padding: 8px;
 `;
 const TaskList = styled.div<{ isDraggingOver: boolean }>`
-  padding: 8px;
-  transition: background-color 0.2s ease;
-  background-color: ${props => (props.isDraggingOver ? 'skyblue' : 'white')};
-  flex-grow: 1;
-  min-height: 100px;
+border: 2px dashed ${props => (props.isDraggingOver ? '#1890ff' : 'transparent')};
+  border-radius: 1px;
+  padding: 12px;
+  background-color: white;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: #1890ff;
+  }
 `;
 export const KanbanColumn = (props: any) => {
   return (
