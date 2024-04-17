@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, {css} from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div<{ isDragging: boolean }>`
 background-color: white;
@@ -22,6 +23,14 @@ ${props =>
 `;
 
 export const Task = (props: any) => {
+  const navigate = useNavigate()
+  const opportunityDetail = (opportunityId: any) => {
+    navigate(`/app/opportunities/opportunity-details`, {
+      state: {
+        opportunityId
+      }
+    })
+  }
   // return {<Container>{props.task.name}</Container>}
   return (
     <Draggable draggableId={props.task.id} index={props.index}>
@@ -31,6 +40,7 @@ export const Task = (props: any) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           isDragging={snapshot.isDragging}
+          onClick={()=>opportunityDetail(props.task.id)}
         >
           {props.task.name}
         </Container>

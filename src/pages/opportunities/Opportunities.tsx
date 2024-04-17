@@ -192,16 +192,6 @@ export default function Opportunities(props: any) {
     return selected.indexOf(name) !== -1;
   };
 
-
-  const opportunityDetail = (opportunityId: any) => {
-    navigate(`/app/opportunities/opportunity-details`, {
-      state: {
-        opportunityId, detail: true,
-        contacts: contacts || [], leadSource: leadSource || [], currency: currency || [], tags: tags || [], account: account || [], stage: stage || [], users: users || [], teams: teams || [], countries: countries || []
-      }
-    })
-  }
-
   const deleteRow = (id: any) => {
     setSelectedId(id)
     setDeleteRowModal(!deleteRowModal)
