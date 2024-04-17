@@ -386,10 +386,7 @@ export default function Opportunities(props: any) {
                                 ''
                             )}
                         </Toolbar> */}
-            <TableContainer>
-              <><KanbanBoard data={opportunities}/>
-              </>
-            </TableContainer>
+            <KanbanBoard data={opportunities}/>
           </Paper>
         </Box>
       </Container>
