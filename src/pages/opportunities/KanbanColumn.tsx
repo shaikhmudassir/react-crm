@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Task } from './Task';
+import { Droppable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
   margin: 8px;
@@ -14,13 +15,20 @@ const TaskList = styled.div`
   padding: 8px;
 `;
 
-export const KanbanColumn = (props:any)=> {
-    return (
-      <Container>
-        <Title>{props.column?.title}</Title>
-        <TaskList>
-          {props.tasks?.map((opp:any) => <Task key={opp.id} task={opp} />)}
-        </TaskList>
-      </Container>
-    );
-}
+export const KanbanColumn = (props: any) => {
+  return (
+    <Container>
+      <Title>{props.column?.title}</Title>
+      <Droppable droppableId={props.column?.id}>
+        {(provided) => (
+          <TaskList ref={provided.innerRef} {...provided.droppableProps}>
+            {props.tasks?.map((opp: any, index: any) => (
+              <Task key={opp.id} task={opp} index={index} />
+            ))}
+            {provided.placeholder}
+          </TaskList>
+        )}
+      </Droppable>
+    </Container>
+  );
+};
