@@ -233,21 +233,15 @@ export const OpportunityDetails = (props: any) => {
                                 </div>
                                 <div style={{ color: 'gray', fontSize: '16px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginRight: '15px' }}>
-                                        created &nbsp;
-                                        {FormateTime(opportunityDetails?.created_at)} &nbsp; by   &nbsp;
-                                        <Avatar
-                                            src={opportunityDetails?.created_by?.profile_pic}
-                                            alt={opportunityDetails?.created_by?.email}
-                                        />
-                                        &nbsp;
-                                        &nbsp;
-                                        {opportunityDetails?.created_by?.email}
-                                        {/* {opportunityDetails?.first_name}&nbsp;
-                                        {opportunityDetails?.last_name} */}
+                                        {opportunityDetails?.amount}{opportunityDetails?.currency}
                                     </div>
-
                                 </div>
-                            </div>
+                                <div style={{ color: 'gray', fontSize: '16px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginRight: '15px' }}>
+                                    {opportunityDetails?.stage || '----'}
+                                </div>
+                                </div>
+                                </div>
                             <div style={{ padding: '20px', display: 'flex', flexDirection: 'row', marginTop: '10px' }}>
                                 <div className='title2'>
                                 </div>
@@ -287,9 +281,9 @@ export const OpportunityDetails = (props: any) => {
                                     </div>
                                 </div>
                                 <div style={{ width: '32%' }}>
-                                    <div className='title2'>Amount</div>
+                                    <div className='title2'>Closed Date</div>
                                     <div className='title3'>
-                                        {opportunityDetails?.amount || '----'}
+                                    {opportunityDetails?.closed_on || '----'}
                                     </div>
                                 </div>
                                 <div style={{ width: '32%' }}>
@@ -310,34 +304,18 @@ export const OpportunityDetails = (props: any) => {
                                     </div>
                                 </div>
                                 <div style={{ width: '32%' }}>
+                                <div className='title2'>Assigned Users</div>
+                                    <div className='title3'>
+                                        {opportunityDetails?.assigned_to || '----'}
+                                    </div>
+                                </div>
+                                <div style={{ width: '32%' }}>
                                     <div className='title2'>Contacts</div>
                                     <div className='title3'>
                                         {opportunityDetails?.contact_name || '----'}
                                     </div>
                                 </div>
                             </div>
-                            <div style={{ padding: '20px', marginTop: '10px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <div style={{ width: '32%' }}>
-                                    <div className='title2'>Stage</div>
-                                    <div className='title3'>
-                                        {opportunityDetails?.stage || '----'}
-                                    </div>
-                                </div>
-                                <div style={{ width: '32%' }}>
-                                    <div className='title2'>Assigned Users</div>
-                                    <div className='title3'>
-                                        {opportunityDetails?.assigned_to || '----'}
-                                    </div>
-                                </div>
-                                <div style={{ width: '32%' }}>
-                                    <div className='title2'>Closed Date</div>
-                                    <div className='title3'>
-                                        {opportunityDetails?.closed_on || '----'}
-                                    </div>
-                                </div>
-                            </div>
-                            {/* </div> */}
-                            {/* Description */}
                             <div style={{ marginTop: '2%' }}>
                                 <div style={{ padding: '20px', borderBottom: '1px solid lightgray', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <div style={{ fontWeight: 600, fontSize: '18px', color: '#1a3353f0' }}>
