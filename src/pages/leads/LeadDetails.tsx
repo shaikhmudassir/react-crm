@@ -301,10 +301,16 @@ function LeadDetails(props: any) {
                     <Box sx={{ width: '65%' }}>
                         <Box sx={{ borderRadius: '10px', border: '1px solid #80808038', backgroundColor: 'white' }}>
                             <div style={{ padding: '20px', borderBottom: '1px solid lightgray', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <div style={{ fontWeight: 600, fontSize: '18px', color: '#1a3353f0' }}>
-                                    Lead Information
+                            <div style={{ fontWeight: 600, fontSize: '18px', color: '#1a3353f0' }}>
+                                {leadDetails?.title}
                                 </div>
-                                <div style={{ color: 'gray', fontSize: '16px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div style={{ fontWeight: 600, fontSize: '18px', color: '#1a3353f0' }}>
+                                    <button>Send Message</button>
+                                </div>
+                                <div style={{ fontWeight: 600, fontSize: '18px', color: '#1a3353f0' }}>
+                                <button>Update Lead Status</button>
+                                </div>
+                                {/* <div style={{ color: 'gray', fontSize: '16px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginRight: '15px' }}>
                                         created &nbsp;
                                         {FormateTime(leadDetails?.created_at)} &nbsp; by   &nbsp;
@@ -318,11 +324,11 @@ function LeadDetails(props: any) {
                                         {leadDetails?.last_name}
                                     </div>
 
-                                </div>
+                                </div> */}
                             </div>
                             <div style={{ padding: '20px', display: 'flex', flexDirection: 'row', marginTop: '10px' }}>
                                 <div className='title2'>
-                                    {leadDetails?.title}
+                                    
                                     {/* {console.log(users?.length && users.length,'lll')} */}
                                     <Stack sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', mt: 1 }}>
                                         {/* {
