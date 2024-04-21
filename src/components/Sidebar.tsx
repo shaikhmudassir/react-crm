@@ -110,7 +110,8 @@ export default function Sidebar(props: any) {
             })
     }
 
-    const navList = ['leads', 'contacts', 'opportunities', 'accounts', 'companies', 'users', 'cases', 'chat']
+    const navList1 = ['leads', 'contacts', 'opportunities', 'accounts', 'companies', 'users', 'cases', 'chat']
+    const navList = ['chat', 'leads', 'opportunities', 'contacts', 'accounts', 'companies', 'users']
     const navIcons = (text: any, screen: any): React.ReactNode => {
         switch (text) {
             case 'leads':
