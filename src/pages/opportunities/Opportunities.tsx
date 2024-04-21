@@ -260,9 +260,7 @@ export default function Opportunities(props: any) {
   //   }
 
   // };
-  const getUniqueColumns = () => {
-    
-  }
+  
   const handleRowSelect = (accountId: string) => {
     const selectedIndex = selected.indexOf(accountId);
     let newSelected: string[] = [...selected];

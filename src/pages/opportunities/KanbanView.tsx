@@ -30,6 +30,7 @@ const KanbanBoard = (props: KANBANVIEW) => {
     'VALUE PROPOSITION',
     'QUALIFICATION',
     'CLOSED WON',
+    'PERCEPTION ANALYSIS'
   ];
   useEffect(() => {
     if (data) {
