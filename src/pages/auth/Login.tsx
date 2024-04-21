@@ -122,8 +122,7 @@ export default function Login() {
                 >
                     <Grid item >
                         <Stack sx={{ alignItems: 'center' }}>
-                            <h3>Welcome to BottleCRM</h3>
-                            <p> Free and OpenSource CRM from small medium business.</p>
+                            <h3>Welcome to YorCRM</h3>
                             <img
                                 src={imgLogin}
                                 alt='register_ad_image'

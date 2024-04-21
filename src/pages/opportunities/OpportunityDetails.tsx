@@ -229,7 +229,7 @@ export const OpportunityDetails = (props: any) => {
                         <Box sx={{ borderRadius: '10px', border: '1px solid #80808038', backgroundColor: 'white' }}>
                             <div style={{ padding: '20px', borderBottom: '1px solid lightgray', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <div style={{ fontWeight: 600, fontSize: '18px', color: '#1a3353f0' }}>
-                                    Opportunity Information
+                                {opportunityDetails?.name}
                                 </div>
                                 <div style={{ color: 'gray', fontSize: '16px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginRight: '15px' }}>
@@ -250,22 +250,6 @@ export const OpportunityDetails = (props: any) => {
                             </div>
                             <div style={{ padding: '20px', display: 'flex', flexDirection: 'row', marginTop: '10px' }}>
                                 <div className='title2'>
-                                    {opportunityDetails?.name}
-                                    <Stack sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', mt: 1 }}>
-                                        {/* {
-                                            lead.assigned_to && lead.assigned_to.map((assignItem) => (
-                                                assignItem.user_details.profile_pic
-                                                    ? */}
-                                        {users?.length ? users.map((val: any, i: any) =>
-                                            <Avatar
-                                                key={i}
-                                                alt={val?.user_details?.email}
-                                                src={val?.user_details?.profile_pic}
-                                                sx={{ mr: 1 }}
-                                            />
-                                        ) : ''
-                                        }
-                                    </Stack>
                                 </div>
                                 <Stack sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                                     {opportunityDetails?.tags?.length ? opportunityDetails?.tags.map((tagData: any) => (
@@ -296,7 +280,7 @@ export const OpportunityDetails = (props: any) => {
                             </div>
                             <div style={{ padding: '20px', marginTop: '10px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <div style={{ width: '32%' }}>
-                                    <div className='title2'>Probability</div>
+                                    <div className='title2'>Probability(%)</div>
                                     <div className='title3'>
                                         {/* {lead.pipeline ? lead.pipeline : '------'} */}
                                         {opportunityDetails?.probability || '----'}
@@ -319,12 +303,6 @@ export const OpportunityDetails = (props: any) => {
                                 </div>
                             </div>
                             <div style={{ padding: '20px', marginTop: '10px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <div style={{ width: '32%' }}>
-                                    <div className='title2'>Currency</div>
-                                    <div className='title3'>
-                                        {opportunityDetails?.currency || '----'}
-                                    </div>
-                                </div>
                                 <div style={{ width: '32%' }}>
                                     <div className='title2'>Users</div>
                                     <div className='title3'>
