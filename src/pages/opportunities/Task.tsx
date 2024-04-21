@@ -4,25 +4,42 @@ import { Draggable } from 'react-beautiful-dnd';
 import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div<{ isDragging: boolean }>`
-background-color: white;
-border-radius: 8px;
-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-padding: 16px;
-transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 
-&:hover {
-  transform: translateY(-4px);
-}
-
-${props =>
-  props.isDragging &&
-  css`
+  &:hover {
+    transform: translateY(-4px);
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    transform: scale(1.05);
-  `}
+  }
+
+  ${props =>
+    props.isDragging &&
+    css`
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      transform: scale(1.05);
+    `}
+`;
+
+const Title = styled.h3`
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+`;
+
+const Subtitle = styled.div`
+  font-size: 14px;
+  color: #666666;
+  margin-bottom: 4px;
 `;
 
 export const Task = (props: any) => {
+  const { name, id, amount, created_at, created_by, created_on_arrow } = props.task;
+  const formattedDate = new Date(created_at).toLocaleDateString();
   const navigate = useNavigate();
   const editHandle = (opportunityDetails:any) => {
     // navigate('/contacts/edit-contacts', { state: { value: contactDetails, address: newAddress } })
@@ -62,9 +79,9 @@ export const Task = (props: any) => {
         opportunityId,
         detail: true
       }
-    })
-  }
-  // return {<Container>{props.task.name}</Container>}
+    });
+  };
+
   return (
     <Draggable draggableId={props.task.id} index={props.index}>
       {(provided, snapshot) => (
@@ -73,9 +90,12 @@ export const Task = (props: any) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           isDragging={snapshot.isDragging}
-          onClick={()=>opportunityDetail(props.task.id)}
+          onClick={() => opportunityDetail(id)}
         >
-          {props.task.name}
+          <Title>{name}</Title>
+          <Subtitle>Amount: {amount}</Subtitle>
+          <Subtitle>Created By: {created_by.email}</Subtitle>
+          <Subtitle>{created_on_arrow}</Subtitle>
         </Container>
       )}
     </Draggable>
