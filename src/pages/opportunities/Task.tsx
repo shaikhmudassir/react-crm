@@ -1,10 +1,10 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div<{ isDragging: boolean }>`
-  background-color: white;
+  background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   padding: 16px;
@@ -29,6 +29,7 @@ const Title = styled.h3`
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 8px;
+  color: #333333;
 `;
 
 const Subtitle = styled.div`
@@ -93,9 +94,15 @@ export const Task = (props: any) => {
           onClick={() => opportunityDetail(id)}
         >
           <Title>{name}</Title>
-          <Subtitle>Amount: {amount}</Subtitle>
-          <Subtitle>Created By: {created_by.email}</Subtitle>
-          <Subtitle>{created_on_arrow}</Subtitle>
+          <Subtitle>
+            <strong>Amount:</strong> {amount}
+          </Subtitle>
+          <Subtitle>
+            <strong>Created By:</strong> {created_by.email}
+          </Subtitle>
+          <Subtitle>
+            <strong>Created On:</strong> {formattedDate}
+          </Subtitle>
         </Container>
       )}
     </Draggable>
