@@ -110,7 +110,8 @@ export default function Sidebar(props: any) {
             })
     }
 
-    const navList = ['leads', 'contacts', 'opportunities', 'accounts', 'companies', 'users', 'cases', 'chat']
+    const navList1 = ['leads', 'contacts', 'opportunities', 'accounts', 'companies', 'users', 'cases', 'chat']
+    const navList = ['chat', 'leads', 'opportunities', 'contacts', 'accounts', 'companies', 'users']
     const navIcons = (text: any, screen: any): React.ReactNode => {
         switch (text) {
             case 'leads':
@@ -174,7 +175,7 @@ export default function Sidebar(props: any) {
                 >
                     <Box>
                         <Toolbar>
-                            {drawerWidth === 60 ? <img src={logo} width={'40px'} style={{ transform: 'rotate(270deg)', marginLeft: '-15px', marginRight: '10px' }} /> : <img src={logo} width={'100px'} style={{ marginLeft: '-5px', marginRight: '30px' }} />}
+                            <img src={logo} width={'40px'} style={{ marginLeft: '-15px', marginRight: '10px' }} /> 
                             <IconButton sx={{ ml: '-10px' }} onClick={() => setDrawerWidth(drawerWidth === 60 ? 200 : 60)}>
                                 <FaBars style={{ height: '20px' }} />
                             </IconButton>

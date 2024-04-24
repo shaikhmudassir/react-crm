@@ -67,7 +67,7 @@ export default function Login() {
                 >
                     <Grid item>
                         <Grid sx={{ mt: 2 }}>
-                            <img src={imgLogo} alt='register_logo' className='register-logo' />
+                        <img src={imgLogo} alt='register_ad_image' className='register-ad-image' style={{ width: '128px', height: '128px' }} />
                         </Grid>
                         <Typography variant='h5' style={{ fontWeight: 'bolder' }}>Sign In</Typography>
                         <Grid item sx={{ mt: 4 }}>
@@ -122,8 +122,7 @@ export default function Login() {
                 >
                     <Grid item >
                         <Stack sx={{ alignItems: 'center' }}>
-                            <h3>Welcome to BottleCRM</h3>
-                            <p> Free and OpenSource CRM from small medium business.</p>
+                            <h3>Welcome to YorCRM</h3>
                             <img
                                 src={imgLogin}
                                 alt='register_ad_image'

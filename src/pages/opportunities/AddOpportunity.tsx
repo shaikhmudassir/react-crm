@@ -65,7 +65,7 @@ interface FormData {
     assigned_to: string[],
     contact_name: string,
     contacts: string[],
-    due_date: string,
+    due_date?: string,
     tags: string[],
     opportunity_attachment: string | null,
     file: string | null
@@ -104,7 +104,6 @@ export function AddOpportunity() {
         assigned_to: [],
         contact_name: '',
         contacts: [],
-        due_date: '',
         tags: [],
         opportunity_attachment: null,
         file: null
@@ -189,7 +188,6 @@ export function AddOpportunity() {
           }
         // console.log('Form data:', formData.lead_attachment,'sfs', formData.file);
         const data = {
-
             name: formData.name,
             account: formData.account,
             amount: formData.amount,
@@ -330,29 +328,52 @@ export function AddOpportunity() {
                                                 </FormControl>
                                             </div>
                                             <div className='fieldSubContainer'>
-                                                <div className='fieldTitle'>Currency</div>
-                                                <FormControl sx={{ width: '70%' }}>
-                                                    <Select
-                                                        name='currency'
-                                                        value={formData.currency}
-                                                        open={currencySelectOpen}
-                                                        onClick={() => setCurrencySelectOpen(!currencySelectOpen)}
-                                                        IconComponent={() => (
-                                                            <div onClick={() => setCurrencySelectOpen(!currencySelectOpen)} className="select-icon-background">
-                                                                {currencySelectOpen ? <FiChevronUp className='select-icon' /> : <FiChevronDown className='select-icon' />}
-                                                            </div>
+                                                <div className='fieldTitle' style={{ width: '35%' }}>Teams</div>
+                                                <FormControl error={!!errors?.teams?.[0]} sx={{ width: '85%' }}>
+                                                    <Autocomplete
+                                                        // ref={autocompleteRef}
+                                                        value={selectedTeams}
+                                                        multiple
+                                                        limitTags={5}
+                                                        options={state.teams || []}
+                                                        // options={state.contacts ? state.contacts.map((option: any) => option) : ['']}
+                                                        getOptionLabel={(option: any) => option}
+                                                        onChange={(e: any, value: any) => handleChange2('teams', value)}
+                                                        size='small'
+                                                        filterSelectedOptions
+                                                        renderTags={(value, getTagProps) =>
+                                                            value.map((option, index) => (
+                                                                <Chip
+                                                                    deleteIcon={<FaTimes style={{ width: '9px' }} />}
+                                                                    sx={{
+                                                                        backgroundColor: 'rgba(0, 0, 0, 0.08)',
+                                                                        height: '18px'
+
+                                                                    }}
+                                                                    variant='outlined'
+                                                                    label={option}
+                                                                    {...getTagProps({ index })}
+                                                                />
+                                                            ))
+                                                        }
+                                                        popupIcon={<CustomPopupIcon><FaPlus className='input-plus-icon' /></CustomPopupIcon>}
+                                                        renderInput={(params) => (
+                                                            <TextField {...params}
+                                                                placeholder='Add Teams'
+                                                                InputProps={{
+                                                                    ...params.InputProps,
+                                                                    sx: {
+                                                                        '& .MuiAutocomplete-popupIndicator': { '&:hover': { backgroundColor: 'white' } },
+                                                                        '& .MuiAutocomplete-endAdornment': {
+                                                                            mt: '-8px',
+                                                                            mr: '-8px',
+                                                                        }
+                                                                    }
+                                                                }}
+                                                             />
                                                         )}
-                                                        className={'select'}
-                                                        onChange={handleChange}
-                                                        error={!!errors?.currency?.[0]}
-                                                    >
-                                                        {state?.currency?.length && state?.currency.map((option: any) => (
-                                                            <MenuItem key={option[0]} value={option[0]}>
-                                                                {option[1]}
-                                                            </MenuItem>
-                                                        ))}
-                                                    </Select>
-                                                    <FormHelperText className='helperText'>{errors?.currency?.[0] ? errors?.currency[0] : ''}</FormHelperText>
+                                                    />
+                                                    <FormHelperText>{errors?.teams?.[0] || ''}</FormHelperText>
                                                 </FormControl>
                                             </div>
                                         </div>
@@ -438,7 +459,7 @@ export function AddOpportunity() {
                                                 </FormControl>
                                             </div>
                                             <div className='fieldSubContainer'>
-                                                <div className='fieldTitle'>Probability</div>
+                                                <div className='fieldTitle'>Probability(%)</div>
                                                 <TextField
                                                     type={'number'}
                                                     name='probability'
@@ -605,59 +626,6 @@ export function AddOpportunity() {
                                                     helperText={errors?.opportunity_attachment?.[0] ? errors?.opportunity_attachment[0] : ''}
                                                     error={!!errors?.opportunity_attachment?.[0]}
                                                 />
-                                            </div>
-                                        </div>
-                                        <div className='fieldContainer2'>
-                                            <div className='fieldSubContainer'>
-                                                <div className='fieldTitle' style={{ width: '35%' }}>Teams</div>
-                                                <FormControl error={!!errors?.teams?.[0]} sx={{ width: '85%' }}>
-                                                    <Autocomplete
-                                                        // ref={autocompleteRef}
-                                                        value={selectedTeams}
-                                                        multiple
-                                                        limitTags={5}
-                                                        options={state.teams || []}
-                                                        // options={state.contacts ? state.contacts.map((option: any) => option) : ['']}
-                                                        getOptionLabel={(option: any) => option}
-                                                        onChange={(e: any, value: any) => handleChange2('teams', value)}
-                                                        size='small'
-                                                        filterSelectedOptions
-                                                        renderTags={(value, getTagProps) =>
-                                                            value.map((option, index) => (
-                                                                <Chip
-                                                                    deleteIcon={<FaTimes style={{ width: '9px' }} />}
-                                                                    sx={{
-                                                                        backgroundColor: 'rgba(0, 0, 0, 0.08)',
-                                                                        height: '18px'
-
-                                                                    }}
-                                                                    variant='outlined'
-                                                                    label={option}
-                                                                    {...getTagProps({ index })}
-                                                                />
-                                                            ))
-                                                        }
-                                                        popupIcon={<CustomPopupIcon><FaPlus className='input-plus-icon' /></CustomPopupIcon>}
-                                                        renderInput={(params) => (
-                                                            <TextField {...params}
-                                                                placeholder='Add Teams'
-                                                                InputProps={{
-                                                                    ...params.InputProps,
-                                                                    sx: {
-                                                                        '& .MuiAutocomplete-popupIndicator': { '&:hover': { backgroundColor: 'white' } },
-                                                                        '& .MuiAutocomplete-endAdornment': {
-                                                                            mt: '-8px',
-                                                                            mr: '-8px',
-                                                                        }
-                                                                    }
-                                                                }}
-                                                             />
-                                                        )}
-                                                    />
-                                                    <FormHelperText>{errors?.teams?.[0] || ''}</FormHelperText>
-                                                </FormControl>
-                                            </div>
-                                            <div className='fieldSubContainer'>
                                             </div>
                                         </div>
                                     </Box>
