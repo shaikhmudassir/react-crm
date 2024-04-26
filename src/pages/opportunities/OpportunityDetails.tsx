@@ -18,6 +18,8 @@ import { CustomAppBar } from '../../components/CustomAppBar';
 import { FaPlus, FaStar } from 'react-icons/fa';
 import FormateTime from '../../components/FormateTime';
 import { Label } from '../../components/Label';
+import { stages } from './helper';
+import CustomSelect from './CustomSelect';
 
 export const formatDate = (dateString: any) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -127,7 +129,7 @@ export const OpportunityDetails = (props: any) => {
   const [comments, setComments] = useState([]);
   const [commentList, setCommentList] = useState('Recent Last');
   const [note, setNote] = useState('');
-
+  const [currentStage, setCurrentStage] = useState<string>('');
   useEffect(() => {
     getOpportunityDetails(state.opportunityId);
   }, [state.opportunityId]);
@@ -144,6 +146,7 @@ export const OpportunityDetails = (props: any) => {
         console.log(res, 'edd');
         if (!res.error) {
           setOpportunityDetails(res?.opportunity_obj);
+          setCurrentStage(res?.opportunity_obj?.stage)
           setUsers(res?.users);
           // setContacts(res?.contacts)
           // setIndustries(res?.industries)
@@ -235,8 +238,11 @@ export const OpportunityDetails = (props: any) => {
       },
     });
   };
-
-  const backbtnHandle = () => {
+  const handleStageChange = (value: string) => {
+    setCurrentStage(value);
+    // call update api console.log('curr-stage',value);
+};  
+const backbtnHandle = () => {
     navigate('/app/opportunities');
   };
 
@@ -333,7 +339,7 @@ export const OpportunityDetails = (props: any) => {
                       marginRight: '15px',
                     }}
                   >
-                    {opportunityDetails?.stage || '----'}
+                  <CustomSelect options={stages} currentValue={currentStage} setCurrentValue={handleStageChange}/>
                   </div>
                 </div>
               </div>
