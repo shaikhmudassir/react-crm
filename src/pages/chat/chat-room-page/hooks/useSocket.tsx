@@ -21,7 +21,8 @@ const useSocket = (props: ISOCKET) => {
     newSocket.onmessage = function (e) {
       const data = JSON.parse(e.data);
       //console.log("message-received->",data)
-      setRecvMessages((recvMessages) => [...recvMessages, data.message]);      
+      if(data.message.received)
+      setRecvMessages((recvMessages) => [...recvMessages, data.message.msg]);      
     };
 
     
