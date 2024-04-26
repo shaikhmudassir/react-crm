@@ -20,6 +20,7 @@ import FormateTime from '../../components/FormateTime';
 import { Label } from '../../components/Label';
 import { stages } from './helper';
 import CustomSelect from './CustomSelect';
+import { submitForm } from './service';
 
 export const formatDate = (dateString: any) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -239,7 +240,27 @@ export const OpportunityDetails = (props: any) => {
     });
   };
   const handleStageChange = (value: string) => {
-    setCurrentStage(value);
+    const data = {
+      stage: value,
+      name: opportunityDetails?.name,
+      account: opportunityDetails?.account?.id,
+      amount: opportunityDetails?.amount,
+      currency: opportunityDetails?.currency,
+      teams: opportunityDetails?.teams,
+      lead_source: opportunityDetails?.lead_source,
+      probability: opportunityDetails?.probability,
+      description: opportunityDetails?.description,
+      assigned_to: opportunityDetails?.assigned_to,
+      contact_name: opportunityDetails?.contact_name,
+      due_date: opportunityDetails?.closed_on,
+      tags: opportunityDetails?.tags,
+      opportunity_attachment: opportunityDetails?.opportunity_attachment
+    }
+    submitForm(data, state.opportunityId).then((res: any) => {
+      setCurrentStage(value);
+    })
+    .catch(() => {
+    })
     // call update api console.log('curr-stage',value);
 };  
 const backbtnHandle = () => {
