@@ -26,11 +26,34 @@ const KanbanBoard = (props: KANBANVIEW) => {
     stages: {},
   });
   const columnOrder = [
-    'NEEDS ANALYSIS',
-    'VALUE PROPOSITION',
-    'QUALIFICATION',
-    'CLOSED WON',
-    'PERCEPTION ANALYSIS'
+    [
+      "Enquiry Received",
+      "Enquiry Received"
+    ],
+    [
+      "Qualification",
+      "Qualification"
+    ],
+    [
+      "Quotation Sent",
+      "Quotation Sent"
+    ],
+    [
+      "Negotiation/Review",
+      "Negotiation/Review"
+    ],
+    [
+      "Closed Won",
+      "Closed Won"
+    ],
+    [
+      "Closed Lost",
+      "Closed Lost"
+    ],
+    [
+      "Closed-Lost to Competition",
+      "Closed-Lost to Competition"
+    ]
   ];
   useEffect(() => {
     if (data) {
@@ -64,7 +87,7 @@ const KanbanBoard = (props: KANBANVIEW) => {
       <DragDropContext onDragEnd={dragEnd}>
         {columnOrder &&
           columnOrder.map((stageName) => {
-            const stageObj = formattedData?.stages[stageName];
+            const stageObj = formattedData?.stages[stageName[0]];
             const opportunities = stageObj?.oppIds.map(
               (oppId: any) => formattedData.opportunities[oppId]
             );
