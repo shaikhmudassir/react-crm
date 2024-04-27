@@ -41,7 +41,7 @@ ${props =>
 
 export const KanbanColumn = (props: any) => {
   return (
-    <Container>
+    props.column?.title && <Container>
       <ColumnHeader>{props.column?.title}</ColumnHeader>
       <Droppable droppableId={props.column?.id}>
         {(provided, snapshot) => (
