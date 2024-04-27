@@ -18,6 +18,9 @@ import { CustomAppBar } from '../../components/CustomAppBar';
 import { FaPlus, FaStar } from 'react-icons/fa';
 import FormateTime from '../../components/FormateTime';
 import { Label } from '../../components/Label';
+import { stages } from './helper';
+import CustomSelect from './CustomSelect';
+import { submitForm } from './service';
 
 export const formatDate = (dateString: any) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -127,7 +130,7 @@ export const OpportunityDetails = (props: any) => {
   const [comments, setComments] = useState([]);
   const [commentList, setCommentList] = useState('Recent Last');
   const [note, setNote] = useState('');
-
+  const [currentStage, setCurrentStage] = useState<string>('');
   useEffect(() => {
     getOpportunityDetails(state.opportunityId);
   }, [state.opportunityId]);
@@ -144,6 +147,7 @@ export const OpportunityDetails = (props: any) => {
         console.log(res, 'edd');
         if (!res.error) {
           setOpportunityDetails(res?.opportunity_obj);
+          setCurrentStage(res?.opportunity_obj?.stage)
           setUsers(res?.users);
           // setContacts(res?.contacts)
           // setIndustries(res?.industries)
@@ -235,8 +239,31 @@ export const OpportunityDetails = (props: any) => {
       },
     });
   };
-
-  const backbtnHandle = () => {
+  const handleStageChange = (value: string) => {
+    const data = {
+      stage: value,
+      name: opportunityDetails?.name,
+      account: opportunityDetails?.account?.id,
+      amount: opportunityDetails?.amount,
+      currency: opportunityDetails?.currency,
+      teams: opportunityDetails?.teams,
+      lead_source: opportunityDetails?.lead_source,
+      probability: opportunityDetails?.probability,
+      description: opportunityDetails?.description,
+      assigned_to: opportunityDetails?.assigned_to,
+      contact_name: opportunityDetails?.contact_name,
+      due_date: opportunityDetails?.closed_on,
+      tags: opportunityDetails?.tags,
+      opportunity_attachment: opportunityDetails?.opportunity_attachment
+    }
+    submitForm(data, state.opportunityId).then((res: any) => {
+      setCurrentStage(value);
+    })
+    .catch(() => {
+    })
+    // call update api console.log('curr-stage',value);
+};  
+const backbtnHandle = () => {
     navigate('/app/opportunities');
   };
 
@@ -333,7 +360,7 @@ export const OpportunityDetails = (props: any) => {
                       marginRight: '15px',
                     }}
                   >
-                    {opportunityDetails?.stage || '----'}
+                  <CustomSelect options={stages} currentValue={currentStage} setCurrentValue={handleStageChange}/>
                   </div>
                 </div>
               </div>
