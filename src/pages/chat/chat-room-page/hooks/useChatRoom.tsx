@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useChatContext } from '../../context/chat';
-import { getMessageHistory } from '../../data/inbox';
+import { getLeadDetails, getMessageHistory } from '../../data/inbox';
 import { Message } from '../components/messages-list/data/get-messages';
 import useSocket from './useSocket';
 // import { useChatContext } from "pages/chat/context/chat";
@@ -10,9 +10,12 @@ export default function useChatRoom() {
   const [isShowIcon, setIsShowIcon] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [showLeadDetails, setShowLeadDetails] = useState(true);
+  const [leadDetails, setLeadDetails] = useState();
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [messages, setMessages] = useState<any>([]);
   const wa_id = chatCtx.activeChat?.wa_id;
+  const lead_id = chatCtx.activeChat?.lead;
   const { isConnected, sendMessage, recvMessages } = useSocket({
     roomId: wa_id || '',
   });
@@ -26,6 +29,11 @@ export default function useChatRoom() {
           return dateA - dateB;
         });
         setMessages(sortedMessages);
+      });
+    }
+    if(lead_id){
+      getLeadDetails(lead_id).then((res) => {
+        setLeadDetails(res.lead_obj)
       });
     }
   }, [chatCtx.activeChat?.id]);
@@ -82,5 +90,8 @@ export default function useChatRoom() {
     updateMessageList,
     isConnected,
     sendMessage,
+    showLeadDetails,
+    setShowLeadDetails,
+    leadDetails
   };
 }
