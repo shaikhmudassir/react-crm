@@ -11,6 +11,7 @@ import useNavigateToChat from "./hooks/useNavigateToChat";
 import { Container, Body, Background, FooterContainer, ScrollButton } from "./styles";
 import { IconBase } from "react-icons";
 import useSocket from "./hooks/useSocket";
+import LeadDetailsSection from "./components/lead-details";
 
 export default function ChatRoomPage() {
   const {
@@ -74,7 +75,7 @@ export default function ChatRoomPage() {
             setShowLeadDetails(true)
           }}
         >
-          {/* <ProfileSection name={activeInbox?.name ?? ""} image={activeInbox?.profile_image ?? ""} /> */}
+          <LeadDetailsSection leadDetails={leadDetails} />
         </Sidebar>
         <Sidebar
           title="Contact Info"
