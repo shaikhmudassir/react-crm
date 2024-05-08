@@ -11,6 +11,7 @@ import useNavigateToChat from "./hooks/useNavigateToChat";
 import { Container, Body, Background, FooterContainer, ScrollButton } from "./styles";
 import { IconBase } from "react-icons";
 import useSocket from "./hooks/useSocket";
+import LeadDetailsSection from "./components/lead-details";
 
 export default function ChatRoomPage() {
   const {
@@ -27,7 +28,10 @@ export default function ChatRoomPage() {
     messages,
     updateMessageList,
     isConnected, 
-    sendMessage
+    sendMessage,
+    leadDetails,
+    showLeadDetails,
+    setShowLeadDetails
   } = useChatRoom();
   useNavigateToChat(activeInbox);
   return (
@@ -63,6 +67,15 @@ export default function ChatRoomPage() {
         </Body>
         <Sidebar title="Search" isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)}>
           <SearchSection />
+        </Sidebar>
+        <Sidebar
+          title="Lead Details"
+          isOpen={showLeadDetails}
+          onClose={() => {
+            setShowLeadDetails(true)
+          }}
+        >
+          <LeadDetailsSection leadDetails={leadDetails} />
         </Sidebar>
         <Sidebar
           title="Contact Info"
