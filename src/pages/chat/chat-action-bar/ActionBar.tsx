@@ -12,6 +12,7 @@ const ActionBarContainer = styled.div`
   height: 50px;
   background-color: #f0f0f0; /* Example background color */
   border-bottom: 1px solid #ccc; /* Example border style */
+  padding: 0 225px; /* Add padding of 20px to left and right */
 
   a {
     text-decoration: none;
