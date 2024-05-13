@@ -7,7 +7,7 @@ import styled from 'styled-components'; // Import styled-components
 // Define a styled component for the action bar
 const ActionBarContainer = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start; /* Align items from left to right */
   align-items: center;
   height: 50px;
   background-color: #f0f0f0; /* Example background color */
@@ -17,10 +17,11 @@ const ActionBarContainer = styled.div`
     text-decoration: none;
     color: #333; /* Example text color */
     font-weight: bold;
+    margin-right: 15px; /* Example margin between items */
+  }
 
-    &:hover {
-      color: #555; /* Example hover color */
-    }
+  a:last-child {
+    margin-right: 0; /* Remove margin for the last item */
   }
 `;
 
