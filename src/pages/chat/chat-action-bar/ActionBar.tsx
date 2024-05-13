@@ -14,8 +14,10 @@ const ActionBarContainer = styled.div`
   border-bottom: 1px solid #ccc; /* Example border style */
   padding: 0 225px; /* Add padding of 20px to left and right */
 
-  a {
-    text-decoration: none;
+  button {
+    border: none;
+    background: none;
+    cursor: pointer;
     color: #333; /* Example text color */
     font-weight: bold;
     margin-right: 15px; /* Example margin between items */
@@ -29,8 +31,9 @@ const ActionBarContainer = styled.div`
 const ActionBar = () => {
   return (
     <ActionBarContainer>
-      <Link to="/">Home</Link>
-      <Link to="/contacts">Contacts</Link>
+ <button onClick={()=>{}}>All</button>
+      <button onClick={()=>{}}>Unread</button>
+      <button onClick={()=>{}}>Awaiting Reply</button>
       {/* Add more links/buttons as needed */}
     </ActionBarContainer>
   );
