@@ -37,8 +37,8 @@ export default function ChatProvider(props: { children: any }) {
   };
   useEffect(()=>{
     getChatContacts().then((res)=>{
-      // setInbox(res); uncomment later
-      setInbox(res.filter((i:any)=>i.name.includes('Sha')));
+      setInbox(res);
+      // setInbox(res.filter((i:any)=>i.name.includes('Sha')));
     });
   },[])
   return (
