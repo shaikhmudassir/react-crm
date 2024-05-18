@@ -137,7 +137,7 @@ export default function Opportunities(props: any) {
     }
     try {
       const offset = (currentPage - 1) * recordsPerPage;
-      await fetchData(`${OpportunityUrl}/?offset=${offset}&limit=${recordsPerPage}`, 'GET', null as any, Header)
+      await fetchData(`${OpportunityUrl}/?offset=${offset}&limit=1000`, 'GET', null as any, Header)
         // fetchData(`${OpportunityUrl}/`, 'GET', null as any, Header)
         .then((res) => {
           // console.log(res, 'Opportunity')
