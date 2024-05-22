@@ -39,6 +39,7 @@ export default function ChatRoomPage() {
     leadDetails,
     showLeadDetails,
     setShowLeadDetails,
+    initiateConversation
   } = useChatRoom();
   useNavigateToChat(activeInbox);
   return (
@@ -59,6 +60,7 @@ export default function ChatRoomPage() {
               onShowBottomIcon={handleShowIcon}
               shouldScrollToBottom={shouldScrollToBottom}
               messages={messages}
+              initiateConversation={initiateConversation}
             />
             <FooterContainer>
               {isShowIcon && (

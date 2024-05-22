@@ -1,9 +1,9 @@
-import { forwardRef, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { forwardRef } from 'react';
+import { useParams } from 'react-router-dom';
 
 // import Icon from "common/components/icons";
-import useScrollToBottom from "./hooks/useScrollToBottom";
-import { Message } from "./data/get-messages";
+import useScrollToBottom from './hooks/useScrollToBottom';
+import { Message } from './data/get-messages';
 import {
   ChatMessage,
   ChatMessageFiller,
@@ -13,19 +13,21 @@ import {
   DateWrapper,
   EncryptionMessage,
   MessageGroup,
-} from "./styles";
-import { IconBase } from "react-icons";
+} from './styles';
+import { IconBase } from 'react-icons';
+import { Button } from '@mui/material';
 
 type MessagesListProps = {
   onShowBottomIcon: Function;
   shouldScrollToBottom?: boolean;
-  messages: Message[]
+  messages: Message[];
+  initiateConversation: () => void;
 };
 
 export default function MessagesList(props: MessagesListProps) {
-  
+
   const params = useParams();
-  const { onShowBottomIcon, shouldScrollToBottom, messages } = props;
+  const { onShowBottomIcon, shouldScrollToBottom, messages, initiateConversation } = props;
   const { containerRef, lastMessageRef } = useScrollToBottom(
     onShowBottomIcon,
     shouldScrollToBottom,
@@ -36,20 +38,29 @@ export default function MessagesList(props: MessagesListProps) {
     <Container ref={containerRef}>
       <EncryptionMessage>
         <IconBase id="lock" className="icon" />
-        Messages are end-to-end encrypted. No one outside of this chat, not even WhatsApp, can read
-        or listen to them. Click to learn more.
+        Messages are end-to-end encrypted. No one outside of this chat, not even
+        WhatsApp, can read or listen to them. Click to learn more.
       </EncryptionMessage>
       <DateWrapper>
         <DateElem> TODAY </DateElem>
       </DateWrapper>
       <MessageGroup>
-        {messages?.map((message:Message, i:any) => {
-          if (i === messages.length - 1) {
-            return <SingleMessage key={message.id} message={message} ref={lastMessageRef} />;
-          } else {
-            return <SingleMessage key={message.id} message={message} />;
-          }
-        })}
+          {messages?.map((message: Message, i: any) => {
+            if (i === messages.length - 1) {
+              return (
+                <SingleMessage
+                  key={message.id}
+                  message={message}
+                  ref={lastMessageRef}
+                />
+              );
+            } else {
+              return <SingleMessage key={message.id} message={message} />;
+            }
+          })}
+        <Button variant="outlined" onClick={initiateConversation}>
+          Start Chat
+        </Button>
       </MessageGroup>
     </Container>
   );
@@ -61,12 +72,14 @@ const SingleMessage = forwardRef((props: { message: Message }, ref: any) => {
   const hours = messageDate.getHours();
   const minutes = messageDate.getMinutes();
   // Format the hours and minutes to HH:MM format
-  const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+  const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes
+    .toString()
+    .padStart(2, '0')}`;
 
   return (
     <ChatMessage
       key={message.id}
-      className={message.isOpponent ? "chat__msg--received" : "chat__msg--sent"}
+      className={message.isOpponent ? 'chat__msg--received' : 'chat__msg--sent'}
       ref={ref}
     >
       <span>{message.message}</span>
@@ -75,9 +88,13 @@ const SingleMessage = forwardRef((props: { message: Message }, ref: any) => {
         <span>{formattedTime}</span>
         {!message.isOpponent && (
           <IconBase
-            id={`${message.messageStatus === "SENT" ? "singleTick" : "doubleTick"}`}
+            id={`${
+              message.messageStatus === 'SENT' ? 'singleTick' : 'doubleTick'
+            }`}
             className={`chat__msg-status-icon ${
-              message.messageStatus === "READ" ? "chat__msg-status-icon--blue" : ""
+              message.messageStatus === 'READ'
+                ? 'chat__msg-status-icon--blue'
+                : ''
             }`}
           />
         )}
