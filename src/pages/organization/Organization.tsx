@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Box, Container } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import OrganizationModal from './OrganizationModal';
 import '../../styles/style.css'
+import { OrgUrl } from '../../services/ApiUrls';
+import { fetchData } from '../../components/FetchData';
 
 interface Item {
     org: {
@@ -13,30 +14,41 @@ interface Item {
 
 export default function Organization() {
     const navigate = useNavigate()
-
-    const [organizationModal, setOrganizationModal] = useState(false)
-
+    const headers = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('Token')
+    }
+    const getOrganization = () => {
+        fetchData(`${OrgUrl}/`, 'GET', null as any, headers)
+            .then((res: any) => {
+                if (res?.profile_org_list) {
+                    const org:Item = res?.profile_org_list[0]
+                    localStorage.setItem('org', org?.org?.id)
+                    if (localStorage.getItem('org')) {
+                        navigate('/')
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error)
+            })
+    }
     useEffect(() => {
         if (!localStorage.getItem('Token')) {
             navigate('/login')
         } else {
-            setOrganizationModal(true)
+            getOrganization();
         }
     }, [])
-
-    const handleClose = (event: any, reason: any) => {
-        if (reason && reason == "backdropClick") {
-            return;
-        }
-    }
 
     return (
         <Box>
             <Container sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                <OrganizationModal
+                {/* <OrganizationModal
                     open={organizationModal}
                     handleClose={handleClose}
-                />
+                /> */}
                 {/* <Card>
                     <List>
                         {
