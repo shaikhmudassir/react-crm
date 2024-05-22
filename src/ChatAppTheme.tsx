@@ -1,37 +1,34 @@
-import { Suspense, useEffect, useState } from "react";
-import GlobalStyle from "./global-styles";
-import ChatApp from "./ChatApp";
-import { MainPageLoader } from "./common/components/loader";
-import AppThemeProvider from "./common/theme";
-import { useNavigate } from "react-router-dom";
-import Organization from "./pages/organization/Organization";
+import { Suspense, useEffect, useState } from 'react';
+import GlobalStyle from './global-styles';
+import ChatApp from './ChatApp';
+import { MainPageLoader } from './common/components/loader';
+import AppThemeProvider from './common/theme';
+import { useNavigate } from 'react-router-dom';
 
 export default function ChatAppTheme() {
-  const navigate = useNavigate()
-  const [org, setOrg] = useState(false)
+  const navigate = useNavigate();
+  const [org, setOrg] = useState(false);
 
   useEffect(() => {
     if (!localStorage.getItem('Token')) {
-      navigate('/login')
+      navigate('/login');
     } else if (!localStorage.getItem('org')) {
-      setOrg(false)
+      setOrg(false);
     } else if (localStorage.getItem('Token') && localStorage.getItem('org')) {
-      setOrg(true)
+      setOrg(true);
     }
-  }, [navigate])
+  }, [navigate]);
 
   return (
-  <>
-    {org ?
-    <AppThemeProvider>
-      <GlobalStyle />
-      <Suspense fallback={<MainPageLoader />}>
-        <ChatApp />
-      </Suspense>
-    </AppThemeProvider>
-      :
-    <Organization />
-    }
-  </>
+    <>
+      {org && (
+        <AppThemeProvider>
+          <GlobalStyle />
+          <Suspense fallback={<MainPageLoader />}>
+            <ChatApp />
+          </Suspense>
+        </AppThemeProvider>
+      )}
+    </>
   );
 }

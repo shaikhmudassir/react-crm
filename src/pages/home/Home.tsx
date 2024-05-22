@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import Sidebar from '../../components/Sidebar';
-import Organization from '../organization/Organization';
 import { fetchData } from '../../components/FetchData';
 import { OrgUrl } from '../../services/ApiUrls';
 interface Item {
