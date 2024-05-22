@@ -16,6 +16,7 @@ export default function useChatRoom() {
   const [messages, setMessages] = useState<any>([]);
   const wa_id = chatCtx.activeChat?.wa_id;
   const lead_id = chatCtx.activeChat?.lead;
+  const userActiveChatName = chatCtx.activeChat?.name;
   const { isConnected, sendMessage, recvMessages } = useSocket({
     roomId: wa_id || '',
   });
@@ -75,6 +76,11 @@ export default function useChatRoom() {
     if (state === false) setShouldScrollToBottom(false);
   };
 
+  const initiateConversation = () => {
+    const defaultMessage = 'Hello '+userActiveChatName+', I am here to assist you. How can I help you today?';
+    sendMessage(defaultMessage)
+  }
+
   return {
     activeInbox: chatCtx.activeChat,
     handleMenuOpen,
@@ -92,6 +98,7 @@ export default function useChatRoom() {
     sendMessage,
     showLeadDetails,
     setShowLeadDetails,
-    leadDetails
+    leadDetails,
+    initiateConversation
   };
 }
