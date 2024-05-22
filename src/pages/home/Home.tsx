@@ -13,10 +13,13 @@ interface Item {
 }
 export const Home = (props: any) => {
   const navigate = useNavigate();
-
-  const [open, setOpen] = useState(true);
   const [org, setOrg] = useState(false);
-
+  
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    Authorization: localStorage.getItem('Token'),
+  };
   // const [localStorageChange, setLocalStorageChange] = useState(false);
 
   // useEffect(() => {
@@ -40,12 +43,6 @@ export const Home = (props: any) => {
     }
   }, [navigate]);
 
-  const headers = {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-    Authorization: localStorage.getItem('Token'),
-  };
-
   const getOrganization = () => {
     fetchData(`${OrgUrl}/`, 'GET', null as any, headers)
       .then((res: any) => {
@@ -61,7 +58,7 @@ export const Home = (props: any) => {
         console.error('Error:', error);
       });
   };
-  
+
   useEffect(() => {
     if (!localStorage.getItem('Token')) {
       navigate('/login');
@@ -83,7 +80,7 @@ export const Home = (props: any) => {
       {org && (
         <Sidebar
           // handleDrawerClose={() => handleDrawerClose}
-          open={open}
+          open={true}
         />
       ) }
     </Box>
