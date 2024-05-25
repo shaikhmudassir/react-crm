@@ -6,7 +6,6 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { fetchData } from './FetchData';
 import { ProfileUrl } from '../services/ApiUrls';
 import { Header1 } from './FetchData';
-import OrganizationModal from '../pages/organization/OrganizationModal';
 import Company from '../pages/company/Company';
 import AddCompany from '../pages/company/AddCompany';
 import CompanyDetails from '../pages/company/CompanyDetails';
@@ -53,9 +52,6 @@ export default function Sidebar(props: any) {
     const [drawerWidth, setDrawerWidth] = useState(200)
     const [headerWidth, setHeaderWidth] = useState(drawerWidth)
     const [userDetail, setUserDetail] = useState('')
-    const [organizationModal, setOrganizationModal] = useState(false)
-    const organizationModalClose = () => { setOrganizationModal(false) }
-
     useEffect(() => {
         toggleScreen()
     }, [navigate])
@@ -75,7 +71,6 @@ export default function Sidebar(props: any) {
     // toggleScreen()
     // }, [])
     const toggleScreen = () => {
-        // console.log(location.pathname.split('/'), 'll')
         if (location.pathname.split('/')[1] === '' || location.pathname.split('/')[1] === undefined || location.pathname.split('/')[2] === 'leads') {
             setScreen('leads')
         } else if (location.pathname.split('/')[2] === 'contacts') {
@@ -93,14 +88,9 @@ export default function Sidebar(props: any) {
         }
     }
 
-    // useEffect(() => {
-    //     userProfile()
-    // }, [])
-
     const userProfile = () => {
         fetchData(`${ProfileUrl}/`, 'GET', null as any, Header1)
             .then((res: any) => {
-                // console.log(res, 'user')
                 if (res?.user_obj) {
                     setUserDetail(res?.user_obj)
                 }
@@ -155,7 +145,6 @@ export default function Sidebar(props: any) {
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
-    // console.log(screen, 'sidebar');
     const context = { drawerWidth: drawerWidth, screen: screen }
     return (
         <>
@@ -219,12 +208,6 @@ export default function Sidebar(props: any) {
                                     }}>
                                         <ListItemIcon > <FaSignOutAlt fill='#3e79f7' /></ListItemIcon>
                                         <StyledListItemText primary={'Sign out'} sx={{ ml: '-20px', color: '#3e79f7' }} />
-                                    </StyledListItemButton>
-                                </ListItem>
-                                <ListItem disablePadding>
-                                    <StyledListItemButton onClick={() => setOrganizationModal(!organizationModal)}>
-                                        <ListItemIcon > <FaIndustry fill='#3e79f7' /></ListItemIcon>
-                                        <StyledListItemText primary={'Organization'} sx={{ ml: '-20px', color: '#3e79f7' }} />
                                     </StyledListItemButton>
                                 </ListItem>
                             </List>
@@ -318,10 +301,6 @@ export default function Sidebar(props: any) {
                         </Routes>
                     </Box>
                 </MyContext.Provider>
-                <OrganizationModal
-                    open={organizationModal}
-                    handleClose={organizationModalClose}
-                />
             </Box >
         </>
 
