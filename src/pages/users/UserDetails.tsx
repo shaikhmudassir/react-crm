@@ -99,12 +99,12 @@ export default function UserDetails() {
     //   }, [])
 
     const backbtnHandle = () => {
-        navigate('/app/users')
+        navigate('/app/employees')
     }
 
     const editHandle = () => {
         // navigate('/contacts/edit-contacts', { state: { value: contactDetails, address: newAddress } })
-        navigate('/app/users/edit-user', {
+        navigate('/app/employees/edit-user', {
             state: {
                 value: {
                     email: userDetails?.user_details?.email,
@@ -127,9 +127,9 @@ export default function UserDetails() {
         })
     }
 
-    const module = 'Users'
-    const crntPage = 'User Detail'
-    const backBtn = 'Back To Users'
+    const module = 'Employees'
+    const crntPage = 'Employee Detail'
+    const backBtn = 'Back To Employees'
     // console.log(userDetails, 'user');
     const updateUserStatus = (e:any)=>{
         const Header = {

@@ -101,7 +101,7 @@ export function AddUsers() {
   };
 
   const backbtnHandle = () => {
-    navigate('/app/users');
+    navigate('/app/employees');
   };
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -172,7 +172,7 @@ export function AddUsers() {
           // navigate('/contacts')profile_errors
 
           resetForm();
-          navigate('/app/users');
+          navigate('/app/employees');
         }
         if (res.error) {
           // profile_errors
@@ -208,9 +208,9 @@ export function AddUsers() {
     resetForm();
     backbtnHandle();
   };
-  const module = 'Users';
-  const crntPage = 'Add Users';
-  const backBtn = 'Back To Users';
+  const module = 'Employees';
+  const crntPage = 'Add Employee';
+  const backBtn = 'Back To Employees';
 
   // console.log(formData.profile_pic, 'formData.profile_pic')
   return (

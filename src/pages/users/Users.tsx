@@ -179,7 +179,7 @@ export default function Users() {
     }
 
     const userDetail = (userId: any) => {
-        navigate(`/app/users/user-details`, { state: { userId, detail: true } })
+        navigate(`/app/employees/user-details`, { state: { userId, detail: true } })
     }
     const handleRecordsPerPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
         if (tab == 'active') {
@@ -291,9 +291,9 @@ export default function Users() {
 
     const onAddUser = () => {
         if (!loading) {
-            navigate('/app/users/add-users')
+            navigate('/app/employees/add-users')
         }
-        // navigate('/users/add-users', {
+        // navigate('/employees/add-users', {
         //   state: {
         //     roles: usersData.roles,
         //     status: usersData.status
@@ -317,7 +317,7 @@ export default function Users() {
                 console.log(res, 'res');
                 if (!res.error) {
                     const data = res?.data?.profile_obj
-                    navigate('/app/users/edit-user', {
+                    navigate('/app/employees/edit-user', {
                         state: {
                             value: {
                                 email: data?.user_details?.email,
@@ -486,7 +486,7 @@ export default function Users() {
                         onClick={onAddUser}
                         className={'add-button'}
                     >
-                        Add User
+                        Add Employee
                     </Button>
                 </Stack>
             </CustomToolbar>
