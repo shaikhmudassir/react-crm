@@ -235,9 +235,9 @@ export function EditUser() {
     backbtnHandle();
     // resetForm()
   };
-  const module = 'Users';
-  const crntPage = 'Edit User';
-  const backBtn = state?.edit ? 'Back To Users' : 'Back To UserDetails';
+  const module = 'Employees';
+  const crntPage = 'Edit Employee';
+  const backBtn = state?.edit ? 'Back To Employees' : 'Back To EmployeeDetails';
 
   const inputStyles = {
     display: 'none',
