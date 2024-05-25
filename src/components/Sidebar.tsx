@@ -100,8 +100,8 @@ export default function Sidebar(props: any) {
             })
     }
 
-    // const navList1 = ['leads', 'contacts', 'opportunities', 'accounts', 'companies', 'users', 'cases', 'chat']
-    const navList = ['chat', 'leads', 'opportunities', 'contacts', 'accounts', 'companies', 'users']
+    const navList1 = ['leads', 'contacts', 'opportunities', 'accounts', 'companies', 'employees', 'cases', 'chat']
+    const navList = ['chat', 'leads', 'opportunities', 'contacts', 'accounts', 'companies', 'employees']
     const navIcons = (text: any, screen: any): React.ReactNode => {
         switch (text) {
             case 'leads':
@@ -116,8 +116,8 @@ export default function Sidebar(props: any) {
                 return screen === 'companies' ? <FaIndustry fill='#3e79f7' /> : <FaIndustry />
             // case 'analytics':
             //     return screen === 'analytics' ? <FaChartLine fill='#3e79f7' /> : <FaChartLine />
-            case 'users':
-                return screen === 'users' ? <FaUserFriends fill='#3e79f7' /> : <FaUserFriends />
+            case 'employees':
+                return screen === 'employees' ? <FaUserFriends fill='#3e79f7' /> : <FaUserFriends />
             case 'cases':
                 return screen === 'cases' ? <FaBriefcase fill='#3e79f7' /> : <FaBriefcase />
             default: return <FaDiceD6 fill='#3e79f7' />
@@ -286,10 +286,10 @@ export default function Sidebar(props: any) {
                             <Route path='/app/accounts/add-account' element={<AddAccount />} />
                             <Route path='/app/accounts/account-details' element={<AccountDetails />} />
                             <Route path='/app/accounts/edit-account' element={<EditAccount />} />
-                            <Route path='/app/users' element={<Users />} />
-                            <Route path='/app/users/add-users' element={<AddUsers />} />
-                            <Route path='/app/users/edit-user' element={<EditUser />} />
-                            <Route path='/app/users/user-details' element={<UserDetails />} />
+                            <Route path='/app/employees' element={<Users />} />
+                            <Route path='/app/employees/add-users' element={<AddUsers />} />
+                            <Route path='/app/employees/edit-user' element={<EditUser />} />
+                            <Route path='/app/employees/user-details' element={<UserDetails />} />
                             <Route path='/app/opportunities' element={<Opportunities />} />
                             <Route path='/app/opportunities/add-opportunity' element={<AddOpportunity />} />
                             <Route path='/app/opportunities/opportunity-details' element={<OpportunityDetails />} />

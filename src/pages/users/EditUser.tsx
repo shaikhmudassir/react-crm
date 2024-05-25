@@ -115,9 +115,9 @@ export function EditUser() {
 
   const backbtnHandle = () => {
     if (state?.edit) {
-      navigate('/app/users');
+      navigate('/app/employees');
     } else {
-      navigate('/app/users/user-details', {
+      navigate('/app/employees/user-details', {
         state: { userId: state?.id, detail: true },
       });
     }
@@ -198,7 +198,7 @@ export function EditUser() {
         // console.log('editsubmit:', res);
         if (!res.error) {
           resetForm();
-          navigate('/app/users');
+          navigate('/app/employees');
         }
         if (res.error) {
           setError(true);
