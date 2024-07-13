@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import { FaArrowDown } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { CompanyUrl } from '../../services/ApiUrls';
+import { TemplateUrl } from '../../services/ApiUrls';
 import { CustomAppBar } from '../../components/CustomAppBar';
 import { fetchData } from '../../components/FetchData';
 import '../../styles/style.css'
@@ -64,7 +64,7 @@ function EditTemplate() {
         // console.log('Form data:', data);
         const data = { name: formData.name }
         // console.log(data, 'edit')
-        fetchData(`${CompanyUrl}/${location?.state?.id}`, 'PUT', JSON.stringify(data), Header)
+        fetchData(`${TemplateUrl}/${location?.state?.id}`, 'PUT', JSON.stringify(data), Header)
             .then((res: any) => {
                 console.log('Form data:', res);
                 if (!res.error) {
@@ -85,11 +85,11 @@ function EditTemplate() {
     }
 
     const backbtnHandle = () => {
-        navigate('/app/companies/company-details', { state: { companyId: { id: location?.state?.id }, detail: true } })
+        navigate('/app/templates/template-details', { state: { templateId: { id: location?.state?.id }, detail: true } })
     }
-    const module = 'Companies'
-    const crntPage = 'Edit Company'
-    const backBtn = 'Back To Company Detail'
+    const module = 'Templates'
+    const crntPage = 'Edit Template'
+    const backBtn = 'Back To Template Detail'
 
     const onCancel = () => {
         setReset(true)
