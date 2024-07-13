@@ -131,13 +131,13 @@ function EditTemplate() {
                                                 <div className='fieldSubContainer'>
                                                     <div className='fieldTitle'>Locale</div>
                                                     <TextField
-                                                        name='name'
+                                                        name='locale'
                                                         value={formData.locale}
                                                         onChange={handleChange}
                                                         style={{ width: '70%' }}
                                                         size='small'
-                                                        helperText={errors?.name?.[0] ? errors?.name[0] : ''}
-                                                        error={!!errors?.name?.[0]}
+                                                        helperText={errors?.locale?.[0] ? errors?.locale[0] : ''}
+                                                        error={!!errors?.locale?.[0]}
                                                     />
                                                 </div>
                                         </div>
@@ -145,7 +145,7 @@ function EditTemplate() {
                                             <div className='fieldSubContainer'>
                                                     <div className='fieldTitle'>Message Body</div>
                                                     <TextField
-                                                        name='body'
+                                                        name='messageBody'
                                                         value={formData.messageBody}
                                                         onChange={handleChange}
                                                         style={{ width: '70%' }}
@@ -157,7 +157,7 @@ function EditTemplate() {
                                                 <div className='fieldSubContainer'>
                                                     <div className='fieldTitle'>Footer</div>
                                                     <TextField
-                                                        name='name'
+                                                        name='footerText'
                                                         value={formData.footerText}
                                                         onChange={handleChange}
                                                         style={{ width: '70%' }}

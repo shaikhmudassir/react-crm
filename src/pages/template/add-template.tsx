@@ -16,18 +16,20 @@ import { fetchData, Header } from '../../components/FetchData';
 import { AntSwitch, CustomSelectField, RequiredTextField } from '../../styles/CssStyled';
 import '../../styles/style.css'
 import { FiChevronDown } from '@react-icons/all-files/fi/FiChevronDown';
+import { FormErrors, TEMPLATEOBJECTTYPE } from './types';
 
-type FormErrors = {
-    name?: string[];
-};
-
+const defaultValues = {
+    name: '',
+    locale: '',
+    button:'',
+    footerText: '',
+    messageBody: ''
+}
 function AddTemplate() {
     const navigate = useNavigate()
     const { state } = useLocation()
     const [error, setError] = useState(false)
-    const [formData, setFormData] = useState({
-        name: ''
-    })
+    const [formData, setFormData] = useState<TEMPLATEOBJECTTYPE>(defaultValues)
     const [errors, setErrors] = useState<FormErrors>({});
 
     const handleChange = (e: any) => {
@@ -63,7 +65,7 @@ function AddTemplate() {
     };
 
     const resetForm = () => {
-        setFormData({ name: '' });
+        setFormData(defaultValues);
         setErrors({});
     }
     const backbtnHandle = () => {
@@ -92,26 +94,63 @@ function AddTemplate() {
                                 </AccordionSummary>
                                 <Divider className='divider' />
                                 <AccordionDetails>
-                                    <Box
-                                        sx={{ width: '98%', color: '#1A3353',mb:1 }}
+                                <Box
+                                        sx={{ width: '98%', color: '#1A3353' ,mb:1}}
                                         component='form'
                                         // noValidate
                                         autoComplete='off'
                                     >
                                         <div className='fieldContainer'>
                                             <div className='fieldSubContainer'>
-                                                <div className='fieldTitle'>Template Name</div>
-                                                <RequiredTextField
-                                                    name='name'
-                                                    value={formData.name}
-                                                    onChange={handleChange}
-                                                    style={{ width: '70%' }}
-                                                    size='small'
-                                                    helperText={errors?.name?.[0] ? errors?.name[0] : ''}
-                                                    error={!!errors?.name?.[0]}
-
-                                                />
-                                            </div>
+                                                    <div className='fieldTitle'>Template Name</div>
+                                                    <RequiredTextField
+                                                        name='name'
+                                                        value={formData.name}
+                                                        onChange={handleChange}
+                                                        style={{ width: '70%' }}
+                                                        size='small'
+                                                        helperText={errors?.name?.[0] ? errors?.name[0] : ''}
+                                                        error={!!errors?.name?.[0]}
+                                                    />
+                                                </div>
+                                                <div className='fieldSubContainer'>
+                                                    <div className='fieldTitle'>Locale</div>
+                                                    <RequiredTextField
+                                                        name='locale'
+                                                        value={formData.locale}
+                                                        onChange={handleChange}
+                                                        style={{ width: '70%' }}
+                                                        size='small'
+                                                        helperText={errors?.locale?.[0] ? errors?.locale[0] : ''}
+                                                        error={!!errors?.locale?.[0]}
+                                                    />
+                                                </div>
+                                        </div>
+                                        <div className='fieldContainer'>
+                                            <div className='fieldSubContainer'>
+                                                    <div className='fieldTitle'>Message Body</div>
+                                                    <RequiredTextField
+                                                        name='messageBody'
+                                                        value={formData.messageBody}
+                                                        onChange={handleChange}
+                                                        style={{ width: '70%' }}
+                                                        size='small'
+                                                        helperText={errors?.messageBody?.[0] ? errors?.messageBody[0] : ''}
+                                                        error={!!errors?.messageBody?.[0]}
+                                                    />
+                                                </div>
+                                                <div className='fieldSubContainer'>
+                                                    <div className='fieldTitle'>Footer</div>
+                                                    <TextField
+                                                        name='footerText'
+                                                        value={formData.footerText}
+                                                        onChange={handleChange}
+                                                        style={{ width: '70%' }}
+                                                        size='small'
+                                                        helperText={errors?.footerText?.[0] ? errors?.footerText[0] : ''}
+                                                        error={!!errors?.footerText?.[0]}
+                                                    />
+                                                </div>
                                         </div>
                                     </Box>
                                 </AccordionDetails>
