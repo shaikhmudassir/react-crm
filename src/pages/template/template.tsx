@@ -6,10 +6,10 @@ import { FiChevronRight } from "@react-icons/all-files/fi/FiChevronRight";
 import { getComparator, stableSort } from '../../components/Sorting';
 import { Spinner } from '../../components/Spinner';
 import { fetchData } from '../../components/FetchData';
-import { CompaniesUrl, TemplateUrl, ContactUrl, TemplatesUrl } from '../../services/ApiUrls';
+import { TemplateUrl, TemplatesUrl } from '../../services/ApiUrls';
 import { AntSwitch, CustomTab, CustomToolbar, FabLeft, FabRight, StyledTableCell, StyledTableRow } from '../../styles/CssStyled';
 import { useNavigate } from 'react-router-dom';
-import { FaTrashAlt } from 'react-icons/fa';
+import { FaEye, FaLink, FaTrashAlt } from 'react-icons/fa';
 import { DeleteModal } from '../../components/DeleteModal';
 import { FiChevronUp } from '@react-icons/all-files/fi/FiChevronUp';
 import { FiChevronDown } from '@react-icons/all-files/fi/FiChevronDown';
@@ -65,18 +65,26 @@ const response = [
     {
         templateId: 'i-24562',
         name: 'Launchzone',
-        status: 'approved/draft/submitted',
+        status: 'approved',
         type: 'text',
         actions: 'add',
-        updatedAt: 'timestamp'
+        updatedAt: '20-Mar-2023'
     },
     {
         templateId: 'i-112233',
         name: 'Hello Text',
-        status: 'approved/draft/submitted',
+        status: 'draft',
         type: 'text',
         actions: 'add',
-        updatedAt: 'timestamp'
+        updatedAt: '21-Mar-2023'
+    },
+    {
+        templateId: 'i-11224533',
+        name: 'Long Text',
+        status: 'submitted',
+        type: 'text',
+        actions: 'add',
+        updatedAt: '21-Mar-2023'
     }
 ]
 export default function Template() {
@@ -195,12 +203,12 @@ export default function Template() {
 
     const addTemplate = () => {
         if (!loading) {
-            navigate('/app/companies/add-template')
+            navigate('/app/templates/add-template')
         }
     }
 
     const templateDetail = (templateId: any) => {
-        navigate(`/app/companies/template-details`, { state: { templateId, detail: true } })
+        navigate(`/app/templates/template-details`, { state: { templateId, detail: true } })
     }
 
     const deleteRow = (deleteId: any) => {
@@ -210,6 +218,10 @@ export default function Template() {
     const deleteRowModalClose = () => {
         setDeleteRowModal(false)
         setSelectedId('')
+    }
+
+    const copyLink = (templateId: any)=>{
+
     }
     const modalDialog = 'Are You Sure you want to delete this template?'
     const modalTitle = 'Delete Template'
@@ -303,9 +315,14 @@ export default function Template() {
                                                         sx={{ border: 0, '&:nth-of-type(even)': { backgroundColor: 'whitesmoke' }, color: 'rgb(26, 51, 83)', textTransform: 'capitalize' }}>
                                                         <TableCell align='left' sx={{ border: 0, color: 'rgb(26, 51, 83)' }}>{index + 1}</TableCell>
                                                         <TableCell align='left' sx={{ cursor: 'pointer', color: '#3E79F7', textTransform: 'none', border: 0 }} onClick={() => templateDetail(item)}>{item.name}</TableCell>
-                                                        <TableCell align='left' sx={{ border: 0, color: 'rgb(26, 51, 83)' }}><FaTrashAlt style={{ cursor: 'pointer' }}
-                                                            onClick={() => deleteRow(item.id)}
-                                                        /></TableCell>
+                                                        <TableCell align='left' sx={{ border: 0, color: 'rgb(26, 51, 83)' }}>{item.type}</TableCell>
+                                                        <TableCell align='left' sx={{ border: 0, color: 'rgb(26, 51, 83)' }}>{item.status}</TableCell>
+                                                        <TableCell align='left' sx={{ border: 0, color: 'rgb(26, 51, 83)' }}>
+                                                            <FaTrashAlt style={{ cursor: 'pointer' }} onClick={() => deleteRow(item.id)}/>
+                                                            <FaEye style={{ cursor: 'pointer' }} onClick={() => templateDetail(item.id)}/>
+                                                            <FaLink style={{ cursor: 'pointer' }} onClick={() => copyLink(item.id)}/>
+                                                        </TableCell>
+                                                        <TableCell align='left' sx={{ border: 0, color: 'rgb(26, 51, 83)' }}>{item.updatedAt}</TableCell>
                                                     </TableRow>
                                                 ))
                                             : <TableRow> <TableCell colSpan={6} sx={{ border: 0 }}><Spinner /></TableCell></TableRow>
