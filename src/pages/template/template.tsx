@@ -202,9 +202,7 @@ export default function Template() {
     };
 
     const addTemplate = () => {
-        if (!loading) {
             navigate('/app/templates/add-template')
-        }
     }
 
     const templateDetails = (templateId: any) => {

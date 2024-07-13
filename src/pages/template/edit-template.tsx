@@ -63,8 +63,7 @@ function EditTemplate() {
             Authorization: localStorage.getItem('Token'),
             org: localStorage.getItem('org')
           }
-        const data = { name: formData.name }
-        fetchData(`${TemplateUrl}/${location?.state?.templateId}`, 'PUT', JSON.stringify(data), Header)
+        fetchData(`${TemplateUrl}/${location?.state?.templateId}`, 'PUT', JSON.stringify(formData), Header)
             .then((res: any) => {
                 console.log('Form data:', res);
                 if (!res.error) {
