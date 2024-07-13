@@ -8,7 +8,7 @@ import { CustomAppBar } from '../../components/CustomAppBar'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { TemplateUrl } from '../../services/ApiUrls'
 import { fetchData, Header } from '../../components/FetchData'
-import { TemplateForm } from './template-form'
+import { TemplateDetailsForm } from './template-details-form'
 import { TEMPLATEOBJECTTYPE } from './types'
 
 const sampleData: TEMPLATEOBJECTTYPE = {
@@ -62,7 +62,7 @@ export default function TemplateDetails() {
             <div>
                 <CustomAppBar backbtnHandle={backbtnHandle} module={module} backBtn={backBtn} crntPage={crntPage} editHandle={editHandle} />
                 <Box sx={{ mt: '120px', p: '20px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    {templateDetails && <TemplateForm templateDetails={templateDetails}/>}
+                    {templateDetails && <TemplateDetailsForm templateDetails={templateDetails}/>}
                 </Box>
             </div>
         </Box>

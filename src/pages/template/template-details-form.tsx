@@ -5,7 +5,7 @@ import { TEMPLATEOBJECTTYPE } from "./types";
 type TEMPLATEFORMPROPS = {
     templateDetails: TEMPLATEOBJECTTYPE
 }
-export const TemplateForm = (props: TEMPLATEFORMPROPS)=>{
+export const TemplateDetailsForm = (props: TEMPLATEFORMPROPS)=>{
     const  {templateDetails} = props;
     return <Box sx={{ width: '100%' }}>
     <Card sx={{ borderRadius: '7px' }}>
