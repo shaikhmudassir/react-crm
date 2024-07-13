@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import { FaArrowDown } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { CompaniesUrl, CompanyUrl, ContactUrl } from '../../services/ApiUrls';
+import { TemplatesUrl } from '../../services/ApiUrls';
 import { CustomAppBar } from '../../components/CustomAppBar';
 import { fetchData, Header } from '../../components/FetchData';
 import { AntSwitch, CustomSelectField, RequiredTextField } from '../../styles/CssStyled';
@@ -48,11 +48,11 @@ function AddTemplate() {
             org: localStorage.getItem('org')
           }
         const data = { name: formData.name }
-        fetchData(`${CompaniesUrl}`, 'POST', JSON.stringify(data), Header)
+        fetchData(`${TemplatesUrl}`, 'POST', JSON.stringify(data), Header)
             .then((res: any) => {
                 if (!res.error) {
                     resetForm()
-                    navigate('/app/companies')
+                    navigate('/app/templates')
                 }
                 if (res.error) {
                     setError(true)
@@ -67,11 +67,11 @@ function AddTemplate() {
         setErrors({});
     }
     const backbtnHandle = () => {
-        navigate('/app/companies')
+        navigate('/app/templates')
     }
-    const module = 'Companies'
-    const crntPage = 'Add Company'
-    const backBtn = 'Back To Companies'
+    const module = 'Templates'
+    const crntPage = 'Add Template'
+    const backBtn = 'Back To Templates'
 
     const onCancel = () => {
         resetForm();
@@ -88,7 +88,7 @@ function AddTemplate() {
                                 defaultExpanded
                             >
                                 <AccordionSummary expandIcon={<FiChevronDown style={{ fontSize: '25px' }} />}>
-                                    <Typography className='accordion-header'>Company Information</Typography>
+                                    <Typography className='accordion-header'>Template Information</Typography>
                                 </AccordionSummary>
                                 <Divider className='divider' />
                                 <AccordionDetails>
@@ -100,7 +100,7 @@ function AddTemplate() {
                                     >
                                         <div className='fieldContainer'>
                                             <div className='fieldSubContainer'>
-                                                <div className='fieldTitle'>Name</div>
+                                                <div className='fieldTitle'>Template Name</div>
                                                 <RequiredTextField
                                                     name='name'
                                                     value={formData.name}

@@ -6,53 +6,61 @@ import {
 } from '@mui/material'
 import { CustomAppBar } from '../../components/CustomAppBar'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { CompanyUrl, ContactUrl } from '../../services/ApiUrls'
+import { TemplateUrl } from '../../services/ApiUrls'
 import { fetchData, Header } from '../../components/FetchData'
 
 type response = {
     name: string;
-
+    locale: string,
+    messageBody: string,
+    footerText: string,
+    button: any
 };
-
+const sampleData = {
+    name: 'My Template',
+    locale: 'English (US)',
+    messageBody: 'Hello Shakib, I am here to assist you. How can I help you today?',
+    footerText: 'You can send text or email us at aaacrm@yorcrm.com',
+    button: ''
+}
 export default function TemplateDetails() {
     const navigate = useNavigate()
     const { state } = useLocation()
-    const [companyDetails, setCompanyDetails] = useState<response | null>(null)
+    const [templateDetails, setTemplateDetails] = useState<response | null>(null)
 
     useEffect(() => {
-        getCompanyDetail(state?.companyId?.id)
-    }, [state?.companyId?.id])
+        getTemplateDetail(state?.templateId?.id)
+    }, [state?.templateId?.id])
 
-    const getCompanyDetail = (id: any) => {
+    const getTemplateDetail = (id: any) => {
         const Header = {
             Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: localStorage.getItem('Token'),
             org: localStorage.getItem('org')
           }
-        fetchData(`${CompanyUrl}/${id}`, 'GET', null as any, Header)
+        fetchData(`${TemplateUrl}/${id}`, 'GET', null as any, Header)
             .then((res) => {
                 console.log(res, 'res');
                 if (!res.error) {
-                    setCompanyDetails(res?.data)
+                    setTemplateDetails(res?.data)
                 }
-            })
+            }).catch(()=>setTemplateDetails(sampleData))
     }
 
     const backbtnHandle = () => {
-        navigate('/app/companies')
+        navigate('/app/templates')
     }
 
     const editHandle = () => {
-        navigate('/app/companies/edit-company', {
-            state: { value: { name: companyDetails?.name }, id: state?.companyId?.id }
+        navigate('/app/templates/edit-template', {
+            state: { value: { name: templateDetails?.name }, id: state?.templateId?.id }
         })
     }
 
-    const module = 'Companies'
-    const crntPage = 'Company Detail'
-    const backBtn = 'Back To Companies'
-    // console.log(state, 'Companies');
+    const module = 'Templates'
+    const crntPage = 'Template Detail'
+    const backBtn = 'Back To Templates'
 
     return (
         <Box sx={{ mt: '60px' }}>
@@ -63,14 +71,34 @@ export default function TemplateDetails() {
                         <Card sx={{ borderRadius: '7px' }}>
                             <div style={{ padding: '20px', borderBottom: '1px solid lightgray', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <div style={{ fontWeight: 600, fontSize: '18px', color: '#1a3353f0' }}>
-                                    Company Information
+                                    Template Information
                                 </div>
                             </div>
                             <div style={{ padding: '20px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <div style={{ width: '32%' }}>
+                            <div style={{ width: '32%' }}>
                                     <div className='title2'>Name</div>
                                     <div className='title3'>
-                                        {companyDetails?.name || '---'}
+                                        {templateDetails?.name || '---'}
+                                    </div>
+                                </div>
+                                <div style={{ width: '32%' }}>
+                                    <div className='title2'>Locale</div>
+                                    <div className='title3'>
+                                        {templateDetails?.locale || '---'}
+                                    </div>
+                                </div>
+                            </div>
+                            <div style={{ padding: '20px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <div style={{ width: '32%' }}>
+                                    <div className='title2'>Message Body</div>
+                                    <div className='title3'>
+                                        {templateDetails?.messageBody || '---'}
+                                    </div>
+                                </div>
+                                <div style={{ width: '32%' }}>
+                                    <div className='title2'>Message Footer</div>
+                                    <div className='title3'>
+                                        {templateDetails?.footerText || '---'}
                                     </div>
                                 </div>
                             </div>
