@@ -8,15 +8,10 @@ import { CustomAppBar } from '../../components/CustomAppBar'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { TemplateUrl } from '../../services/ApiUrls'
 import { fetchData, Header } from '../../components/FetchData'
+import { TemplateForm } from './template-form'
+import { TEMPLATEOBJECTTYPE } from './types'
 
-type response = {
-    name: string;
-    locale: string,
-    messageBody: string,
-    footerText: string,
-    button: any
-};
-const sampleData = {
+const sampleData: TEMPLATEOBJECTTYPE = {
     name: 'My Template',
     locale: 'English (US)',
     messageBody: 'Hello Shakib, I am here to assist you. How can I help you today?',
@@ -26,7 +21,7 @@ const sampleData = {
 export default function TemplateDetails() {
     const navigate = useNavigate()
     const { state } = useLocation()
-    const [templateDetails, setTemplateDetails] = useState<response | null>(null)
+    const [templateDetails, setTemplateDetails] = useState<TEMPLATEOBJECTTYPE | null>(null)
 
     useEffect(() => {
         getTemplateDetail(state?.templateId?.id)
@@ -67,43 +62,7 @@ export default function TemplateDetails() {
             <div>
                 <CustomAppBar backbtnHandle={backbtnHandle} module={module} backBtn={backBtn} crntPage={crntPage} editHandle={editHandle} />
                 <Box sx={{ mt: '120px', p: '20px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Box sx={{ width: '100%' }}>
-                        <Card sx={{ borderRadius: '7px' }}>
-                            <div style={{ padding: '20px', borderBottom: '1px solid lightgray', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <div style={{ fontWeight: 600, fontSize: '18px', color: '#1a3353f0' }}>
-                                    Template Information
-                                </div>
-                            </div>
-                            <div style={{ padding: '20px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <div style={{ width: '32%' }}>
-                                    <div className='title2'>Name</div>
-                                    <div className='title3'>
-                                        {templateDetails?.name || '---'}
-                                    </div>
-                                </div>
-                                <div style={{ width: '32%' }}>
-                                    <div className='title2'>Locale</div>
-                                    <div className='title3'>
-                                        {templateDetails?.locale || '---'}
-                                    </div>
-                                </div>
-                            </div>
-                            <div style={{ padding: '20px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <div style={{ width: '32%' }}>
-                                    <div className='title2'>Message Body</div>
-                                    <div className='title3'>
-                                        {templateDetails?.messageBody || '---'}
-                                    </div>
-                                </div>
-                                <div style={{ width: '32%' }}>
-                                    <div className='title2'>Message Footer</div>
-                                    <div className='title3'>
-                                        {templateDetails?.footerText || '---'}
-                                    </div>
-                                </div>
-                            </div>
-                        </Card>
-                    </Box>
+                    {templateDetails && <TemplateForm templateDetails={templateDetails}/>}
                 </Box>
             </div>
         </Box>
