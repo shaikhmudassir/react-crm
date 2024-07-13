@@ -24,17 +24,16 @@ export default function TemplateDetails() {
     const [templateDetails, setTemplateDetails] = useState<TEMPLATEOBJECTTYPE | null>(null)
 
     useEffect(() => {
-        getTemplateDetail(state?.templateId?.id)
-    }, [state?.templateId?.id])
-
-    const getTemplateDetail = (id: any) => {
+        getTemplateDetail(state?.templateId)
+    }, [state?.templateId])
+    const getTemplateDetail = (templateId: any) => {
         const Header = {
             Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: localStorage.getItem('Token'),
             org: localStorage.getItem('org')
           }
-        fetchData(`${TemplateUrl}/${id}`, 'GET', null as any, Header)
+        fetchData(`${TemplateUrl}/${templateId}`, 'GET', null as any, Header)
             .then((res) => {
                 console.log(res, 'res');
                 if (!res.error) {
@@ -49,7 +48,7 @@ export default function TemplateDetails() {
 
     const editHandle = () => {
         navigate('/app/templates/edit-template', {
-            state: { value: templateDetails, id: state?.templateId?.id }
+            state: { value: templateDetails, templateId: state?.templateId}
         })
     }
 

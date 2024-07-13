@@ -207,7 +207,7 @@ export default function Template() {
         }
     }
 
-    const templateDetail = (templateId: any) => {
+    const templateDetails = (templateId: any) => {
         navigate(`/app/templates/template-details`, { state: { templateId, detail: true } })
     }
 
@@ -314,13 +314,13 @@ export default function Template() {
                                                         key={index}
                                                         sx={{ border: 0, '&:nth-of-type(even)': { backgroundColor: 'whitesmoke' }, color: 'rgb(26, 51, 83)', textTransform: 'capitalize' }}>
                                                         <TableCell align='left' sx={{ border: 0, color: 'rgb(26, 51, 83)' }}>{index + 1}</TableCell>
-                                                        <TableCell align='left' sx={{ cursor: 'pointer', color: '#3E79F7', textTransform: 'none', border: 0 }} onClick={() => templateDetail(item)}>{item.name}</TableCell>
+                                                        <TableCell align='left' sx={{ cursor: 'pointer', color: '#3E79F7', textTransform: 'none', border: 0 }} onClick={() => templateDetails(item.templateId)}>{item.name}</TableCell>
                                                         <TableCell align='left' sx={{ border: 0, color: 'rgb(26, 51, 83)' }}>{item.type}</TableCell>
                                                         <TableCell align='left' sx={{ border: 0, color: 'rgb(26, 51, 83)' }}>{item.status}</TableCell>
                                                         <TableCell align='left' sx={{ border: 0, color: 'rgb(26, 51, 83)' }}>
-                                                            <FaTrashAlt style={{ cursor: 'pointer' }} onClick={() => deleteRow(item.id)}/>
-                                                            <FaEye style={{ cursor: 'pointer' }} onClick={() => templateDetail(item.id)}/>
-                                                            <FaLink style={{ cursor: 'pointer' }} onClick={() => copyLink(item.id)}/>
+                                                            <FaTrashAlt style={{ cursor: 'pointer' }} onClick={() => deleteRow(item.templateId)}/>
+                                                            <FaEye style={{ cursor: 'pointer' }} onClick={() => templateDetails(item.templateId)}/>
+                                                            <FaLink style={{ cursor: 'pointer' }} onClick={() => copyLink(item.templateId)}/>
                                                         </TableCell>
                                                         <TableCell align='left' sx={{ border: 0, color: 'rgb(26, 51, 83)' }}>{item.updatedAt}</TableCell>
                                                     </TableRow>

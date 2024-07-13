@@ -34,7 +34,7 @@ function EditTemplate() {
     const [errors, setErrors] = useState<FormErrors>({});
     useEffect(() => {
         setFormData(location?.state?.value)
-    }, [location?.state?.id])
+    }, [location?.state?.templateId])
 
     useEffect(() => {
         if (reset) {
@@ -63,10 +63,8 @@ function EditTemplate() {
             Authorization: localStorage.getItem('Token'),
             org: localStorage.getItem('org')
           }
-        // console.log('Form data:', data);
         const data = { name: formData.name }
-        // console.log(data, 'edit')
-        fetchData(`${TemplateUrl}/${location?.state?.id}`, 'PUT', JSON.stringify(data), Header)
+        fetchData(`${TemplateUrl}/${location?.state?.templateId}`, 'PUT', JSON.stringify(data), Header)
             .then((res: any) => {
                 console.log('Form data:', res);
                 if (!res.error) {
@@ -87,7 +85,7 @@ function EditTemplate() {
     }
 
     const backbtnHandle = () => {
-        navigate('/app/templates/template-details', { state: { templateId: { id: location?.state?.id }, detail: true } })
+        navigate('/app/templates/template-details', { state: { templateId: location?.state?.templateId, detail: true } })
     }
     const module = 'Templates'
     const crntPage = 'Edit Template'
