@@ -49,8 +49,7 @@ function AddTemplate() {
             Authorization: localStorage.getItem('Token'),
             org: localStorage.getItem('org')
           }
-        const data = { name: formData.name }
-        fetchData(`${TemplatesUrl}`, 'POST', JSON.stringify(data), Header)
+        fetchData(`${TemplatesUrl}`, 'POST', JSON.stringify(formData), Header)
             .then((res: any) => {
                 if (!res.error) {
                     resetForm()
