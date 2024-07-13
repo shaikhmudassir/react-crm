@@ -49,7 +49,7 @@ export default function TemplateDetails() {
 
     const editHandle = () => {
         navigate('/app/templates/edit-template', {
-            state: { value: { name: templateDetails?.name }, id: state?.templateId?.id }
+            state: { value: templateDetails, id: state?.templateId?.id }
         })
     }
 

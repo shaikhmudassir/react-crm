@@ -16,19 +16,21 @@ import { CustomAppBar } from '../../components/CustomAppBar';
 import { fetchData } from '../../components/FetchData';
 import '../../styles/style.css'
 import { FiChevronDown } from '@react-icons/all-files/fi/FiChevronDown';
+import { FormErrors, TEMPLATEOBJECTTYPE } from './types';
 
-type FormErrors = {
-    name?: string[];
-};
-
+const defaultValues = {
+    name: '',
+    locale: '',
+    button:'',
+    footerText: '',
+    messageBody: ''
+}
 function EditTemplate() {
     const navigate = useNavigate()
     const location = useLocation();
     const [reset, setReset] = useState(false)
     const [error, setError] = useState(false)
-    const [formData, setFormData] = useState({
-        name: ''
-    })
+    const [formData, setFormData] = useState<TEMPLATEOBJECTTYPE>(defaultValues)
     const [errors, setErrors] = useState<FormErrors>({});
     useEffect(() => {
         setFormData(location?.state?.value)
@@ -80,7 +82,7 @@ function EditTemplate() {
     };
 
     const resetForm = () => {
-        setFormData({ name: '' });
+        setFormData(defaultValues);
         setErrors({});
     }
 
@@ -95,7 +97,6 @@ function EditTemplate() {
         setReset(true)
         backbtnHandle()
     }
-    // console.log(formData, 'editform')
     return (
         <Box sx={{ mt: '60px' }}>
             <CustomAppBar backbtnHandle={backbtnHandle} module={module} crntPage={crntPage} backBtn={backBtn} onCancel={onCancel} onSubmit={handleSubmit} />
@@ -119,17 +120,55 @@ function EditTemplate() {
                                     >
                                         <div className='fieldContainer'>
                                             <div className='fieldSubContainer'>
-                                                <div className='fieldTitle'>Salutation</div>
-                                                <TextField
-                                                    name='name'
-                                                    value={formData.name}
-                                                    onChange={handleChange}
-                                                    style={{ width: '70%' }}
-                                                    size='small'
-                                                    helperText={errors?.name?.[0] ? errors?.name[0] : ''}
-                                                    error={!!errors?.name?.[0]}
-                                                />
-                                            </div>
+                                                    <div className='fieldTitle'>Template Name</div>
+                                                    <TextField
+                                                        name='name'
+                                                        value={formData.name}
+                                                        onChange={handleChange}
+                                                        style={{ width: '70%' }}
+                                                        size='small'
+                                                        helperText={errors?.name?.[0] ? errors?.name[0] : ''}
+                                                        error={!!errors?.name?.[0]}
+                                                    />
+                                                </div>
+                                                <div className='fieldSubContainer'>
+                                                    <div className='fieldTitle'>Locale</div>
+                                                    <TextField
+                                                        name='name'
+                                                        value={formData.locale}
+                                                        onChange={handleChange}
+                                                        style={{ width: '70%' }}
+                                                        size='small'
+                                                        helperText={errors?.name?.[0] ? errors?.name[0] : ''}
+                                                        error={!!errors?.name?.[0]}
+                                                    />
+                                                </div>
+                                        </div>
+                                        <div className='fieldContainer'>
+                                            <div className='fieldSubContainer'>
+                                                    <div className='fieldTitle'>Message Body</div>
+                                                    <TextField
+                                                        name='body'
+                                                        value={formData.messageBody}
+                                                        onChange={handleChange}
+                                                        style={{ width: '70%' }}
+                                                        size='small'
+                                                        helperText={errors?.messageBody?.[0] ? errors?.messageBody[0] : ''}
+                                                        error={!!errors?.messageBody?.[0]}
+                                                    />
+                                                </div>
+                                                <div className='fieldSubContainer'>
+                                                    <div className='fieldTitle'>Footer</div>
+                                                    <TextField
+                                                        name='name'
+                                                        value={formData.footerText}
+                                                        onChange={handleChange}
+                                                        style={{ width: '70%' }}
+                                                        size='small'
+                                                        helperText={errors?.footerText?.[0] ? errors?.footerText[0] : ''}
+                                                        error={!!errors?.footerText?.[0]}
+                                                    />
+                                                </div>
                                         </div>
                                     </Box>
                                 </AccordionDetails>

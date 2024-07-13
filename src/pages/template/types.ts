@@ -5,3 +5,11 @@ export type TEMPLATEOBJECTTYPE = {
     footerText: string;
     button: any
 };
+
+export type FormErrors = {
+    name?: string[];
+    locale?:  string[],
+    button?: string[],
+    footerText?:  string[],
+    messageBody?:  string[]
+};
