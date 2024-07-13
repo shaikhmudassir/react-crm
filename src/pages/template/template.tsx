@@ -6,7 +6,7 @@ import { FiChevronRight } from "@react-icons/all-files/fi/FiChevronRight";
 import { getComparator, stableSort } from '../../components/Sorting';
 import { Spinner } from '../../components/Spinner';
 import { fetchData } from '../../components/FetchData';
-import { CompaniesUrl, CompanyUrl, ContactUrl } from '../../services/ApiUrls';
+import { CompaniesUrl, TemplateUrl, ContactUrl, TemplatesUrl } from '../../services/ApiUrls';
 import { AntSwitch, CustomTab, CustomToolbar, FabLeft, FabRight, StyledTableCell, StyledTableRow } from '../../styles/CssStyled';
 import { useNavigate } from 'react-router-dom';
 import { FaTrashAlt } from 'react-icons/fa';
@@ -28,26 +28,61 @@ const headCells: readonly HeadCell[] = [
         id: '',
         numeric: false,
         disablePadding: false,
-        label: ''
+        label: '#'
     },
     {
         id: 'name',
         numeric: false,
         disablePadding: false,
-        label: 'Company'
+        label: 'Template Name'
     },
     {
-        id: '',
-        numeric: true,
+        id: 'type',
+        numeric: false,
         disablePadding: false,
-        label: 'Action'
+        label: 'Type'
+    },
+    {
+        id: 'status',
+        numeric: false,
+        disablePadding: false,
+        label: 'Status'
+    },
+    {
+        id: 'actions',
+        numeric: false,
+        disablePadding: false,
+        label: 'Actions'
+    },
+    {
+        id: 'updatedAt',
+        numeric: false,
+        disablePadding: false,
+        label: 'Updated At'
     }
 ]
-
+const response = [
+    {
+        templateId: 'i-24562',
+        name: 'Launchzone',
+        status: 'approved/draft/submitted',
+        type: 'text',
+        actions: 'add',
+        updatedAt: 'timestamp'
+    },
+    {
+        templateId: 'i-112233',
+        name: 'Hello Text',
+        status: 'approved/draft/submitted',
+        type: 'text',
+        actions: 'add',
+        updatedAt: 'timestamp'
+    }
+]
 export default function Template() {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(true);
-    const [companyList, setCompanyList] = useState([]);
+    const [templateList, setTemplateList] = useState<any>([]);
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(10)
 
@@ -66,7 +101,7 @@ export default function Template() {
 
 
     useEffect(() => {
-        getCompany()
+        getTemplate()
     }, [])
 
     const handleChangePage = (event: any, newPage: any) => {
@@ -78,20 +113,21 @@ export default function Template() {
         setPage(0)
     }
 
-    const getCompany = () => {
+    const getTemplate = () => {
         const Header = {
             Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: localStorage.getItem('Token'),
             org: localStorage.getItem('org')
           }
-        fetchData(`${CompaniesUrl}`, 'GET', null as any, Header)
+        fetchData(`${TemplatesUrl}`, 'GET', null as any, Header)
             .then((data) => {
                 if (!data.error) {
-                    setCompanyList(data.data);
+                    // setTemplateList(data.data);
+                    setTemplateList(response);
                     setLoading(false)
                 }
-            })
+            }).catch(()=>setTemplateList(response))
     }
 
     const handleRequestSort = (event: any, property: any) => {
@@ -107,11 +143,11 @@ export default function Template() {
             Authorization: localStorage.getItem('Token'),
             org: localStorage.getItem('org')
           }
-        fetchData(`${CompanyUrl}/${selectedId}`, 'DELETE', null as any, Header)
+        fetchData(`${TemplateUrl}/${selectedId}`, 'DELETE', null as any, Header)
             .then((res: any) => {
                 if (!res.error) {
                     deleteRowModalClose()
-                    getCompany()
+                    getTemplate()
                 }
             })
             .catch(() => {
@@ -157,14 +193,14 @@ export default function Template() {
         return pageNumbers;
     };
 
-    const addCompany = () => {
+    const addTemplate = () => {
         if (!loading) {
-            navigate('/app/companies/add-company')
+            navigate('/app/companies/add-template')
         }
     }
 
-    const companyDetail = (companyId: any) => {
-        navigate(`/app/companies/company-details`, { state: { companyId, detail: true } })
+    const templateDetail = (templateId: any) => {
+        navigate(`/app/companies/template-details`, { state: { templateId, detail: true } })
     }
 
     const deleteRow = (deleteId: any) => {
@@ -175,8 +211,8 @@ export default function Template() {
         setDeleteRowModal(false)
         setSelectedId('')
     }
-    const modalDialog = 'Are You Sure you want to delete this company?'
-    const modalTitle = 'Delete Company'
+    const modalDialog = 'Are You Sure you want to delete this template?'
+    const modalTitle = 'Delete Template'
 
     const recordsList = [[10, '10 Records per page'], [20, '20 Records per page'], [30, '30 Records per page'], [40, '40 Records per page'], [50, '50 Records per page']]
 
@@ -223,10 +259,10 @@ export default function Template() {
                     <Button
                         variant='contained'
                         startIcon={<FiPlus className='plus-icon' />}
-                        onClick={addCompany}
+                        onClick={addTemplate}
                         className={'add-button'}
                     >
-                        Add Company
+                        Add Template
                     </Button>
                 </Stack>
             </CustomToolbar>
@@ -258,15 +294,15 @@ export default function Template() {
                 </TableHead> */}
                                 <TableBody>
                                     {
-                                        companyList?.length
-                                            ? stableSort(companyList, getComparator(order, orderBy))
+                                        templateList?.length
+                                            ? stableSort(templateList, getComparator(order, orderBy))
                                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item: any, index: any) => (
                                                     <TableRow
                                                         tabIndex={-1}
                                                         key={index}
                                                         sx={{ border: 0, '&:nth-of-type(even)': { backgroundColor: 'whitesmoke' }, color: 'rgb(26, 51, 83)', textTransform: 'capitalize' }}>
                                                         <TableCell align='left' sx={{ border: 0, color: 'rgb(26, 51, 83)' }}>{index + 1}</TableCell>
-                                                        <TableCell align='left' sx={{ cursor: 'pointer', color: '#3E79F7', textTransform: 'none', border: 0 }} onClick={() => companyDetail(item)}>{item.name}</TableCell>
+                                                        <TableCell align='left' sx={{ cursor: 'pointer', color: '#3E79F7', textTransform: 'none', border: 0 }} onClick={() => templateDetail(item)}>{item.name}</TableCell>
                                                         <TableCell align='left' sx={{ border: 0, color: 'rgb(26, 51, 83)' }}><FaTrashAlt style={{ cursor: 'pointer' }}
                                                             onClick={() => deleteRow(item.id)}
                                                         /></TableCell>

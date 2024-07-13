@@ -12,6 +12,9 @@ export const OrgUrl = 'org'
 
 export const CompanyUrl = 'leads/company'
 export const CompaniesUrl = 'leads/companies'
+// templates URL
+export const TemplateUrl = 'template'
+export const TemplatesUrl = 'templates'
 // Lead
 export const LeadUrl = 'leads'
 // Contact
