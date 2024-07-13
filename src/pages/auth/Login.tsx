@@ -122,14 +122,14 @@ export default function Login() {
                 >
                     <Grid item >
                         <Stack sx={{ alignItems: 'center' }}>
-                            <h3>Welcome to YorCRM</h3>
+                            <h3>Welcome to AAA CRM</h3>
                             <img
                                 src={imgLogin}
                                 alt='register_ad_image'
                                 className='register-ad-image'
                             />
                             <footer className='register-footer'>
-                                bottlecrm.com
+                                AAAcrm.com
                             </footer>
                         </Stack>
                     </Grid>
