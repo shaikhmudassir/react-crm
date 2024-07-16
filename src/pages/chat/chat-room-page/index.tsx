@@ -19,6 +19,7 @@ import { IconBase } from 'react-icons';
 import useSocket from './hooks/useSocket';
 import LeadDetailsSection from './components/lead-details';
 import ActionBar from '../chat-action-bar/ActionBar';
+import TemplatesSection from './components/templates';
 
 export default function ChatRoomPage() {
   const {
@@ -26,6 +27,8 @@ export default function ChatRoomPage() {
     handleMenuOpen,
     handleShowIcon,
     isProfileOpen,
+    isTemplateOpen,
+    setIsTemplateOpen,
     isSearchOpen,
     isShowIcon,
     setIsProfileOpen,
@@ -54,13 +57,16 @@ export default function ChatRoomPage() {
               image={activeInbox?.profile_image ?? ''}
               subTitle={activeInbox?.isOnline ? 'Online' : ''}
               onSearchClick={() => handleMenuOpen('search')}
-              onProfileClick={() => handleMenuOpen('profile')}
+              onProfileClick={() => {
+                handleMenuOpen('profile')
+                setIsProfileOpen(!isProfileOpen);
+              }}
             />
             <MessagesList
               onShowBottomIcon={handleShowIcon}
               shouldScrollToBottom={shouldScrollToBottom}
               messages={messages}
-              initiateConversation={initiateConversation}
+              initiateConversation={()=>setIsTemplateOpen(!isTemplateOpen)}
             />
             <FooterContainer>
               {isShowIcon && (
@@ -83,25 +89,38 @@ export default function ChatRoomPage() {
           >
             <SearchSection />
           </Sidebar>
+          {isTemplateOpen && 
+            <Sidebar
+              title="Templates Section"
+              isOpen={isTemplateOpen}
+              onClose={() => {
+                setIsTemplateOpen(false)
+              }}
+            >
+              <TemplatesSection
+                name={activeInbox?.name ?? ''}
+                image={activeInbox?.profile_image ?? ''}
+              />
+            </Sidebar>}
           <Sidebar
-            title="Lead Details"
-            isOpen={showLeadDetails}
-            onClose={() => {
-              setShowLeadDetails(true);
-            }}
-          >
-            <LeadDetailsSection leadDetails={leadDetails} />
-          </Sidebar>
-          <Sidebar
-            title="Contact Info"
-            isOpen={isProfileOpen}
-            onClose={() => setIsProfileOpen(false)}
-          >
-            <ProfileSection
-              name={activeInbox?.name ?? ''}
-              image={activeInbox?.profile_image ?? ''}
-            />
-          </Sidebar>
+                title="Lead Details"
+                isOpen={showLeadDetails}
+                onClose={() => {
+                  setShowLeadDetails(true);
+                }}
+              >
+                <LeadDetailsSection leadDetails={leadDetails} />
+              </Sidebar>
+              <Sidebar
+                title="Contact Info"
+                isOpen={isProfileOpen}
+                onClose={() => setIsProfileOpen(false)}
+              >
+                <ProfileSection
+                  name={activeInbox?.name ?? ''}
+                  image={activeInbox?.profile_image ?? ''}
+                />
+              </Sidebar>
         </Container>
       </ChatLayout>
     </>

@@ -10,6 +10,7 @@ export default function useChatRoom() {
   const [isShowIcon, setIsShowIcon] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isTemplateOpen, setIsTemplateOpen] = useState(false);
   const [showLeadDetails, setShowLeadDetails] = useState(true);
   const [leadDetails, setLeadDetails] = useState();
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
@@ -99,6 +100,8 @@ export default function useChatRoom() {
     showLeadDetails,
     setShowLeadDetails,
     leadDetails,
-    initiateConversation
+    initiateConversation,
+    isTemplateOpen,
+    setIsTemplateOpen
   };
 }
