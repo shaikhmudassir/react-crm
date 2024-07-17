@@ -24,6 +24,7 @@ export default function useChatRoom() {
 
   useEffect(() => {
     if (wa_id) {
+      setIsTemplateOpen(false);
       getMessageHistory(wa_id || '').then((res) => {
         const sortedMessages = res.sort((a: Message, b: Message) => {
           const dateA = new Date(`${a.date}T${a.timestamp}`).getTime();

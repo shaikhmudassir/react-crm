@@ -88,7 +88,7 @@ export const sampleTemplateDetails: TEMPLATEOBJECTTYPE[] = [
 		messageBody: 'This is sample template for testing',
 		footerText: 'Best regards, The Team',
 		button: '',
-        status: 'approved'
+        status: 'draft'
 	},
 	{
 		templateId: 'i-11224533',
@@ -97,7 +97,7 @@ export const sampleTemplateDetails: TEMPLATEOBJECTTYPE[] = [
 		messageBody: 'Greeting! How may I assist you',
 		footerText: 'Best regards, The Team',
 		button: '',
-        status: 'approved'
+        status: 'submitted'
 	}
 ]
 
