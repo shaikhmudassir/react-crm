@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { AppBar, Avatar, Box, Drawer, IconButton, List, ListItem, ListItemIcon, Popover, Toolbar, Tooltip, Typography } from '@mui/material';
-import { FaAddressBook, FaBars, FaBriefcase, FaBuilding, FaChartLine, FaCog, FaDiceD6, FaHandshake, FaIndustry, FaSignOutAlt, FaTachometerAlt, FaUserFriends, FaUsers } from "react-icons/fa";
+import { FaAddressBook, FaBars, FaBriefcase, FaBuilding, FaChartLine, FaCog, FaDiceD6, FaHandshake, FaIndustry, FaSignOutAlt, FaTachometerAlt, FaTelegramPlane, FaUserFriends, FaUsers } from "react-icons/fa";
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { fetchData } from './FetchData';
 import { ProfileUrl } from '../services/ApiUrls';
@@ -38,6 +38,10 @@ import logo from '../assets/images/auth/img_logo.png';
 import { StyledListItemButton, StyledListItemText } from '../styles/CssStyled';
 // import MyContext, { MyContextData } from '../context/Context';
 import MyContext from '../context/Context';
+import AddTemplate from '../pages/template/add-template';
+import EditTemplate from '../pages/template/edit-template';
+import TemplateDetails from '../pages/template/template-details';
+import Template from '../pages/template/template';
 
 // declare global {
 //     interface Window {
@@ -81,6 +85,8 @@ export default function Sidebar(props: any) {
             setScreen('accounts')
         } else if (location.pathname.split('/')[2] === 'companies') {
             setScreen('companies')
+        } else if (location.pathname.split('/')[2] === 'templates') {
+            setScreen('templates')
         } else if (location.pathname.split('/')[2] === 'users') {
             setScreen('users')
         } else if (location.pathname.split('/')[2] === 'cases') {
@@ -101,7 +107,7 @@ export default function Sidebar(props: any) {
     }
 
     const navList1 = ['leads', 'contacts', 'opportunities', 'accounts', 'companies', 'employees', 'cases', 'chat']
-    const navList = ['chat', 'leads', 'opportunities', 'contacts', 'accounts', 'companies', 'employees']
+    const navList = ['chat', 'leads', 'opportunities', 'contacts', 'accounts', 'companies', 'employees', 'templates']
     const navIcons = (text: any, screen: any): React.ReactNode => {
         switch (text) {
             case 'leads':
@@ -120,6 +126,8 @@ export default function Sidebar(props: any) {
                 return screen === 'employees' ? <FaUserFriends fill='#3e79f7' /> : <FaUserFriends />
             case 'cases':
                 return screen === 'cases' ? <FaBriefcase fill='#3e79f7' /> : <FaBriefcase />
+            case 'templates':
+                return screen === 'templates' ? <FaTelegramPlane fill='#3e79f7' /> : <FaTelegramPlane />    
             default: return <FaDiceD6 fill='#3e79f7' />
         }
     }
@@ -278,6 +286,10 @@ export default function Sidebar(props: any) {
                             <Route path='/app/companies/add-company' element={<AddCompany />} />
                             <Route path='/app/companies/edit-company' element={<EditCompany />} />
                             <Route path='/app/companies/company-details' element={<CompanyDetails />} />
+                            <Route path='/app/templates' element={<Template />} />
+                            <Route path='/app/templates/add-template' element={<AddTemplate />} />
+                            <Route path='/app/templates/edit-template' element={<EditTemplate />} />
+                            <Route path='/app/templates/template-details' element={<TemplateDetails />} />
                             <Route path='/app/contacts' element={<Contacts />} />
                             <Route path='/app/contacts/add-contacts' element={<AddContacts />} />
                             <Route path='/app/contacts/contact-details' element={<ContactDetails />} />

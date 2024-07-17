@@ -10,6 +10,7 @@ export default function useChatRoom() {
   const [isShowIcon, setIsShowIcon] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isTemplateOpen, setIsTemplateOpen] = useState(false);
   const [showLeadDetails, setShowLeadDetails] = useState(true);
   const [leadDetails, setLeadDetails] = useState();
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
@@ -23,6 +24,7 @@ export default function useChatRoom() {
 
   useEffect(() => {
     if (wa_id) {
+      setIsTemplateOpen(false);
       getMessageHistory(wa_id || '').then((res) => {
         const sortedMessages = res.sort((a: Message, b: Message) => {
           const dateA = new Date(`${a.date}T${a.timestamp}`).getTime();
@@ -76,9 +78,8 @@ export default function useChatRoom() {
     if (state === false) setShouldScrollToBottom(false);
   };
 
-  const initiateConversation = () => {
-    const defaultMessage = 'Hello '+userActiveChatName+', I am here to assist you. How can I help you today?';
-    sendMessage(defaultMessage)
+  const initiateConversation = (message:string) => {
+    sendMessage(message)
   }
 
   return {
@@ -99,6 +100,8 @@ export default function useChatRoom() {
     showLeadDetails,
     setShowLeadDetails,
     leadDetails,
-    initiateConversation
+    initiateConversation,
+    isTemplateOpen,
+    setIsTemplateOpen
   };
 }
