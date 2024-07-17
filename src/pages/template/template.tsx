@@ -14,6 +14,7 @@ import { DeleteModal } from '../../components/DeleteModal';
 import { FiChevronUp } from '@react-icons/all-files/fi/FiChevronUp';
 import { FiChevronDown } from '@react-icons/all-files/fi/FiChevronDown';
 import { EnhancedTableHead } from '../../components/EnchancedTableHead';
+import { sampleTemplatesList } from './types';
 // import { DeleteModal } from './DeleteModal';
 
 interface HeadCell {
@@ -61,32 +62,7 @@ const headCells: readonly HeadCell[] = [
         label: 'Updated At'
     }
 ]
-const response = [
-    {
-        templateId: 'i-24562',
-        name: 'Launchzone',
-        status: 'approved',
-        type: 'text',
-        actions: 'add',
-        updatedAt: '20-Mar-2023'
-    },
-    {
-        templateId: 'i-112233',
-        name: 'Hello Text',
-        status: 'draft',
-        type: 'text',
-        actions: 'add',
-        updatedAt: '21-Mar-2023'
-    },
-    {
-        templateId: 'i-11224533',
-        name: 'Long Text',
-        status: 'submitted',
-        type: 'text',
-        actions: 'add',
-        updatedAt: '21-Mar-2023'
-    }
-]
+
 export default function Template() {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(true);
@@ -132,10 +108,10 @@ export default function Template() {
             .then((data) => {
                 if (!data.error) {
                     // setTemplateList(data.data);
-                    setTemplateList(response);
+                    setTemplateList(sampleTemplatesList);
                     setLoading(false)
                 }
-            }).catch(()=>setTemplateList(response))
+            }).catch(()=>setTemplateList(sampleTemplatesList))
     }
 
     const handleRequestSort = (event: any, property: any) => {

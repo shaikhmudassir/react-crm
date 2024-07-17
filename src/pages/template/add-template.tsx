@@ -19,11 +19,13 @@ import { FiChevronDown } from '@react-icons/all-files/fi/FiChevronDown';
 import { FormErrors, TEMPLATEOBJECTTYPE } from './types';
 
 const defaultValues = {
+    templateId: '',
     name: '',
     locale: '',
-    button:'',
+    messageBody: '',
     footerText: '',
-    messageBody: ''
+    button: '',
+    status: ''
 }
 function AddTemplate() {
     const navigate = useNavigate()

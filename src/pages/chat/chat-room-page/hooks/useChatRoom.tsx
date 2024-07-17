@@ -77,9 +77,8 @@ export default function useChatRoom() {
     if (state === false) setShouldScrollToBottom(false);
   };
 
-  const initiateConversation = () => {
-    const defaultMessage = 'Hello '+userActiveChatName+', I am here to assist you. How can I help you today?';
-    sendMessage(defaultMessage)
+  const initiateConversation = (message:string) => {
+    sendMessage(message)
   }
 
   return {

@@ -98,8 +98,7 @@ export default function ChatRoomPage() {
               }}
             >
               <TemplatesSection
-                name={activeInbox?.name ?? ''}
-                image={activeInbox?.profile_image ?? ''}
+                onSend={(template:any)=>initiateConversation(template.messageBody)}
               />
             </Sidebar>}
           <Sidebar

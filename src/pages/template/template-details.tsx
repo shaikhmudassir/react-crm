@@ -9,15 +9,11 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { TemplateUrl } from '../../services/ApiUrls'
 import { fetchData, Header } from '../../components/FetchData'
 import { TemplateDetailsForm } from './template-details-form'
-import { TEMPLATEOBJECTTYPE } from './types'
+import { sampleTemplateDetails, TEMPLATEOBJECTTYPE } from './types'
 
-const sampleData: TEMPLATEOBJECTTYPE = {
-    name: 'My Template',
-    locale: 'English (US)',
-    messageBody: 'Hello Shakib, I am here to assist you. How can I help you today?',
-    footerText: 'You can send text or email us at aaacrm@yorcrm.com',
-    button: ''
-}
+const getTemplateDetailsFromSampleData = (templateId:string): TEMPLATEOBJECTTYPE=> {
+    return sampleTemplateDetails.filter((i)=>i.templateId===templateId)[0];
+};
 export default function TemplateDetails() {
     const navigate = useNavigate()
     const { state } = useLocation()
@@ -39,7 +35,7 @@ export default function TemplateDetails() {
                 if (!res.error) {
                     setTemplateDetails(res?.data)
                 }
-            }).catch(()=>setTemplateDetails(sampleData))
+            }).catch(()=>setTemplateDetails(getTemplateDetailsFromSampleData(templateId)))
     }
 
     const backbtnHandle = () => {
