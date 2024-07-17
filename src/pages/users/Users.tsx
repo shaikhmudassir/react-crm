@@ -179,7 +179,7 @@ export default function Users() {
     }
 
     const userDetail = (userId: any) => {
-        navigate(`/app/employees/user-details`, { state: { userId, detail: true } })
+        navigate(`/app/users/user-details`, { state: { userId, detail: true } })
     }
     const handleRecordsPerPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
         if (tab == 'active') {
@@ -291,9 +291,9 @@ export default function Users() {
 
     const onAddUser = () => {
         if (!loading) {
-            navigate('/app/employees/add-users')
+            navigate('/app/users/add-users')
         }
-        // navigate('/employees/add-users', {
+        // navigate('/users/add-users', {
         //   state: {
         //     roles: usersData.roles,
         //     status: usersData.status
@@ -317,7 +317,7 @@ export default function Users() {
                 console.log(res, 'res');
                 if (!res.error) {
                     const data = res?.data?.profile_obj
-                    navigate('/app/employees/edit-user', {
+                    navigate('/app/users/edit-user', {
                         state: {
                             value: {
                                 email: data?.user_details?.email,
@@ -330,7 +330,6 @@ export default function Users() {
                                 state: data?.address?.state,
                                 pincode: data?.address?.postcode,
                                 country: data?.address?.country,
-                                countries: res?.data?.countries,
                                 profile_pic: data?.user_details?.profile_pic,
                                 has_sales_access: data?.has_sales_access,
                                 has_marketing_access: data?.has_marketing_access,
@@ -486,7 +485,7 @@ export default function Users() {
                         onClick={onAddUser}
                         className={'add-button'}
                     >
-                        Add Employee
+                        Add User
                     </Button>
                 </Stack>
             </CustomToolbar>

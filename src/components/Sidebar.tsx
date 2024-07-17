@@ -6,6 +6,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { fetchData } from './FetchData';
 import { ProfileUrl } from '../services/ApiUrls';
 import { Header1 } from './FetchData';
+import OrganizationModal from '../pages/organization/OrganizationModal';
 import Company from '../pages/company/Company';
 import AddCompany from '../pages/company/AddCompany';
 import CompanyDetails from '../pages/company/CompanyDetails';
@@ -52,6 +53,9 @@ export default function Sidebar(props: any) {
     const [drawerWidth, setDrawerWidth] = useState(200)
     const [headerWidth, setHeaderWidth] = useState(drawerWidth)
     const [userDetail, setUserDetail] = useState('')
+    const [organizationModal, setOrganizationModal] = useState(false)
+    const organizationModalClose = () => { setOrganizationModal(false) }
+
     useEffect(() => {
         toggleScreen()
     }, [navigate])
@@ -71,6 +75,7 @@ export default function Sidebar(props: any) {
     // toggleScreen()
     // }, [])
     const toggleScreen = () => {
+        // console.log(location.pathname.split('/'), 'll')
         if (location.pathname.split('/')[1] === '' || location.pathname.split('/')[1] === undefined || location.pathname.split('/')[2] === 'leads') {
             setScreen('leads')
         } else if (location.pathname.split('/')[2] === 'contacts') {
@@ -88,9 +93,14 @@ export default function Sidebar(props: any) {
         }
     }
 
+    // useEffect(() => {
+    //     userProfile()
+    // }, [])
+
     const userProfile = () => {
         fetchData(`${ProfileUrl}/`, 'GET', null as any, Header1)
             .then((res: any) => {
+                // console.log(res, 'user')
                 if (res?.user_obj) {
                     setUserDetail(res?.user_obj)
                 }
@@ -100,8 +110,7 @@ export default function Sidebar(props: any) {
             })
     }
 
-    const navList1 = ['leads', 'contacts', 'opportunities', 'accounts', 'companies', 'employees', 'cases', 'chat']
-    const navList = ['chat', 'leads', 'opportunities', 'contacts', 'accounts', 'companies', 'employees']
+    const navList = ['leads', 'contacts', 'opportunities', 'accounts', 'companies', 'users', 'cases']
     const navIcons = (text: any, screen: any): React.ReactNode => {
         switch (text) {
             case 'leads':
@@ -116,8 +125,8 @@ export default function Sidebar(props: any) {
                 return screen === 'companies' ? <FaIndustry fill='#3e79f7' /> : <FaIndustry />
             // case 'analytics':
             //     return screen === 'analytics' ? <FaChartLine fill='#3e79f7' /> : <FaChartLine />
-            case 'employees':
-                return screen === 'employees' ? <FaUserFriends fill='#3e79f7' /> : <FaUserFriends />
+            case 'users':
+                return screen === 'users' ? <FaUserFriends fill='#3e79f7' /> : <FaUserFriends />
             case 'cases':
                 return screen === 'cases' ? <FaBriefcase fill='#3e79f7' /> : <FaBriefcase />
             default: return <FaDiceD6 fill='#3e79f7' />
@@ -131,20 +140,14 @@ export default function Sidebar(props: any) {
         userProfile();
         setAnchorEl(event.currentTarget);
     };
-    const openInNewTab = (path: string) => {
-        window.open(
-          `${window.location.origin}/${path}`,
-          '_blank',
-          'noopener,noreferrer'
-        );
-      };
-    
+
     const handleClose = () => {
         setAnchorEl(null);
     };
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
+    // console.log(screen, 'sidebar');
     const context = { drawerWidth: drawerWidth, screen: screen }
     return (
         <>
@@ -164,7 +167,7 @@ export default function Sidebar(props: any) {
                 >
                     <Box>
                         <Toolbar>
-                            <img src={logo} width={'40px'} style={{ marginLeft: '-15px', marginRight: '10px' }} /> 
+                            {drawerWidth === 60 ? <img src={logo} width={'40px'} style={{ transform: 'rotate(270deg)', marginLeft: '-15px', marginRight: '10px' }} /> : <img src={logo} width={'100px'} style={{ marginLeft: '-5px', marginRight: '30px' }} />}
                             <IconButton sx={{ ml: '-10px' }} onClick={() => setDrawerWidth(drawerWidth === 60 ? 200 : 60)}>
                                 <FaBars style={{ height: '20px' }} />
                             </IconButton>
@@ -210,6 +213,12 @@ export default function Sidebar(props: any) {
                                         <StyledListItemText primary={'Sign out'} sx={{ ml: '-20px', color: '#3e79f7' }} />
                                     </StyledListItemButton>
                                 </ListItem>
+                                <ListItem disablePadding>
+                                    <StyledListItemButton onClick={() => setOrganizationModal(!organizationModal)}>
+                                        <ListItemIcon > <FaIndustry fill='#3e79f7' /></ListItemIcon>
+                                        <StyledListItemText primary={'Organization'} sx={{ ml: '-20px', color: '#3e79f7' }} />
+                                    </StyledListItemButton>
+                                </ListItem>
                             </List>
                             {/* <Tooltip title='logout' sx={{ ml: '15px' }}>
                                 <IconButton
@@ -235,12 +244,8 @@ export default function Sidebar(props: any) {
                                     <StyledListItemButton
                                         sx={{ pt: '6px', pb: '6px' }}
                                         onClick={() => {
-                                            if(text === 'chat'){
-                                                openInNewTab('chat');
-                                            } else {
-                                                navigate(`/app/${text}`)
-                                                setScreen(text)
-                                            }
+                                            navigate(`/app/${text}`)
+                                            setScreen(text)
                                         }}
                                         selected={screen === text}
                                     >
@@ -286,10 +291,10 @@ export default function Sidebar(props: any) {
                             <Route path='/app/accounts/add-account' element={<AddAccount />} />
                             <Route path='/app/accounts/account-details' element={<AccountDetails />} />
                             <Route path='/app/accounts/edit-account' element={<EditAccount />} />
-                            <Route path='/app/employees' element={<Users />} />
-                            <Route path='/app/employees/add-users' element={<AddUsers />} />
-                            <Route path='/app/employees/edit-user' element={<EditUser />} />
-                            <Route path='/app/employees/user-details' element={<UserDetails />} />
+                            <Route path='/app/users' element={<Users />} />
+                            <Route path='/app/users/add-users' element={<AddUsers />} />
+                            <Route path='/app/users/edit-user' element={<EditUser />} />
+                            <Route path='/app/users/user-details' element={<UserDetails />} />
                             <Route path='/app/opportunities' element={<Opportunities />} />
                             <Route path='/app/opportunities/add-opportunity' element={<AddOpportunity />} />
                             <Route path='/app/opportunities/opportunity-details' element={<OpportunityDetails />} />
@@ -301,6 +306,10 @@ export default function Sidebar(props: any) {
                         </Routes>
                     </Box>
                 </MyContext.Provider>
+                <OrganizationModal
+                    open={organizationModal}
+                    handleClose={organizationModalClose}
+                />
             </Box >
         </>
 

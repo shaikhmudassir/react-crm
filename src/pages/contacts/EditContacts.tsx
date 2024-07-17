@@ -239,7 +239,6 @@ function EditContact() {
 
   const onCancel = () => {
     setReset(true)
-    backbtnHandle()
     // resetForm()
   }
   // console.log(formData, 'editform')
@@ -586,7 +585,7 @@ function EditContact() {
                     <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', mt: 1.5 }}>
                       <Button
                         className='header-button'
-                        onClick={onCancel}
+                        onClick={emptyDescription}
                         size='small'
                         variant='contained'
                         startIcon={<FaTimesCircle style={{ fill: 'white', width: '16px', marginLeft: '2px' }} />}
@@ -596,7 +595,7 @@ function EditContact() {
                       </Button>
                       <Button
                         className='header-button'
-                        onClick={handleSubmit}
+                        onClick={() => setFormData({ ...formData, description: quillRef.current.firstChild.innerHTML })}
                         variant='contained'
                         size='small'
                         startIcon={<FaCheckCircle style={{ fill: 'white', width: '16px', marginLeft: '2px' }} />}

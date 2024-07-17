@@ -258,7 +258,6 @@ export function EditCase() {
         if (state?.value?.contacts) {
             setSelectedContacts(state?.value?.contacts);
         }
-        backbtnHandle();
     }
 
     const module = 'Cases'
@@ -623,7 +622,7 @@ export function EditCase() {
                                     <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', mt: 1.5 }}>
                                         <Button
                                             className='header-button'
-                                            onClick={onCancel}
+                                            onClick={emptyDescription}
                                             size='small'
                                             variant='contained'
                                             startIcon={<FaTimesCircle style={{ fill: 'white', width: '16px', marginLeft: '2px' }} />}
