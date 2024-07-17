@@ -12,12 +12,6 @@
     "node": true
   },
 
-  "plugins": [
-    "import",
-    "n",
-    "promise"
-  ],
-
   "globals": {
     "document": "readonly",
     "navigator": "readonly",

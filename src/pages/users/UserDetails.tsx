@@ -24,7 +24,7 @@ type response = {
         profile_pic: string;
     };
     role: string;
-    address: {
+    user_address: {
         address_line: string;
         street: string;
         city: string;
@@ -39,7 +39,7 @@ type response = {
     alternate_phone: string;
     date_of_joining: string;
     is_active: boolean;
-
+    id: string;
 };
 
 export const formatDate = (dateString: any) => {
@@ -52,7 +52,8 @@ export default function UserDetails() {
     const navigate = useNavigate()
     const { state } = useLocation()
     const [userDetails, setUserDetails] = useState<response | null>(null)
-
+    const [res, setRes] = useState<any>(null)
+    const [isActive, setIsActive] = useState<boolean>(false)
     useEffect(() => {
         getUserDetail(state.userId)
     }, [state.userId])
@@ -69,9 +70,10 @@ export default function UserDetails() {
           }
         fetchData(`${UserUrl}/${id}/`, 'GET', null as any, Header)
             .then((res) => {
-                console.log(res, 'res');
                 if (!res.error) {
                     setUserDetails(res?.data?.profile_obj)
+                    setIsActive(res?.data?.profile_obj?.user_details?.is_active);
+                    setRes(res)
                 }
             })
     }
@@ -97,24 +99,25 @@ export default function UserDetails() {
     //   }, [])
 
     const backbtnHandle = () => {
-        navigate('/app/users')
+        navigate('/app/employees')
     }
 
     const editHandle = () => {
         // navigate('/contacts/edit-contacts', { state: { value: contactDetails, address: newAddress } })
-        navigate('/app/users/edit-user', {
+        navigate('/app/employees/edit-user', {
             state: {
                 value: {
                     email: userDetails?.user_details?.email,
                     role: userDetails?.role,
                     phone: userDetails?.phone,
                     alternate_phone: userDetails?.alternate_phone,
-                    address_line: userDetails?.address?.address_line,
-                    street: userDetails?.address?.street,
-                    city: userDetails?.address?.city,
-                    state: userDetails?.address?.state,
-                    pincode: userDetails?.address?.postcode,
-                    country: userDetails?.address?.country,
+                    address_line: userDetails?.user_address?.address_line,
+                    street: userDetails?.user_address?.street,
+                    city: userDetails?.user_address?.city,
+                    state: userDetails?.user_address?.state,
+                    pincode: userDetails?.user_address?.postcode,
+                    country: userDetails?.user_address?.country,
+                    countries: res?.data?.countries,
                     profile_pic: userDetails?.user_details?.profile_pic,
                     has_sales_access: userDetails?.has_sales_access,
                     has_marketing_access: userDetails?.has_marketing_access,
@@ -124,11 +127,24 @@ export default function UserDetails() {
         })
     }
 
-    const module = 'Users'
-    const crntPage = 'User Detail'
-    const backBtn = 'Back To Users'
+    const module = 'Employees'
+    const crntPage = 'Employee Detail'
+    const backBtn = 'Back To Employees'
     // console.log(userDetails, 'user');
-
+    const updateUserStatus = (e:any)=>{
+        const Header = {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('Token'),
+            org: localStorage.getItem('org')
+          }
+        const isChecked:boolean = e.target.checked;
+        const userStatus:string = isChecked ? 'Active' : 'Inactive'
+        fetchData(`${UserUrl}/${userDetails?.id}/status/`, 'POST', JSON.stringify({status : userStatus}), Header)
+            .then(() => {
+                setIsActive(!isActive);
+            })
+    }
     return (
         <Box sx={{ mt: '60px' }}>
             <div>
@@ -193,7 +209,7 @@ export default function UserDetails() {
                                 <div style={{ width: '32%' }}>
                                     <div className='title2'>Is Active</div>
                                     <div className='title3'>
-                                        <AntSwitch checked={userDetails?.user_details?.is_active} />
+                                        <AntSwitch checked={isActive} onChange={updateUserStatus} />
                                     </div>
                                 </div>
                                 <div style={{ width: '32%' }}>
@@ -262,19 +278,19 @@ export default function UserDetails() {
                                     <div style={{ width: '32%' }}>
                                         <div className='title2'>Address Lane</div>
                                         <div className='title3'>
-                                            {userDetails?.address?.address_line || '---'}
+                                            {userDetails?.user_address?.address_line || '---'}
                                         </div>
                                     </div>
                                     <div style={{ width: '32%' }}>
                                         <div className='title2'>Street</div>
                                         <div className='title3'>
-                                            {userDetails?.address?.street || '---'}
+                                            {userDetails?.user_address?.street || '---'}
                                         </div>
                                     </div>
                                     <div style={{ width: '32%' }}>
                                         <div className='title2'>City</div>
                                         <div className='title3'>
-                                            {userDetails?.address?.city || '---'}
+                                            {userDetails?.user_address?.city || '---'}
                                         </div>
                                     </div>
                                 </div>
@@ -282,19 +298,19 @@ export default function UserDetails() {
                                     <div style={{ width: '32%' }}>
                                         <div className='title2'>Pincode</div>
                                         <div className='title3'>
-                                            {userDetails?.address?.postcode || '---'}
+                                            {userDetails?.user_address?.postcode || '---'}
                                         </div>
                                     </div>
                                     <div style={{ width: '32%' }}>
                                         <div className='title2'>State</div>
                                         <div className='title3'>
-                                            {userDetails?.address?.state || '---'}
+                                            {userDetails?.user_address?.state || '---'}
                                         </div>
                                     </div>
                                     <div style={{ width: '32%' }}>
                                         <div className='title2'>Country</div>
                                         <div className='title3'>
-                                            {userDetails?.address?.country || '---'}
+                                            {userDetails?.user_address?.country || '---'}
                                         </div>
                                     </div>
                                 </div>

@@ -144,7 +144,6 @@ export default function ContactDetails() {
     const module = 'Contacts'
     const crntPage = 'Contact Detail'
     const backBtn = 'Back To Contacts'
-    // console.log(state, 'contact');
 
     return (
         <Box sx={{ mt: '60px' }}>
