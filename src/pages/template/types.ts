@@ -1,3 +1,49 @@
+interface HeadCell {
+    disablePadding: boolean;
+    id: any;
+    label: string;
+    numeric: boolean;
+}
+
+export const headCells: readonly HeadCell[] = [
+    {
+        id: '',
+        numeric: false,
+        disablePadding: false,
+        label: '#'
+    },
+    {
+        id: 'name',
+        numeric: false,
+        disablePadding: false,
+        label: 'Template Name'
+    },
+    {
+        id: 'type',
+        numeric: false,
+        disablePadding: false,
+        label: 'Type'
+    },
+    {
+        id: 'status',
+        numeric: false,
+        disablePadding: false,
+        label: 'Status'
+    },
+    {
+        id: 'actions',
+        numeric: false,
+        disablePadding: false,
+        label: 'Actions'
+    },
+    {
+        id: 'updatedAt',
+        numeric: false,
+        disablePadding: false,
+        label: 'Updated At'
+    }
+]
+
 export type TEMPLATEOBJECTTYPE = {
     templateId: string;
     name: string;

@@ -14,54 +14,8 @@ import { DeleteModal } from '../../components/DeleteModal';
 import { FiChevronUp } from '@react-icons/all-files/fi/FiChevronUp';
 import { FiChevronDown } from '@react-icons/all-files/fi/FiChevronDown';
 import { EnhancedTableHead } from '../../components/EnchancedTableHead';
-import { sampleTemplatesList } from './types';
+import { headCells, sampleTemplatesList } from './types';
 // import { DeleteModal } from './DeleteModal';
-
-interface HeadCell {
-    disablePadding: boolean;
-    id: any;
-    label: string;
-    numeric: boolean;
-}
-
-const headCells: readonly HeadCell[] = [
-    {
-        id: '',
-        numeric: false,
-        disablePadding: false,
-        label: '#'
-    },
-    {
-        id: 'name',
-        numeric: false,
-        disablePadding: false,
-        label: 'Template Name'
-    },
-    {
-        id: 'type',
-        numeric: false,
-        disablePadding: false,
-        label: 'Type'
-    },
-    {
-        id: 'status',
-        numeric: false,
-        disablePadding: false,
-        label: 'Status'
-    },
-    {
-        id: 'actions',
-        numeric: false,
-        disablePadding: false,
-        label: 'Actions'
-    },
-    {
-        id: 'updatedAt',
-        numeric: false,
-        disablePadding: false,
-        label: 'Updated At'
-    }
-]
 
 export default function Template() {
     const navigate = useNavigate()
