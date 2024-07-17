@@ -88,6 +88,8 @@ export default function Company() {
         fetchData(`${CompaniesUrl}`, 'GET', null as any, Header)
             .then((data) => {
                 if (!data.error) {
+                    console.log(data);
+
                     setCompanyList(data.data);
                     setLoading(false)
                 }
@@ -109,6 +111,7 @@ export default function Company() {
           }
         fetchData(`${CompanyUrl}/${selectedId}`, 'DELETE', null as any, Header)
             .then((res: any) => {
+                console.log('delete:', res);
                 if (!res.error) {
                     deleteRowModalClose()
                     getCompany()
@@ -179,6 +182,7 @@ export default function Company() {
     const modalTitle = 'Delete Company'
 
     const recordsList = [[10, '10 Records per page'], [20, '20 Records per page'], [30, '30 Records per page'], [40, '40 Records per page'], [50, '50 Records per page']]
+    // console.log(contactList, 'cccc')
 
     return (
         <Box sx={{ mt: '60px' }}>
@@ -208,16 +212,18 @@ export default function Company() {
                         ))}
                     </Select>
                     <Box sx={{ borderRadius: '7px', backgroundColor: 'white', height: '40px', minHeight: '40px', maxHeight: '40px', display: 'flex', flexDirection: 'row', alignItems: 'center', mr: 1, p: '0px' }}>
-                        <FabLeft onClick={handleNextPage} disabled={currentPage === totalPages}>
+                        <FabLeft>
                             <FiChevronLeft
+                                //  onClick={previous}
                                 style={{ height: '15px' }}
                             />
                         </FabLeft>
                         <Typography sx={{ mt: 0, textTransform: 'lowercase', fontSize: '15px', color: '#1A3353', textAlign: 'center' }}>
                             0 to 1
                         </Typography>
-                        <FabRight onClick={handleNextPage} disabled={currentPage === totalPages}>
-                            <FiChevronRight style={{ height: '15px' }} />
+                        <FabRight>
+                            <FiChevronRight
+                                style={{ height: '15px' }} />
                         </FabRight>
                     </Box>
                     <Button

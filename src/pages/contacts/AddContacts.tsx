@@ -167,6 +167,14 @@ function AddContacts() {
     // }
   };
 
+  const isValidEmail = (email: any) => {
+    return /^\S+@\S+\.\S+$/.test(email);
+  };
+
+  const isValidPhoneNumber = (phoneNumber: any) => {
+    return /^\+91\d{10}$/.test(phoneNumber);
+  };
+
   const submitForm = () => {
     const Header = {
       Accept: 'application/json',
@@ -251,11 +259,10 @@ function AddContacts() {
   const backBtn = 'Back To Contacts'
 
   const onCancel = () => {
-    resetForm();
-    resetQuillToInitialState();
-    backbtnHandle();
+    resetForm()
   }
 
+  // console.log(errors, 'err')
   return (
     <Box sx={{ mt: '60px' }}>
       <CustomAppBar backbtnHandle={backbtnHandle} module={module} backBtn={backBtn} crntPage={crntPage} onCancel={onCancel} onSubmit={handleSubmit} />
@@ -633,7 +640,7 @@ function AddContacts() {
                     <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', mt: 1.5 }}>
                       <Button
                         className='header-button'
-                        onClick={onCancel}
+                        onClick={resetQuillToInitialState}
                         size='small'
                         variant='contained'
                         startIcon={<FaTimesCircle style={{ fill: 'white', width: '16px', marginLeft: '2px' }} />}
@@ -643,7 +650,7 @@ function AddContacts() {
                       </Button>
                       <Button
                         className='header-button'
-                        onClick={handleSubmit}
+                        onClick={() => setFormData({ ...formData, description: quillRef.current.firstChild.innerHTML })}
                         variant='contained'
                         size='small'
                         startIcon={<FaCheckCircle style={{ fill: 'white', width: '16px', marginLeft: '2px' }} />}

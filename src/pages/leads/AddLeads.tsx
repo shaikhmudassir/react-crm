@@ -262,7 +262,7 @@ export function AddLeads() {
       teams: formData.teams,
       assigned_to: formData.assigned_to,
       contacts: formData.contacts,
-      status: formData.status.toLowerCase(),
+      status: formData.status,
       source: formData.source,
       address_line: formData.address_line,
       street: formData.street,
@@ -334,8 +334,7 @@ export function AddLeads() {
     // }
   }
   const onCancel = () => {
-    resetForm();
-    backbtnHandle();
+    resetForm()
   }
 
   const backbtnHandle = () => {
@@ -468,9 +467,7 @@ export function AddLeads() {
                             limitTags={2}
                             options={state?.users || []}
                             getOptionLabel={(option: any) => state?.users ? option?.user__email : option}
-                            onChange={(e: any, value: any) => {
-                              handleChange2('assigned_to', value)
-                            }}
+                            onChange={(e: any, value: any) => handleChange2('assigned_to', value)}
                             size='small'
                             filterSelectedOptions
                             renderTags={(value, getTagProps) =>
@@ -1069,7 +1066,7 @@ export function AddLeads() {
                     <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', mt: 1.5 }}>
                       <Button
                         className='header-button'
-                        onClick={onCancel}
+                        onClick={resetQuillToInitialState}
                         size='small'
                         variant='contained'
                         startIcon={<FaTimesCircle style={{ fill: 'white', width: '16px', marginLeft: '2px' }} />}
@@ -1079,7 +1076,7 @@ export function AddLeads() {
                       </Button>
                       <Button
                         className='header-button'
-                        onClick={handleSubmit}
+                        onClick={() => setFormData({ ...formData, description: quillRef.current.firstChild.innerHTML })}
                         variant='contained'
                         size='small'
                         startIcon={<FaCheckCircle style={{ fill: 'white', width: '16px', marginLeft: '2px' }} />}
